@@ -1,4 +1,4 @@
-import { ElementStates } from 'types';
+import { ElementStates } from '../../src/shared/types';
 import { getRegExp } from './utils';
 
 describe('stack visualizer work', () => {

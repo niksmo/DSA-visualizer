@@ -1,4 +1,4 @@
-import { ElementStates } from 'types';
+import { ElementStates } from '../../src/shared/types';
 
 describe('string reverse visualizer work', () => {
 	beforeEach(() => {

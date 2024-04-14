@@ -1,4 +1,4 @@
-import { ElementStates } from 'types';
+import { ElementStates } from '../../src/shared/types';
 import { getRegExp } from './utils';
 
 const getSelector = (testId: string) => {
@@ -500,7 +500,7 @@ describe('linked-list visualizer work', () => {
 
 					cy.get(removeByIndex).click();
 
-					cy.get(linkedList).each(($element, index, $array) => {
+					cy.get(linkedList).each(($element, index) => {
 						if (index === 0) {
 							cy
 								.wrap($element)
@@ -516,7 +516,7 @@ describe('linked-list visualizer work', () => {
 
 					cy.wait(1000);
 
-					cy.get(linkedList).each(($element, index, $array) => {
+					cy.get(linkedList).each(($element, index) => {
 						if (index === 0) {
 							cy
 								.wrap($element)
