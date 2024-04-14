@@ -6,63 +6,57 @@ import { ArrowIcon } from '../../../shared/ui/icons';
 import styles from './styles.module.css';
 
 interface ILinkedListChartProps {
-  elements: TArrayItem<string>[];
-  extClassName?: string;
+	elements: TArrayItem<string>[];
+	extClassName?: string;
 }
 
 export const LinkedListChart: React.FC<ILinkedListChartProps> = ({
-  elements,
-  extClassName
+	elements,
+	extClassName
 }) => {
-  const getHead = (headValue: string | null) => {
-    if (headValue === 'head') {
-      return headValue;
-    }
+	const getHead = (headValue: string | null) => {
+		if (headValue === 'head') {
+			return headValue;
+		}
 
-    if (headValue) {
-      return (
-        <Circle isSmall letter={headValue} state={ElementStates.Changing} />
-      );
-    }
+		if (headValue) {
+			return <Circle isSmall letter={headValue} state={ElementStates.Changing} />;
+		}
 
-    return headValue;
-  };
+		return headValue;
+	};
 
-  const getTail = (tailValue: string | null) => {
-    if (tailValue === 'tail') {
-      return tailValue;
-    }
+	const getTail = (tailValue: string | null) => {
+		if (tailValue === 'tail') {
+			return tailValue;
+		}
 
-    if (tailValue) {
-      return (
-        <Circle isSmall letter={tailValue} state={ElementStates.Changing} />
-      );
-    }
+		if (tailValue) {
+			return <Circle isSmall letter={tailValue} state={ElementStates.Changing} />;
+		}
 
-    return tailValue;
-  };
+		return tailValue;
+	};
 
-  return (
-    <ul className={clsx(styles.chart, extClassName)}>
-      {elements.map((item, index, array) => (
-        <li key={item.id} className={styles.chart__item}>
-          <Circle
-            head={getHead(item.head!)}
-            tail={getTail(item.tail!)}
-            state={item.state}
-            letter={item.value}
-            index={index}
-            extClassName={clsx(styles.chart__element, 'ml-8 mr-8')}
-          />
-          {index !== array.length - 1 && (
-            <ArrowIcon
-              fill={
-                item.passed ? ElementStates.Changing : ElementStates.Default
-              }
-            />
-          )}
-        </li>
-      ))}
-    </ul>
-  );
+	return (
+		<ul className={clsx(styles.chart, extClassName)}>
+			{elements.map((item, index, array) => (
+				<li key={item.id} className={styles.chart__item}>
+					<Circle
+						head={getHead(item.head!)}
+						tail={getTail(item.tail!)}
+						state={item.state}
+						letter={item.value}
+						index={index}
+						extClassName={clsx(styles.chart__element, 'ml-8 mr-8')}
+					/>
+					{index !== array.length - 1 && (
+						<ArrowIcon
+							fill={item.passed ? ElementStates.Changing : ElementStates.Default}
+						/>
+					)}
+				</li>
+			))}
+		</ul>
+	);
 };

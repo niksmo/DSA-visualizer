@@ -1,105 +1,106 @@
 import { render } from '@testing-library/react';
-import { ElementStates } from 'types';
+import { describe, it, expect } from 'vitest';
+import { ElementStates } from '../../types';
 import { Circle } from '.';
 
 describe('Circle component test', () => {
-  it('should render with text', () => {
-    const { getByTestId } = render(<Circle letter="abcd" />);
+	it('should render with text', () => {
+		const { getByTestId } = render(<Circle letter="abcd" />);
 
-    const circleWithText = getByTestId('circle');
+		const circleText = getByTestId('circle-value');
 
-    expect(circleWithText).toHaveTextContent('abcd');
+		expect(circleText.textContent).equal('abcd');
 
-    expect(circleWithText).toMatchSnapshot();
-  });
+		expect(circleText).toMatchSnapshot();
+	});
 
-  it('should render without text', () => {
-    const { getByTestId } = render(<Circle />);
+	it('should render without text', () => {
+		const { getByTestId } = render(<Circle />);
 
-    const emptyCircle = getByTestId('circle');
+		const emptyCircle = getByTestId('circle');
 
-    expect(emptyCircle).toBeInTheDocument();
+		expect(emptyCircle).toBeInstanceOf(HTMLElement);
 
-    expect(emptyCircle).toMatchSnapshot();
-  });
+		expect(emptyCircle).toMatchSnapshot();
+	});
 
-  it('should render with text in head', () => {
-    const { getByTestId } = render(<Circle head="abcd" />);
+	it('should render with text in head', () => {
+		const { getByTestId } = render(<Circle head="abcd" />);
 
-    const circleWithTextInHead = getByTestId('circle');
+		const circleHeadText = getByTestId('circle-head');
 
-    expect(circleWithTextInHead).toHaveTextContent('abcd');
+		expect(circleHeadText.textContent).equal('abcd');
 
-    expect(circleWithTextInHead).toMatchSnapshot();
-  });
+		expect(circleHeadText).toMatchSnapshot();
+	});
 
-  it('should render with react element in head', () => {
-    const { getByTestId } = render(<Circle head={<a>abcd</a>} />);
+	it('should render with react element in head', () => {
+		const { getByText } = render(<Circle head={<a>abcd</a>} />);
 
-    const circleWithElemInHead = getByTestId('circle');
+		const circleWithElemInHead = getByText('abcd');
 
-    expect(circleWithElemInHead).toHaveTextContent('abcd');
+		expect(circleWithElemInHead.textContent).equal('abcd');
 
-    expect(circleWithElemInHead).toMatchSnapshot();
-  });
+		expect(circleWithElemInHead).toMatchSnapshot();
+	});
 
-  it('should render with text in tail', () => {
-    const { getByTestId } = render(<Circle tail="abcd" />);
+	it('should render with text in tail', () => {
+		const { getByTestId } = render(<Circle tail="abcd" />);
 
-    const circleWithTextInTail = getByTestId('circle');
+		const circleWithTextInTail = getByTestId('circle-tail');
 
-    expect(circleWithTextInTail).toHaveTextContent('abcd');
+		expect(circleWithTextInTail.textContent).equal('abcd');
 
-    expect(circleWithTextInTail).toMatchSnapshot();
-  });
+		expect(circleWithTextInTail).toMatchSnapshot();
+	});
 
-  it('should render with react element in tail', () => {
-    const { getByTestId } = render(<Circle tail={<a>abcd</a>} />);
+	it('should render with react element in tail', () => {
+		const { getByText } = render(<Circle tail={<a>abcd</a>} />);
 
-    const circleWithElemInTail = getByTestId('circle');
+		const circleWithElemInTail = getByText('abcd');
 
-    expect(circleWithElemInTail).toHaveTextContent('abcd');
+		expect(circleWithElemInTail.textContent).equal('abcd');
 
-    expect(circleWithElemInTail).toMatchSnapshot();
-  });
+		expect(circleWithElemInTail).toMatchSnapshot();
+	});
 
-  it('should render with index', () => {
-    const { getByTestId } = render(<Circle index={5} />);
+	it('should render with index', () => {
+		const { getByTestId } = render(<Circle index={5} />);
 
-    const circleWithIndex = getByTestId('circle');
+		const circleWithIndex = getByTestId('circle-index');
 
-    expect(circleWithIndex).toHaveTextContent('5');
+		expect(circleWithIndex.textContent).equal('5');
 
-    expect(circleWithIndex).toMatchSnapshot();
-  });
+		expect(circleWithIndex).toMatchSnapshot();
+	});
 
-  it('should render with isSmall prop', () => {
-    const { getByTestId } = render(<Circle isSmall />);
+	it('should render with isSmall prop', () => {
+		const { getByTestId } = render(<Circle isSmall />);
 
-    const circleWithIndex = getByTestId('circle-main');
+		const circleWithIndex = getByTestId('circle-main');
 
-    expect(circleWithIndex).toHaveClass('small');
+		expect(circleWithIndex.className.indexOf('small')).toBeGreaterThan(-1);
 
-    expect(circleWithIndex).toMatchSnapshot();
-  });
+		expect(circleWithIndex).toMatchSnapshot();
+	});
 
-  it('should render with all existing states', () => {
-    const { container, getByText } = render(
-      <>
-        <Circle state={ElementStates.Default} letter="1" />
-        <Circle state={ElementStates.Changing} letter="2" />
-        <Circle state={ElementStates.Modified} letter="3" />
-      </>
-    );
+	it('should render with all existing states', () => {
+		const { container, getByText } = render(
+			<>
+				<Circle state={ElementStates.Default} letter="1" />
+				<Circle state={ElementStates.Changing} letter="2" />
+				<Circle state={ElementStates.Modified} letter="3" />
+			</>
+		);
 
-    const defaultState = getByText('1');
-    const changingState = getByText('2');
-    const modifiedState = getByText('3');
+		const defaultState = getByText('1');
+		const changingState = getByText('2');
+		const modifiedState = getByText('3');
 
-    expect(defaultState).toHaveTextContent('1');
-    expect(changingState).toHaveTextContent('2');
-    expect(modifiedState).toHaveTextContent('3');
+		expect(defaultState.textContent).equal('1');
+		expect(changingState.textContent).equal('2');
+		expect(modifiedState.textContent).equal('3');
 
-    expect(container).toMatchSnapshot();
-  });
+		expect(container).toMatchSnapshot();
+	});
 });

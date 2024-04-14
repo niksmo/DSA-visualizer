@@ -7,11 +7,11 @@ import { SortingPage } from './sorting-page';
 import { StackPage } from './stack-page';
 
 export {
-  StringComponent,
-  FibonacciPage,
-  MainPage,
-  ListPage,
-  QueuePage,
-  SortingPage,
-  StackPage
+	StringComponent,
+	FibonacciPage,
+	MainPage,
+	ListPage,
+	QueuePage,
+	SortingPage,
+	StackPage
 };

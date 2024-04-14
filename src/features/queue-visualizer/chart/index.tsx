@@ -5,25 +5,25 @@ import { Circle } from '../../../shared/ui/circle';
 import styles from './styles.module.css';
 
 interface IQueueChartProps {
-  elements: TArrayItem<string>[];
-  extClassName?: string;
+	elements: TArrayItem<string>[];
+	extClassName?: string;
 }
 
 export const QueueChart: React.FC<IQueueChartProps> = ({
-  elements,
-  extClassName
+	elements,
+	extClassName
 }) => (
-  <div className={clsx(styles.chart, extClassName)}>
-    {elements.map((item, index) => (
-      <Circle
-        key={item.id}
-        state={item.state}
-        head={item.head}
-        tail={item.tail}
-        letter={item.value}
-        index={index}
-        extClassName={clsx(styles.chart__element, 'mr-8')}
-      />
-    ))}
-  </div>
+	<div className={clsx(styles.chart, extClassName)}>
+		{elements.map((item, index) => (
+			<Circle
+				key={item.id}
+				state={item.state}
+				head={item.head}
+				tail={item.tail}
+				letter={item.value}
+				index={index}
+				extClassName={clsx(styles.chart__element, 'mr-8')}
+			/>
+		))}
+	</div>
 );

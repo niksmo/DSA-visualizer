@@ -29,8 +29,6 @@
 - React Router v5.2.1
 - Typescript v5.2.2
 - Vite
-- Eslint
-- Prettier
 - Vitest
 - Cypress
 

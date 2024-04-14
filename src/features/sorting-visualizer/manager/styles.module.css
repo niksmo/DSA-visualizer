@@ -1,9 +1,9 @@
 .controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .controls__button {
-  width: 208px;
+	width: 208px;
 }

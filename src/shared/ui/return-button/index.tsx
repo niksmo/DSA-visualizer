@@ -3,21 +3,22 @@ import styles from './styles.module.css';
 import { ReturnIcon } from '../icons';
 
 interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
-  type?: 'button' | 'submit' | 'reset';
-  extClassName?: string;
+	type?: 'button' | 'submit' | 'reset';
+	extClassName?: string;
 }
 
 export const ReturnButton: React.FC<ButtonProps> = ({
-  extClassName = '',
-  ...rest
+	extClassName = '',
+	...rest
 }) => {
-  return (
-    <button
-      className={`${styles.button} ${extClassName}`}
-      type="button"
-      {...rest}>
-      <ReturnIcon />
-      <p className="text text_type_button text_color_link ml-4">К оглавлению</p>
-    </button>
-  );
+	return (
+		<button
+			className={`${styles.button} ${extClassName}`}
+			type="button"
+			{...rest}
+		>
+			<ReturnIcon />
+			<p className="text text_type_button text_color_link ml-4">К оглавлению</p>
+		</button>
+	);
 };

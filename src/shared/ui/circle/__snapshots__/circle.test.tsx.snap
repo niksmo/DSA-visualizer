@@ -1,4 +1,182 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Circle component test > should render with all existing states 1`] = `
+<div>
+  <div
+    class="_content_8fdf19 "
+    data-testid="circle"
+  >
+    <div
+      class="text text_type_input text_color_input mb-4 _absolute_8fdf19 _head_8fdf19 _element_8fdf19"
+      data-testid="circle-head"
+    />
+    <div
+      class="_circle_8fdf19   _default_8fdf19"
+      data-testid="circle-main"
+    >
+      <p
+        class="text text_type_circle text_color_input _letter_8fdf19"
+        data-testid="circle-value"
+      >
+        1
+      </p>
+    </div>
+    <p
+      class="text text_type_input text_color_input mt-4 _absolute_8fdf19 _index_8fdf19"
+      data-testid="circle-index"
+    />
+    <div
+      class="text text_type_input text_color_input mt-4 _absolute_8fdf19 _tail30_8fdf19 _element_8fdf19"
+      data-testid="circle-tail"
+    />
+  </div>
+  <div
+    class="_content_8fdf19 "
+    data-testid="circle"
+  >
+    <div
+      class="text text_type_input text_color_input mb-4 _absolute_8fdf19 _head_8fdf19 _element_8fdf19"
+      data-testid="circle-head"
+    />
+    <div
+      class="_circle_8fdf19   _changing_8fdf19"
+      data-testid="circle-main"
+    >
+      <p
+        class="text text_type_circle text_color_input _letter_8fdf19"
+        data-testid="circle-value"
+      >
+        2
+      </p>
+    </div>
+    <p
+      class="text text_type_input text_color_input mt-4 _absolute_8fdf19 _index_8fdf19"
+      data-testid="circle-index"
+    />
+    <div
+      class="text text_type_input text_color_input mt-4 _absolute_8fdf19 _tail30_8fdf19 _element_8fdf19"
+      data-testid="circle-tail"
+    />
+  </div>
+  <div
+    class="_content_8fdf19 "
+    data-testid="circle"
+  >
+    <div
+      class="text text_type_input text_color_input mb-4 _absolute_8fdf19 _head_8fdf19 _element_8fdf19"
+      data-testid="circle-head"
+    />
+    <div
+      class="_circle_8fdf19   _modified_8fdf19"
+      data-testid="circle-main"
+    >
+      <p
+        class="text text_type_circle text_color_input _letter_8fdf19"
+        data-testid="circle-value"
+      >
+        3
+      </p>
+    </div>
+    <p
+      class="text text_type_input text_color_input mt-4 _absolute_8fdf19 _index_8fdf19"
+      data-testid="circle-index"
+    />
+    <div
+      class="text text_type_input text_color_input mt-4 _absolute_8fdf19 _tail30_8fdf19 _element_8fdf19"
+      data-testid="circle-tail"
+    />
+  </div>
+</div>
+`;
+
+exports[`Circle component test > should render with index 1`] = `
+<p
+  class="text text_type_input text_color_input mt-4 _absolute_8fdf19 _index_8fdf19"
+  data-testid="circle-index"
+>
+  5
+</p>
+`;
+
+exports[`Circle component test > should render with isSmall prop 1`] = `
+<div
+  class="_circle_8fdf19  _small_8fdf19 _default_8fdf19"
+  data-testid="circle-main"
+>
+  <p
+    class="text text_type_circle text_color_input _letter_8fdf19"
+    data-testid="circle-value"
+  />
+</div>
+`;
+
+exports[`Circle component test > should render with react element in head 1`] = `
+<a>
+  abcd
+</a>
+`;
+
+exports[`Circle component test > should render with react element in tail 1`] = `
+<a>
+  abcd
+</a>
+`;
+
+exports[`Circle component test > should render with text 1`] = `
+<p
+  class="text text_type_circle text_color_input _letter_8fdf19"
+  data-testid="circle-value"
+>
+  abcd
+</p>
+`;
+
+exports[`Circle component test > should render with text in head 1`] = `
+<div
+  class="text text_type_input text_color_input mb-4 _absolute_8fdf19 _head_8fdf19 _string_8fdf19"
+  data-testid="circle-head"
+>
+  abcd
+</div>
+`;
+
+exports[`Circle component test > should render with text in tail 1`] = `
+<div
+  class="text text_type_input text_color_input mt-4 _absolute_8fdf19 _tail30_8fdf19 _string_8fdf19"
+  data-testid="circle-tail"
+>
+  abcd
+</div>
+`;
+
+exports[`Circle component test > should render without text 1`] = `
+<div
+  class="_content_8fdf19 "
+  data-testid="circle"
+>
+  <div
+    class="text text_type_input text_color_input mb-4 _absolute_8fdf19 _head_8fdf19 _element_8fdf19"
+    data-testid="circle-head"
+  />
+  <div
+    class="_circle_8fdf19   _default_8fdf19"
+    data-testid="circle-main"
+  >
+    <p
+      class="text text_type_circle text_color_input _letter_8fdf19"
+      data-testid="circle-value"
+    />
+  </div>
+  <p
+    class="text text_type_input text_color_input mt-4 _absolute_8fdf19 _index_8fdf19"
+    data-testid="circle-index"
+  />
+  <div
+    class="text text_type_input text_color_input mt-4 _absolute_8fdf19 _tail30_8fdf19 _element_8fdf19"
+    data-testid="circle-tail"
+  />
+</div>
+`;
 
 exports[`Circle component test should render with all existing states 1`] = `
 <div>

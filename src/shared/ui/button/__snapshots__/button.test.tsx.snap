@@ -1,4 +1,54 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Button component test > should render disabled state 1`] = `
+<button
+  class="text text_type_button text_color_primary _button_7f7d22 undefined false "
+  disabled=""
+  type="button"
+>
+  <p
+    class="text undefined"
+  />
+</button>
+`;
+
+exports[`Button component test > should render loading state 1`] = `
+<button
+  class="text text_type_button text_color_primary _button_7f7d22 undefined _loader_7f7d22 "
+  disabled=""
+  type="button"
+>
+  <img
+    alt="Загрузка."
+    class="_loader_icon_7f7d22"
+    src="/src/shared/ui/button/loader.svg"
+  />
+</button>
+`;
+
+exports[`Button component test > should render with text 1`] = `
+<button
+  class="text text_type_button text_color_primary _button_7f7d22 undefined false "
+  type="button"
+>
+  <p
+    class="text undefined"
+  >
+    clickMe
+  </p>
+</button>
+`;
+
+exports[`Button component test > should render without text 1`] = `
+<button
+  class="text text_type_button text_color_primary _button_7f7d22 undefined false "
+  type="button"
+>
+  <p
+    class="text undefined"
+  />
+</button>
+`;
 
 exports[`Button component test should render disabled state 1`] = `
 <button
