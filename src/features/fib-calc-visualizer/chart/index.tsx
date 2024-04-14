@@ -19,7 +19,7 @@ export const FibChart: React.FC<IFibChartProps> = ({
         letter={String(item.value)}
         index={index}
         key={item.id}
-        extraClass={clsx(styles.chart__element, 'mr-8')}
+        extClassName={clsx(styles.chart__element, 'mr-8')}
       />
     ))}
   </div>

@@ -46,7 +46,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         value={value}
         maxLength={4}
         isLimitText
-        extraClass={styles.controls__input}
+        extClassName={styles.controls__input}
         disabled={listLength === maxSize || animation !== null}
         data-testid="valueInput"
         onChange={onValueChange}
@@ -54,7 +54,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
       <Button
         text="Добавить в head"
         linkedList="small"
-        extraClass={clsx(styles.controls__button, 'ml-6')}
+        extClassName={clsx(styles.controls__button, 'ml-6')}
         isLoader={animation === 'prepend'}
         disabled={value === '' || listLength === maxSize || animation !== null}
         data-testid="addToHead"
@@ -63,7 +63,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
       <Button
         text="Добавить в tail"
         linkedList="small"
-        extraClass={clsx(styles.controls__button, 'ml-6')}
+        extClassName={clsx(styles.controls__button, 'ml-6')}
         isLoader={animation === 'append'}
         disabled={value === '' || listLength === maxSize || animation !== null}
         data-testid="addToTail"
@@ -72,7 +72,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
       <Button
         text="Удалить из head"
         linkedList="small"
-        extraClass={clsx(styles.controls__button, 'ml-6')}
+        extClassName={clsx(styles.controls__button, 'ml-6')}
         isLoader={animation === 'deleteHead'}
         disabled={listLength === 0 || animation !== null}
         data-testid="removeFromHead"
@@ -81,7 +81,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
       <Button
         text="Удалить из tail"
         linkedList="small"
-        extraClass={clsx(styles.controls__button, 'ml-6')}
+        extClassName={clsx(styles.controls__button, 'ml-6')}
         isLoader={animation === 'deleteTail'}
         disabled={listLength === 0 || animation !== null}
         data-testid="removeFromTail"
@@ -96,7 +96,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
         type="number"
         min={0}
         max={listLength ? listLength - 1 : 0}
-        extraClass={styles.controls__input}
+        extClassName={styles.controls__input}
         disabled={animation !== null || listLength === 0}
         data-testid="indexInput"
         onChange={onIndexChange}
@@ -104,7 +104,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
       <Button
         text="Добавить по индексу"
         linkedList="big"
-        extraClass={clsx(styles.controls__button, 'ml-6')}
+        extClassName={clsx(styles.controls__button, 'ml-6')}
         isLoader={animation === 'addByIndex'}
         disabled={
           value === '' ||
@@ -119,7 +119,7 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
       <Button
         text="Удалить по индексу"
         linkedList="big"
-        extraClass={clsx(styles.controls__button, 'ml-6')}
+        extClassName={clsx(styles.controls__button, 'ml-6')}
         isLoader={animation === 'deleteByIndex'}
         disabled={
           !index ||

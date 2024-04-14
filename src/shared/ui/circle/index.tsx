@@ -8,7 +8,7 @@ interface CircleProps {
   head?: string | React.ReactElement | null;
   index?: number;
   tail?: string | React.ReactElement | null;
-  extraClass?: string;
+  extClassName?: string;
   isSmall?: boolean;
 }
 
@@ -18,14 +18,14 @@ export const Circle: React.FC<CircleProps> = ({
   head,
   index,
   tail,
-  extraClass = '',
+  extClassName = '',
   isSmall
 }) => {
   const wrapperTestId = isSmall ? 'circle-small' : 'circle';
 
   return (
     <div
-      className={`${styles.content} ${extraClass}`}
+      className={`${styles.content} ${extClassName}`}
       data-testid={wrapperTestId}>
       <div
         data-testid="circle-head"

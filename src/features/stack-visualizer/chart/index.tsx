@@ -21,7 +21,7 @@ export const StackChart: React.FC<IStackChartProps> = ({
         head={index === arr.length - 1 ? 'top' : null}
         letter={value}
         index={index}
-        extraClass={clsx(styles.chart__element, 'mr-8')}
+        extClassName={clsx(styles.chart__element, 'mr-8')}
       />
     ))}
   </div>

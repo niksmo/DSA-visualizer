@@ -4,16 +4,16 @@ import { ReturnIcon } from '../icons';
 
 interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   type?: 'button' | 'submit' | 'reset';
-  extraClass?: string;
+  extClassName?: string;
 }
 
 export const ReturnButton: React.FC<ButtonProps> = ({
-  extraClass = '',
+  extClassName = '',
   ...rest
 }) => {
   return (
     <button
-      className={`${styles.button} ${extraClass}`}
+      className={`${styles.button} ${extClassName}`}
       type="button"
       {...rest}>
       <ReturnIcon />

@@ -34,21 +34,21 @@ export const QueueManager: React.FC<IQueueManagerProps> = ({
       value={value}
       maxLength={4}
       isLimitText
-      extraClass={styles.controls__input}
+      extClassName={styles.controls__input}
       onChange={onChange}
       disabled={queueLength === queueMaxSize}
     />
     <Button
       type="submit"
       text="Добавить"
-      extraClass="ml-6"
+      extClassName="ml-6"
       isLoader={animation === 'add'}
       disabled={!value || queueLength === queueMaxSize}
     />
     <Button
       data-testid="remove"
       text="Удалить"
-      extraClass="ml-6"
+      extClassName="ml-6"
       isLoader={animation === 'delete'}
       disabled={queueLength === 0}
       onClick={onDelete}
@@ -56,7 +56,7 @@ export const QueueManager: React.FC<IQueueManagerProps> = ({
     <Button
       data-testid="clear"
       text="Очистить"
-      extraClass="ml-40"
+      extClassName="ml-40"
       disabled={queueLength === 0}
       onClick={onClear}
     />

@@ -22,7 +22,7 @@ export const QueueChart: React.FC<IQueueChartProps> = ({
         tail={item.tail}
         letter={item.value}
         index={index}
-        extraClass={clsx(styles.chart__element, 'mr-8')}
+        extClassName={clsx(styles.chart__element, 'mr-8')}
       />
     ))}
   </div>

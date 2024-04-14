@@ -5,15 +5,15 @@ import styles from './styles.module.css';
 interface ColumnProps {
   elevation: number;
   state?: ElementStates;
-  extraClass?: string;
+  extClassName?: string;
 }
 
 export const Column: React.FC<ColumnProps> = ({
   elevation,
   state = ElementStates.Default,
-  extraClass = ''
+  extClassName = ''
 }) => (
-  <div className={`${styles.content} ${extraClass}`}>
+  <div className={`${styles.content} ${extClassName}`}>
     <div
       className={`${styles.column} ${styles[state]}`}
       style={{ height: 320 * elevation * 0.01 || 1 }}

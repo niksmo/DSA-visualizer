@@ -19,7 +19,7 @@ export const SortingChart: React.FC<ISortingChartProps> = ({
         key={item.id}
         elevation={item.value}
         state={item.state}
-        extraClass={clsx(styles.sortingChart__scale, 'mr-5')}
+        extClassName={clsx(styles.sortingChart__scale, 'mr-5')}
       />
     ))}
   </div>

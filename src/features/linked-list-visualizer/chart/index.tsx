@@ -52,7 +52,7 @@ export const LinkedListChart: React.FC<ILinkedListChartProps> = ({
             state={item.state}
             letter={item.value}
             index={index}
-            extraClass={clsx(styles.chart__element, 'ml-8 mr-8')}
+            extClassName={clsx(styles.chart__element, 'ml-8 mr-8')}
           />
           {index !== array.length - 1 && (
             <ArrowIcon

@@ -27,14 +27,14 @@ export const FibManager: React.FC<IFibManagerProps> = ({
       min={1}
       type="number"
       isLimitText
-      extraClass={styles.controls__input}
+      extClassName={styles.controls__input}
       onChange={onChange}
       disabled={isDisabled}
     />
     <Button
       type="submit"
       text="Рассчитать"
-      extraClass={clsx('ml-6', styles.controls__button)}
+      extClassName={clsx('ml-6', styles.controls__button)}
       isLoader={isDisabled}
       disabled={value === '' || Number(value) < 1 || Number(value) > 19}
     />

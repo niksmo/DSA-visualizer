@@ -1,5 +1,4 @@
-import '../shared/ui/common.css';
-import '../shared/ui/box.css';
+import './assets/styles/index.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {
   FibonacciPage,
@@ -12,7 +11,7 @@ import {
 } from '../pages';
 
 export const App = () => (
-  <BrowserRouter basename="/projects/algososh">
+  <BrowserRouter>
     <Switch>
       <Route path="/" exact>
         <MainPage />

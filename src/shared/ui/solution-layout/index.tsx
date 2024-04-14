@@ -5,16 +5,16 @@ import styles from './styles.module.css';
 
 interface SolutionLayoutProps extends PropsWithChildren {
   title: string;
-  extraClass?: string;
+  extClassName?: string;
 }
 
 export const SolutionLayout: React.FC<SolutionLayoutProps> = ({
-  extraClass = '',
+  extClassName = '',
   title,
   children
 }) => {
   return (
-    <main className={`${styles.content} ${extraClass}`}>
+    <main className={`${styles.content} ${extClassName}`}>
       <div className={styles.titleBox}>
         <h1 className={`text text_type_h2 text_color_h1 ${styles.title}`}>
           МБОУ АЛГОСОШ
@@ -27,7 +27,7 @@ export const SolutionLayout: React.FC<SolutionLayoutProps> = ({
       <div className={styles.contentCard}>
         <Link className={styles.link} to="/">
           <ReturnButton
-            extraClass={styles.returnButton}
+            extClassName={styles.returnButton}
             data-testid="returnBtn"
           />
         </Link>
@@ -36,10 +36,6 @@ export const SolutionLayout: React.FC<SolutionLayoutProps> = ({
         </h3>
         {children}
       </div>
-      <p
-        className={`text text_type_column text_color_input mt-14 ${styles.copyright}`}>
-        © Сделано в Практикуме.
-      </p>
     </main>
   );
 };

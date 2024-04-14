@@ -39,13 +39,13 @@ export const SortManager: React.FC<ISortManagerProps> = ({
         label="Пузырёк"
         name="sortType"
         value="bubble"
-        extraClass="ml-10"
+        extClassName="ml-10"
         disabled={isDisabled}
         checked={method === 'bubble'}
         onChange={evt => onChangeMethod(evt.currentTarget.value as TSortMethod)}
       />
       <Button
-        extraClass={clsx(styles.controls__button, 'ml-25')}
+        extClassName={clsx(styles.controls__button, 'ml-25')}
         sorting={Direction.Ascending}
         text="По возрастанию"
         name="asc"
@@ -55,7 +55,7 @@ export const SortManager: React.FC<ISortManagerProps> = ({
         onClick={onStart}
       />
       <Button
-        extraClass={clsx(styles.controls__button, 'ml-6')}
+        extClassName={clsx(styles.controls__button, 'ml-6')}
         sorting={Direction.Descending}
         text="По убыванию"
         name="desc"
@@ -65,7 +65,7 @@ export const SortManager: React.FC<ISortManagerProps> = ({
         onClick={onStart}
       />
       <Button
-        extraClass={clsx(styles.controls__button, 'ml-40')}
+        extClassName={clsx(styles.controls__button, 'ml-40')}
         text="Новый массив"
         disabled={isDisabled}
         onClick={() => newArray()}

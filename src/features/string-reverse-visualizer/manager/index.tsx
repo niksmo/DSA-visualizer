@@ -28,14 +28,14 @@ export const ReverseManager: React.FC<IReverseManagerProps> = ({
       value={value}
       maxLength={11}
       isLimitText
-      extraClass={styles.controls__input}
+      extClassName={styles.controls__input}
       onChange={onChange}
       disabled={isDisabled}
     />
     <Button
       type="submit"
       text="Развернуть"
-      extraClass={clsx('ml-6', styles.controls__button)}
+      extClassName={clsx('ml-6', styles.controls__button)}
       isLoader={isDisabled}
       disabled={value === ''}
     />
