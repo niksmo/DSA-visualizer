@@ -1,4 +1,5 @@
 import React from 'react';
+import { clsx } from 'clsx';
 import loaderIcon from './loader.svg';
 import { AscendingIcon, DescendingIcon } from '../icons';
 import { Direction } from '../../types';
@@ -25,11 +26,14 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
 	const currentIcon =
 		sorting === Direction.Ascending ? <AscendingIcon /> : <DescendingIcon />;
-	const className = `text text_type_button text_color_primary ${
-		styles.button
-	} ${linkedList && styles[linkedList]} ${
-		isLoader && styles.loader
-	} ${extClassName}`;
+
+	const className = clsx(
+		'text text_type_button text_color_primary',
+		styles.button,
+		linkedList && styles[linkedList],
+		isLoader && styles.loader,
+		extClassName
+	);
 
 	return (
 		<button

@@ -3,7 +3,7 @@ import { LinkedList } from './model';
 import { ArrayItem, ListNode } from '../../shared/helpers/entities';
 import { getRandomInteger, waitWithDelay } from '../../shared/helpers/utils';
 import { ElementStates, TArrayItem } from '../../shared/types';
-import { DELAY_IN_MS } from '../../shared/helpers/delays';
+import { DELAY_1000_MS } from '../../shared/helpers/delays';
 
 export const useLinkedList = () => {
 	const queueClass = useMemo(
@@ -118,7 +118,7 @@ export async function* generateAddAnimation(
 		return;
 	}
 
-	const delay = waitWithDelay(DELAY_IN_MS);
+	const delay = waitWithDelay(DELAY_1000_MS);
 
 	if (action === 'prepend' || index === 0) {
 		array[0].head = value;
@@ -191,7 +191,7 @@ export async function* generateDeleteAnimation(
 		return;
 	}
 
-	const delay = waitWithDelay(DELAY_IN_MS);
+	const delay = waitWithDelay(DELAY_1000_MS);
 
 	if (action === 'deleteHead' || index === 0) {
 		array[0].tail = array[0].value;

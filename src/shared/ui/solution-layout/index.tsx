@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { clsx } from 'clsx';
 import { ReturnButton } from '../return-button';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
@@ -14,7 +15,7 @@ export const SolutionLayout: React.FC<SolutionLayoutProps> = ({
 	children
 }) => {
 	return (
-		<main className={`${styles.content} ${extClassName}`}>
+		<main className={clsx(styles.content, extClassName)}>
 			<div className={styles.titleBox}>
 				<h1 className={`text text_type_h2 text_color_h1 ${styles.title}`}>
 					МБОУ АЛГОСОШ

@@ -1,4 +1,5 @@
 import React from 'react';
+import { clsx } from 'clsx';
 import styles from './styles.module.css';
 import { ReturnIcon } from '../icons';
 
@@ -12,11 +13,7 @@ export const ReturnButton: React.FC<ButtonProps> = ({
 	...rest
 }) => {
 	return (
-		<button
-			className={`${styles.button} ${extClassName}`}
-			type="button"
-			{...rest}
-		>
+		<button className={clsx(styles.button, extClassName)} type="button" {...rest}>
 			<ReturnIcon />
 			<p className="text text_type_button text_color_link ml-4">К оглавлению</p>
 		</button>

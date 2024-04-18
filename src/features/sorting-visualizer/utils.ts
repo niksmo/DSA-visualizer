@@ -6,7 +6,7 @@ import {
 	waitWithDelay
 } from '../../shared/helpers/utils';
 import { ArrayItem } from '../../shared/helpers/entities';
-import { SHORT_DELAY_IN_MS } from '../../shared/helpers/delays';
+import { DELAY_500_MS } from '../../shared/helpers/delays';
 
 export type TSortMethod = 'selection' | 'bubble';
 
@@ -80,7 +80,7 @@ export const generateArray = () =>
 export async function* generateBubbleSortAnimation(
 	array: TArrayItem[],
 	sortType: Direction,
-	latency = SHORT_DELAY_IN_MS,
+	latency = DELAY_500_MS,
 	abortController?: AbortController
 ) {
 	if (array.length === 0) {
@@ -123,7 +123,7 @@ export async function* generateBubbleSortAnimation(
 export async function* generateSelectionSortAnimation(
 	array: TArrayItem[],
 	sortType: Direction,
-	latency = SHORT_DELAY_IN_MS,
+	latency = DELAY_500_MS,
 	abortController?: AbortController
 ) {
 	if (array.length === 0) {

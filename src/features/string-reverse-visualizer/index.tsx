@@ -10,7 +10,7 @@ import {
 } from './utils';
 import { ReverseManager } from './manager';
 import { ReverseChart } from './chart';
-import { DELAY_IN_MS } from '../../shared/helpers/delays';
+import { DELAY_1000_MS } from '../../shared/helpers/delays';
 import { withMessage } from '../../shared/helpers/utils';
 import styles from './styles.module.css';
 
@@ -50,7 +50,7 @@ export const ReverseVisualizer: React.FC<IReverseVisualizerProps> = ({
 
 		const animationGenerator = generateReverseAnimation(
 			inputValue.trim(),
-			DELAY_IN_MS,
+			DELAY_1000_MS,
 			abortController
 		);
 

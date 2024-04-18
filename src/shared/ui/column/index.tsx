@@ -1,4 +1,5 @@
 import React from 'react';
+import { clsx } from 'clsx';
 import { ElementStates } from '../../types';
 import styles from './styles.module.css';
 
@@ -13,7 +14,7 @@ export const Column: React.FC<ColumnProps> = ({
 	state = ElementStates.Default,
 	extClassName = ''
 }) => (
-	<div className={`${styles.content} ${extClassName}`}>
+	<div className={clsx(styles.content, extClassName)}>
 		<div
 			className={`${styles.column} ${styles[state]}`}
 			style={{ height: 320 * elevation * 0.01 || 1 }}

@@ -2,7 +2,7 @@ import React, { useMemo, useRef } from 'react';
 import { Queue } from './model';
 import { ElementStates, TArrayItem } from '../../shared/types';
 import { waitWithDelay } from '../../shared/helpers/utils';
-import { DELAY_IN_MS } from '../../shared/helpers/delays';
+import { DELAY_1000_MS } from '../../shared/helpers/delays';
 
 export const useQueue = () => {
 	const queueClass = useMemo(() => new Queue<string>(7), []);
@@ -78,7 +78,7 @@ export async function* generateQueueAnimation(
 		return;
 	}
 
-	const delay = waitWithDelay(DELAY_IN_MS);
+	const delay = waitWithDelay(DELAY_1000_MS);
 
 	array[index].state = ElementStates.Changing;
 	yield array;

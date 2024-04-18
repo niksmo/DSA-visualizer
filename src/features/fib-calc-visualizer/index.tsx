@@ -11,7 +11,7 @@ import {
 	stopAction
 } from './utils';
 import styles from './styles.module.css';
-import { SHORT_DELAY_IN_MS } from '../../shared/helpers/delays';
+import { DELAY_500_MS } from '../../shared/helpers/delays';
 import { withMessage } from '../../shared/helpers/utils';
 
 interface IFibCalcVisualizerProps {
@@ -50,7 +50,7 @@ export const FibCalcVisualizer: React.FC<IFibCalcVisualizerProps> = ({
 
 		const animationGenerator = generateFibAnimation(
 			Number(inputValue),
-			SHORT_DELAY_IN_MS,
+			DELAY_500_MS,
 			abortController
 		);
 		try {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TArrayItem } from '../../shared/types';
-import { SHORT_DELAY_IN_MS } from '../../shared/helpers/delays';
+import { DELAY_500_MS } from '../../shared/helpers/delays';
 import { waitWithDelay } from '../../shared/helpers/utils';
 import { ArrayItem } from '../../shared/helpers/entities';
 
@@ -51,7 +51,7 @@ export const fibCalcReducer: React.Reducer<
 
 export async function* generateFibAnimation(
 	num: number,
-	latency = SHORT_DELAY_IN_MS,
+	latency = DELAY_500_MS,
 	abortController?: AbortController
 ) {
 	const ans: TArrayItem[] = [];

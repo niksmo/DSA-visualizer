@@ -1,4 +1,5 @@
 import React from 'react';
+import { clsx } from 'clsx';
 import { nanoid } from 'nanoid';
 import styles from './styles.module.css';
 
@@ -15,7 +16,7 @@ export const RadioInput: React.FC<RadioProps> = ({
 	const id = nanoid();
 
 	return (
-		<div className={`${styles.content} ${extClassName}`}>
+		<div className={clsx(styles.content, extClassName)}>
 			<input className={styles.input} type="radio" id={id} {...rest} />
 			<label className={`text text_type_button ${styles.label}`} htmlFor={id}>
 				{label}

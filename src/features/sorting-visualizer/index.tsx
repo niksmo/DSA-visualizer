@@ -13,7 +13,7 @@ import {
 	sortingReducer
 } from './utils';
 import { Direction } from '../../shared/types';
-import { SHORT_DELAY_IN_MS } from '../../shared/helpers/delays';
+import { DELAY_500_MS } from '../../shared/helpers/delays';
 import { withMessage } from '../../shared/helpers/utils';
 
 interface ISortingVisualizerProps {
@@ -48,7 +48,7 @@ export const SortingVisualizer = ({
 				const animationGenerator = generateBubbleSortAnimation(
 					renderElements,
 					type,
-					SHORT_DELAY_IN_MS,
+					DELAY_500_MS,
 					abortController
 				);
 				for await (const elements of animationGenerator) {
@@ -59,7 +59,7 @@ export const SortingVisualizer = ({
 				const animationGenerator = generateSelectionSortAnimation(
 					renderElements,
 					type,
-					SHORT_DELAY_IN_MS,
+					DELAY_500_MS,
 					abortController
 				);
 				for await (const elements of animationGenerator) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { clsx } from 'clsx';
 import styles from './styles.module.css';
 
 interface InputProps extends React.HTMLProps<HTMLInputElement> {
@@ -22,7 +23,7 @@ export const Input: React.FC<InputProps> = ({
 			: `Максимальное число — ${max}`;
 
 	return (
-		<div className={`${styles.content} ${extClassName}`}>
+		<div className={clsx(styles.content, extClassName)}>
 			<input
 				className={`${styles.input} text text_type_input text_color_input`}
 				placeholder={placeholder}

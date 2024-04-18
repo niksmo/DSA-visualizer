@@ -2,7 +2,7 @@ import React, { useMemo, useRef } from 'react';
 import { Stack } from './model';
 import { ElementStates, TArrayItem } from '../../shared/types';
 import { waitWithDelay } from '../../shared/helpers/utils';
-import { SHORT_DELAY_IN_MS } from '../../shared/helpers/delays';
+import { DELAY_500_MS } from '../../shared/helpers/delays';
 
 export const useStack = () => {
 	const stackClass = useMemo(() => new Stack<string>(9), []);
@@ -70,7 +70,7 @@ export async function* generateStackAnimation(array: TArrayItem<string>[]) {
 	if (array.length === 0) {
 		return;
 	}
-	const delay = waitWithDelay(SHORT_DELAY_IN_MS);
+	const delay = waitWithDelay(DELAY_500_MS);
 	const peak = array.length - 1;
 
 	array[peak].state = ElementStates.Changing;

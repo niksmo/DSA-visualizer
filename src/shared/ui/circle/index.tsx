@@ -1,4 +1,5 @@
 import React from 'react';
+import { clsx } from 'clsx';
 import { ElementStates } from '../../types';
 import styles from './styles.module.css';
 
@@ -25,7 +26,7 @@ export const Circle: React.FC<CircleProps> = ({
 
 	return (
 		<div
-			className={`${styles.content} ${extClassName}`}
+			className={clsx(styles.content, extClassName)}
 			data-testid={wrapperTestId}
 		>
 			<div
