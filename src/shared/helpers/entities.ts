@@ -43,3 +43,10 @@ export class ListNode<T> implements TListNode<T> {
 		this.next = next ? next : null;
 	}
 }
+
+export abstract class Observable<T> {
+	protected onFrame;
+	constructor(onFrame: (array: T[]) => void) {
+		this.onFrame = onFrame;
+	}
+}
