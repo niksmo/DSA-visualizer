@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
+import { DELAY_1000_MS } from '../../shared/helpers/delays';
+import { ArrayItem } from '../../shared/helpers/entities';
 import { ReverseManager } from './manager';
 import { ReverseChart } from './chart';
-import { DELAY_1000_MS } from '../../shared/helpers/delays';
-import styles from './styles.module.css';
 import { StringReverser } from './lib';
-import { ArrayItem } from '../../shared/helpers/entities';
+import styles from './styles.module.css';
 
 interface IProps {
 	extClassName?: string;
@@ -55,6 +55,7 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 	}, [animation, currentFrame]);
 
 	const renderElements = frames.current[currentFrame];
+	const isFrames = frames.current.length !== 0;
 
 	return (
 		<div className={clsx(styles.reverseVisualizer, extClassName)}>
@@ -64,7 +65,7 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 				isDisabled={animation}
 				onSubmit={handleReverseString}
 			/>
-			{frames.current.length !== 0 && (
+			{isFrames && (
 				<ReverseChart
 					elements={renderElements}
 					extClassName={styles.reverseVisualizer__chart}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { clsx } from 'clsx';
 import { TArrayItem } from '../../../shared/types';
 import { Circle } from '../../../shared/ui/circle';
