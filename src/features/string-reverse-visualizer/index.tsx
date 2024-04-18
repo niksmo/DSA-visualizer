@@ -15,7 +15,7 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 	const [stringValue, setStringValue] = useState('');
 	const [currentFrame, setFrame] = useState(0);
 	const [animation, setAnimation] = useState(false);
-	const frames = useRef<Array<ArrayItem<string>[]>>([]);
+	const frames = useRef<ArrayItem<string>[][]>([]);
 
 	const renderElements = frames.current[currentFrame];
 	const haveFrames = frames.current.length !== 0;
@@ -24,19 +24,19 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 		setStringValue(evt.currentTarget.value);
 	};
 
-	const handleReverseString = async (evt: React.FormEvent) => {
+	const handleReverseString = (evt: React.FormEvent) => {
 		evt.preventDefault();
 
-		if (!stringValue.trim()) {
-			return;
-		}
+		const trimmedValue = stringValue.trim();
+
+		if (trimmedValue) return;
 
 		frames.current = [];
 
 		const reverser = new StringReverser();
 
 		reverser.onFrame = (array) => frames.current.push(array);
-		reverser.reverse(stringValue);
+		reverser.reverse(trimmedValue);
 
 		if (frames.current.length === 0) return;
 

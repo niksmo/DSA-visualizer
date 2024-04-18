@@ -3,12 +3,12 @@ import { TArrayItem } from '../../../shared/types';
 import { Circle } from '../../../shared/ui/circle';
 import styles from './styles.module.css';
 
-interface IReverseChart {
+interface IProps {
 	elements: TArrayItem<string>[];
 	extClassName?: string;
 }
 
-export function ReverseChart({ elements, extClassName }: IReverseChart) {
+export function ReverseChart({ elements, extClassName }: IProps) {
 	return (
 		<div
 			className={clsx(styles.reverseChart, extClassName)}

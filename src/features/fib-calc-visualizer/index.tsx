@@ -1,84 +1,78 @@
-import React, { useEffect, useReducer, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { clsx } from 'clsx';
 import { FibChart } from './chart';
 import { FibManager } from './manager';
-import {
-	animateAction,
-	changeValueAction,
-	fibCalcInitState,
-	fibCalcReducer,
-	generateFibAnimation,
-	stopAction
-} from './utils';
-import styles from './styles.module.css';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
-import { withMessage } from '../../shared/helpers/utils';
+import styles from './styles.module.css';
+import { ArrayItem } from '../../shared/helpers/entities';
+import { FibCalculator } from './lib';
 
-interface IFibCalcVisualizerProps {
+const NUM_PATTERN = /^[1-9]$|^1\d$|^\s*$/;
+
+interface IProps {
 	extClassName?: string;
 }
 
-export const FibCalcVisualizer: React.FC<IFibCalcVisualizerProps> = ({
-	extClassName
-}) => {
-	const [{ animation, inputValue, renderElements }, dispatch] = useReducer(
-		fibCalcReducer,
-		fibCalcInitState
-	);
+export function FibCalcVisualizer({ extClassName }: IProps) {
+	const [numValue, setNumValue] = useState('');
+	const [currentFrame, setFrame] = useState(0);
+	const [animation, setAnimation] = useState(false);
+	const frames = useRef<ArrayItem<number>[][]>([]);
 
-	const abortControllerRef = useRef<null | AbortController>(null);
-
-	const abortAnimation = () => {
-		dispatch(stopAction());
-		abortControllerRef.current?.abort();
-	};
+	const renderElements = frames.current[currentFrame];
+	const haveFrames = frames.current.length !== 0;
 
 	const handleOnChange = (evt: React.FormEvent<HTMLInputElement>) => {
-		const currentValue = evt.currentTarget.value;
+		const numValue = evt.currentTarget.value;
 
-		const allowedNum = /^[1-9]$|^1\d$|^\s*$/;
-		if (allowedNum.test(currentValue)) {
-			dispatch(changeValueAction(currentValue));
-		}
+		NUM_PATTERN.test(numValue) && setNumValue(numValue);
 	};
 
-	const handleCalcFibNum = async (evt: React.FormEvent) => {
+	const handleComputeFibNum = (evt: React.FormEvent) => {
 		evt.preventDefault();
 
-		const abortController = new AbortController();
-		abortControllerRef.current = abortController;
+		frames.current = [];
 
-		const animationGenerator = generateFibAnimation(
-			Number(inputValue),
-			DELAY_500_MS,
-			abortController
-		);
-		try {
-			for await (const elements of animationGenerator) {
-				dispatch(animateAction(elements));
-			}
-			dispatch(stopAction());
-		} catch (error) {
-			if (withMessage(error)) {
-				console.log(error.message);
-			}
-		}
+		const fibCalc = new FibCalculator();
+		fibCalc.onFrame = (array) => frames.current.push(array);
+		fibCalc.compute(parseInt(numValue));
+
+		if (frames.current.length === 0) return;
+
+		setFrame(0);
+		setAnimation(true);
 	};
 
-	useEffect(() => () => void abortAnimation(), []);
+	useEffect(() => {
+		let timeoutId = -1;
+		if (animation && currentFrame < frames.current.length - 1) {
+			timeoutId = window.setTimeout(() => {
+				setFrame(currentFrame + 1);
+			}, DELAY_500_MS);
+		} else {
+			setAnimation(false);
+		}
+
+		return () => {
+			clearTimeout(timeoutId);
+		};
+	}, [currentFrame, animation]);
 
 	return (
 		<div className={clsx(styles.fibVisualizer, extClassName)}>
 			<FibManager
-				onSubmit={handleCalcFibNum}
+				onSubmit={handleComputeFibNum}
 				onChange={handleOnChange}
-				value={inputValue}
+				value={numValue}
 				isDisabled={animation}
 			/>
-			<FibChart
-				extClassName={styles.fibVisualizer__chart}
-				elements={renderElements}
-			/>
+
+			{haveFrames && (
+				<FibChart
+					extClassName={styles.fibVisualizer__chart}
+					elements={renderElements}
+				/>
+			)}
 		</div>
 	);
-};
+}

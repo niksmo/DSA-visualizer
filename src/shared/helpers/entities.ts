@@ -49,4 +49,6 @@ export abstract class FrameMaker<T> {
 	constructor() {
 		this.onFrame = () => {};
 	}
+
+	protected abstract _frame(): void;
 }
