@@ -4,7 +4,7 @@ import { ElementStates } from '../../shared/types';
 export class StringReverser extends Observable<ArrayItem<string>> {
 	private _array: ArrayItem<string>[];
 
-	constructor(onFrame: (array: ArrayItem<string>[]) => void) {
+	constructor(onFrame: (array: ArrayItem<string>[]) => void = () => {}) {
 		super(onFrame);
 		this._array = [];
 	}
