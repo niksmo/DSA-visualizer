@@ -29,7 +29,7 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 
 		const trimmedValue = stringValue.trim();
 
-		if (trimmedValue) return;
+		if (!trimmedValue) return;
 
 		frames.current = [];
 
