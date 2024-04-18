@@ -1,11 +1,11 @@
-import { ArrayItem, Observable } from '../../shared/helpers/entities';
+import { ArrayItem, FrameMaker } from '../../shared/helpers/entities';
 import { ElementStates } from '../../shared/types';
 
-export class StringReverser extends Observable<ArrayItem<string>> {
+export class StringReverser extends FrameMaker<ArrayItem<string>> {
 	private _array: ArrayItem<string>[];
 
-	constructor(onFrame: (array: ArrayItem<string>[]) => void = () => {}) {
-		super(onFrame);
+	constructor() {
+		super();
 		this._array = [];
 	}
 

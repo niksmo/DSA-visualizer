@@ -44,9 +44,9 @@ export class ListNode<T> implements TListNode<T> {
 	}
 }
 
-export abstract class Observable<T> {
-	protected onFrame;
-	constructor(onFrame: (array: T[]) => void) {
-		this.onFrame = onFrame;
+export abstract class FrameMaker<T> {
+	public onFrame: (array: T[]) => void;
+	constructor() {
+		this.onFrame = () => {};
 	}
 }

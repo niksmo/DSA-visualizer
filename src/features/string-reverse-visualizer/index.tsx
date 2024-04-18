@@ -16,7 +16,9 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 	const [currentFrame, setFrame] = useState(0);
 	const [animation, setAnimation] = useState(false);
 	const frames = useRef<Array<ArrayItem<string>[]>>([]);
-	const timeoutId = useRef<number>(-1);
+
+	const renderElements = frames.current[currentFrame];
+	const haveFrames = frames.current.length !== 0;
 
 	const handleOnChangeInputValue = (evt: React.FormEvent<HTMLInputElement>) => {
 		setStringValue(evt.currentTarget.value);
@@ -31,8 +33,9 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 
 		frames.current = [];
 
-		const reverser = new StringReverser((array) => frames.current.push(array));
+		const reverser = new StringReverser();
 
+		reverser.onFrame = (array) => frames.current.push(array);
 		reverser.reverse(stringValue);
 
 		if (frames.current.length === 0) return;
@@ -42,20 +45,18 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 	};
 
 	useEffect(() => {
+		let timeoutId = -1;
 		if (animation && currentFrame < frames.current.length - 1) {
-			timeoutId.current = window.setTimeout(() => {
+			timeoutId = window.setTimeout(() => {
 				setFrame(currentFrame + 1);
 			}, DELAY_1000_MS);
 		} else {
 			setAnimation(false);
 		}
 		return () => {
-			clearTimeout(timeoutId.current);
+			clearTimeout(timeoutId);
 		};
 	}, [animation, currentFrame]);
-
-	const renderElements = frames.current[currentFrame];
-	const isFrames = frames.current.length !== 0;
 
 	return (
 		<div className={clsx(styles.reverseVisualizer, extClassName)}>
@@ -65,7 +66,7 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 				isDisabled={animation}
 				onSubmit={handleReverseString}
 			/>
-			{isFrames && (
+			{haveFrames && (
 				<ReverseChart
 					elements={renderElements}
 					extClassName={styles.reverseVisualizer__chart}
