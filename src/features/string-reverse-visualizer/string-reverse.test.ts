@@ -1,74 +1,66 @@
 import { describe, it, expect } from 'vitest';
 import { ArrayItem } from '../../shared/helpers/entities';
 import { ElementStates } from '../../shared/types';
-import { generateReverseAnimation } from './utils';
+import { StringReverser } from './lib';
 
 describe('reverse string', () => {
-	let array: ArrayItem<string>[] = [];
-	let reverseIterator: ReturnType<typeof generateReverseAnimation>;
-	let expectedValues: string[];
+	it('should correctly reverse string with even count of substrings', () => {
+		const reverser = new StringReverser(() => {});
+		const result = reverser
+			.reverse('1234')
+			.map((item) => item.value)
+			.join('');
 
-	it('should correctly reverse string with even count of substrings', async () => {
-		reverseIterator = generateReverseAnimation('1234', 0);
-		for await (const arrayOfItems of reverseIterator) {
-			array = arrayOfItems;
-		}
-
-		expectedValues = ['4', '3', '2', '1'];
-
-		expect(array.map((item) => item.value)).toEqual(expectedValues);
+		expect(result).toEqual('4321');
 	});
 
-	it('should correctly reverse string with odd count of substrings', async () => {
-		reverseIterator = generateReverseAnimation('12345', 0);
-		for await (const arrayOfItems of reverseIterator) {
-			array = arrayOfItems;
-		}
+	it('should correctly reverse string with odd count of substrings', () => {
+		const reverser = new StringReverser(() => {});
+		const result = reverser
+			.reverse('12345')
+			.map((item) => item.value)
+			.join('');
 
-		expectedValues = ['5', '4', '3', '2', '1'];
-
-		expect(array.map((item) => item.value)).toEqual(expectedValues);
+		expect(result).toEqual('54321');
 	});
 
-	it('should correctly reverse string with one substring', async () => {
-		reverseIterator = generateReverseAnimation('1', 0);
-		for await (const arrayOfItems of reverseIterator) {
-			array = arrayOfItems;
-		}
+	it('should correctly reverse string with one substring', () => {
+		const reverser = new StringReverser(() => {});
+		const result = reverser
+			.reverse('1')
+			.map((item) => item.value)
+			.join('');
 
-		expectedValues = ['1'];
-
-		expect(array.map((item) => item.value)).toEqual(expectedValues);
+		expect(result).toEqual('1');
 	});
 
-	it('should correctly reverse empty string', async () => {
-		reverseIterator = generateReverseAnimation('', 0);
-		for await (const arrayOfItems of reverseIterator) {
-			array = arrayOfItems;
-		}
+	it('should correctly reverse empty string', () => {
+		const reverser = new StringReverser(() => {});
+		const result = reverser
+			.reverse('')
+			.map((item) => item.value)
+			.join('');
 
-		expect(array.map((item) => item.value)).toEqual(expectedValues);
+		expect(result).toEqual('');
 	});
 
-	it('should correctly changing items state', async () => {
-		reverseIterator = generateReverseAnimation('123', 0);
+	it('should correctly changing items state', () => {
+		const frames: Array<ArrayItem<string>[]> = [];
+		const reverser = new StringReverser((array) => {
+			frames.push(array);
+		});
+		reverser.reverse('12');
 
-		array = await reverseIterator.next().then((next) => next.value);
-		expect([array[0].state, array[2].state]).toEqual(
-			Array.from(new Array(2), () => ElementStates.Changing)
-		);
+		expect(
+			[frames[1][0].state, frames[1][1].state].every(
+				(state) => state === ElementStates.Changing
+			)
+		).toBe(true);
 
-		array = await reverseIterator.next().then((next) => next.value);
-		expect([array[0].state, array[2].state]).toEqual(
-			Array.from(new Array(2), () => ElementStates.Modified)
-		);
-
-		array = await reverseIterator.next().then((next) => next.value);
-		expect(array[1].state).toEqual(ElementStates.Changing);
-
-		array = await reverseIterator.next().then((next) => next.value);
-		expect(array.every((item) => item.state === ElementStates.Modified)).toBe(
-			true
-		);
+		expect(
+			[frames[2][0].state, frames[2][1].state].every(
+				(state) => state === ElementStates.Modified
+			)
+		).toBe(true);
 	});
 });

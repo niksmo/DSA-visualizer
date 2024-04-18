@@ -1,85 +1,75 @@
-import React, { useEffect, useReducer, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
-import {
-	animateAction,
-	changeValueAction,
-	generateReverseAnimation,
-	initReverserState,
-	reverserReducer,
-	stopAction
-} from './utils';
 import { ReverseManager } from './manager';
 import { ReverseChart } from './chart';
 import { DELAY_1000_MS } from '../../shared/helpers/delays';
-import { withMessage } from '../../shared/helpers/utils';
 import styles from './styles.module.css';
+import { StringReverser } from './lib';
+import { ArrayItem } from '../../shared/helpers/entities';
 
-interface IReverseVisualizerProps {
+interface IProps {
 	extClassName?: string;
 }
 
-export const ReverseVisualizer: React.FC<IReverseVisualizerProps> = ({
-	extClassName
-}) => {
-	const [{ animation, inputValue, renderElements }, dispatch] = useReducer(
-		reverserReducer,
-		initReverserState
-	);
-
-	const abortControllerRef = useRef<null | AbortController>(null);
-
-	const abortAnimation = () => {
-		dispatch(stopAction());
-		abortControllerRef.current?.abort();
-	};
+export function ReverseVisualizer({ extClassName }: IProps) {
+	const [stringValue, setStringValue] = useState('');
+	const [currentFrame, setFrame] = useState(0);
+	const [animation, setAnimation] = useState(false);
+	const frames = useRef<Array<ArrayItem<string>[]>>([]);
+	const timeoutId = useRef<number>(-1);
 
 	const handleOnChangeInputValue = (evt: React.FormEvent<HTMLInputElement>) => {
-		const currentValue = evt.currentTarget.value;
-		dispatch(changeValueAction(currentValue));
+		setStringValue(evt.currentTarget.value);
 	};
 
 	const handleReverseString = async (evt: React.FormEvent) => {
 		evt.preventDefault();
 
-		if (!inputValue.trim()) {
+		if (!stringValue.trim()) {
 			return;
 		}
 
-		const abortController = new AbortController();
-		abortControllerRef.current = abortController;
+		frames.current = [];
 
-		const animationGenerator = generateReverseAnimation(
-			inputValue.trim(),
-			DELAY_1000_MS,
-			abortController
-		);
+		const reverser = new StringReverser((array) => frames.current.push(array));
 
-		try {
-			for await (const elements of animationGenerator) {
-				dispatch(animateAction(elements));
-			}
-			dispatch(stopAction());
-		} catch (error) {
-			if (withMessage(error)) {
-				console.log(error.message);
-			}
-		}
+		reverser.reverse(stringValue);
+
+		if (frames.current.length === 0) return;
+
+		setFrame(0);
+		setAnimation(true);
 	};
 
-	useEffect(() => () => void abortAnimation(), []);
+	useEffect(() => {
+		if (animation && currentFrame < frames.current.length - 1) {
+			timeoutId.current = window.setTimeout(() => {
+				setFrame(currentFrame + 1);
+			}, DELAY_1000_MS);
+		} else {
+			setAnimation(false);
+		}
+		return () => {
+			clearTimeout(timeoutId.current);
+		};
+	}, [animation, currentFrame]);
+
+	const renderElements = frames.current[currentFrame];
 
 	return (
 		<div className={clsx(styles.reverseVisualizer, extClassName)}>
 			<ReverseManager
-				value={inputValue}
+				value={stringValue}
 				onChange={handleOnChangeInputValue}
 				isDisabled={animation}
 				onSubmit={handleReverseString}
 			/>
-			<ReverseChart
-				elements={renderElements}
-				extClassName={styles.reverseVisualizer__chart}
-			/>
+			{frames.current.length !== 0 && (
+				<ReverseChart
+					elements={renderElements}
+					extClassName={styles.reverseVisualizer__chart}
+				/>
+			)}
 		</div>
 	);
-};
+}

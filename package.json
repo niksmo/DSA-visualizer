@@ -26,7 +26,7 @@
 		"dev": "vite",
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"style": "prettier . --write",
-		"test": "vitest run",
+		"test": "vitest",
 		"cypress:open": "npm run dev && cypress open",
 		"build": "tsc --project tsconfig.build.json && vite build",
 		"preview": "vite preview"

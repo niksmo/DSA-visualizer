@@ -9,16 +9,15 @@ interface IReverseChart {
 	extClassName?: string;
 }
 
-export const ReverseChart: React.FC<IReverseChart> = ({
-	elements,
-	extClassName
-}) => (
-	<div
-		className={clsx(styles.reverseChart, extClassName)}
-		data-testid="reverseChart"
-	>
-		{elements.map(({ value, id, state }) => (
-			<Circle key={id} letter={value} state={state} />
-		))}
-	</div>
-);
+export function ReverseChart({ elements, extClassName }: IReverseChart) {
+	return (
+		<div
+			className={clsx(styles.reverseChart, extClassName)}
+			data-testid="reverseChart"
+		>
+			{elements.map(({ value, id, state }) => (
+				<Circle key={id} letter={value} state={state} />
+			))}
+		</div>
+	);
+}
