@@ -63,7 +63,7 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 			<ReverseManager
 				value={stringValue}
 				onChange={handleOnChangeInputValue}
-				isDisabled={animation}
+				disabled={animation}
 				onSubmit={handleReverseString}
 			/>
 			{haveFrames && (

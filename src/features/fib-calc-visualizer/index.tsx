@@ -64,7 +64,7 @@ export function FibCalcVisualizer({ extClassName }: IProps) {
 				onSubmit={handleComputeFibNum}
 				onChange={handleOnChange}
 				value={numValue}
-				isDisabled={animation}
+				disabled={animation}
 			/>
 
 			{haveFrames && (

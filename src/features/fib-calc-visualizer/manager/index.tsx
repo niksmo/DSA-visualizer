@@ -8,7 +8,7 @@ interface IProps {
 	value: string;
 	onChange: (evt: React.FormEvent<HTMLInputElement>) => void;
 	onSubmit: (evt: React.FormEvent) => void;
-	isDisabled: boolean;
+	disabled: boolean;
 	extClassName?: string;
 }
 
@@ -16,7 +16,7 @@ export function FibManager({
 	value,
 	onChange,
 	onSubmit,
-	isDisabled,
+	disabled,
 	extClassName
 }: IProps) {
 	return (
@@ -30,13 +30,13 @@ export function FibManager({
 				isLimitText
 				extClassName={styles.controls__input}
 				onChange={onChange}
-				disabled={isDisabled}
+				disabled={disabled}
 			/>
 			<Button
 				type="submit"
 				text="Рассчитать"
 				extClassName={clsx('ml-6', styles.controls__button)}
-				isLoader={isDisabled}
+				loader={disabled}
 			/>
 		</form>
 	);

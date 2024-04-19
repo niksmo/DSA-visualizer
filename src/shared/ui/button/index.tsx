@@ -2,36 +2,39 @@ import React from 'react';
 import { clsx } from 'clsx';
 import loaderIcon from './loader.svg';
 import { AscendingIcon, DescendingIcon } from '../icons';
-import { Direction } from '../../types';
 import styles from './styles.module.css';
 
-interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
+const Icon = {
+	Ascending: AscendingIcon,
+	Descending: DescendingIcon
+};
+
+type IProps = React.HTMLProps<HTMLButtonElement> & {
 	text?: string;
 	type?: 'button' | 'submit' | 'reset';
-	sorting?: Direction;
-	linkedList?: 'small' | 'big';
-	isLoader?: boolean;
+	icon?: keyof typeof Icon;
+	size?: 'small' | 'big';
+	loader?: boolean;
 	extClassName?: string;
-}
+};
 
-export const Button: React.FC<ButtonProps> = ({
+export function Button({
 	text,
 	extClassName = '',
 	type = 'button',
-	isLoader = false,
-	sorting,
-	linkedList,
+	icon,
+	loader = false,
+	size,
 	disabled,
 	...rest
-}) => {
-	const currentIcon =
-		sorting === Direction.Ascending ? <AscendingIcon /> : <DescendingIcon />;
+}: IProps) {
+	const CurrentIcon = icon && Icon[icon];
 
 	const className = clsx(
 		'text text_type_button text_color_primary',
 		styles.button,
-		linkedList && styles[linkedList],
-		isLoader && styles.loader,
+		size && styles[size],
+		loader && styles.loader,
 		extClassName
 	);
 
@@ -39,17 +42,17 @@ export const Button: React.FC<ButtonProps> = ({
 		<button
 			className={className}
 			type={type}
-			disabled={isLoader || disabled}
+			disabled={loader || disabled}
 			{...rest}
 		>
-			{isLoader ? (
+			{loader ? (
 				<img className={styles.loader_icon} src={loaderIcon} alt="Загрузка." />
 			) : (
 				<>
-					{sorting && currentIcon}
-					<p className={`text ${sorting && 'ml-5'}`}>{text}</p>
+					{CurrentIcon && <CurrentIcon />}
+					<p className={clsx('text', CurrentIcon && 'ml-5')}>{text}</p>
 				</>
 			)}
 		</button>
 	);
-};
+}

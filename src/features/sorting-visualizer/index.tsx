@@ -1,95 +1,49 @@
-import React, { useEffect, useReducer, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { SortingChart } from './chart';
-import { SortManager } from './manager';
-import {
-	animateAction,
-	endAction,
-	generateArray,
-	generateBubbleSortAnimation,
-	generateSelectionSortAnimation,
-	initSortingState,
-	switchMethodAction,
-	setNewArrayAction,
-	sortingReducer
-} from './utils';
-import { Direction } from '../../shared/types';
+import { SortManager, TSortMethodUnion, TSortTypeUnion } from './manager';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
-import { withMessage } from '../../shared/helpers/utils';
+import { ArrayItem } from '../../shared/helpers/entities';
+import { makeArray } from './lib';
 
-interface ISortingVisualizerProps {
+interface IProps {
 	extClassName?: string;
 }
 
-export const SortingVisualizer = ({
-	extClassName
-}: ISortingVisualizerProps) => {
-	const [{ animation, method, sortType, renderElements }, dispatch] = useReducer(
-		sortingReducer,
-		initSortingState
-	);
+const initArray = makeArray();
 
-	const abortControllerRef = useRef<null | AbortController>(null);
+export function SortingVisualizer({ extClassName }: IProps) {
+	const [currentFrame, setFrame] = useState(0);
+	const [animation, setAnimation] = useState(false);
+	const [frames, setFrames] = useState<ArrayItem<number>[][]>([initArray]);
 
-	const abortAnimation = () => {
-		dispatch(endAction());
-		abortControllerRef.current?.abort();
-	};
+	const renderElements = frames[currentFrame];
 
-	const handleSort = async (
-		evt: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) => {
-		const type = evt.currentTarget.value as Direction;
+	const handleMethodChange = (sortMethod: TSortMethodUnion) => {};
 
-		const abortController = new AbortController();
-		abortControllerRef.current = abortController;
+	const handleSort = (sortType: TSortTypeUnion) => {};
 
-		try {
-			if (method === 'bubble') {
-				const animationGenerator = generateBubbleSortAnimation(
-					renderElements,
-					type,
-					DELAY_500_MS,
-					abortController
-				);
-				for await (const elements of animationGenerator) {
-					dispatch(animateAction(elements, type));
-				}
-			}
-			if (method === 'selection') {
-				const animationGenerator = generateSelectionSortAnimation(
-					renderElements,
-					type,
-					DELAY_500_MS,
-					abortController
-				);
-				for await (const elements of animationGenerator) {
-					dispatch(animateAction(elements, type));
-				}
-			}
-			dispatch(endAction());
-		} catch (error) {
-			if (withMessage(error)) {
-				console.log(error.message);
-			}
-		}
+	const handleNewArray = () => {
+		setFrames([makeArray()]);
+		setFrame(0);
 	};
 
 	useEffect(() => {
-		dispatch(setNewArrayAction(generateArray()));
-		return () => void abortAnimation();
-	}, []);
+		let timeoutId = -1;
+
+		return () => {
+			clearTimeout(timeoutId);
+		};
+	});
 
 	return (
 		<div className={extClassName}>
 			<SortManager
-				method={method}
-				onStart={handleSort}
-				onChangeMethod={(method) => dispatch(switchMethodAction(method))}
-				isDisabled={animation}
-				sortType={sortType}
-				newArray={() => dispatch(setNewArrayAction(generateArray()))}
+				disabled={animation}
+				onMethodChange={handleMethodChange}
+				onSort={handleSort}
+				onNewArray={handleNewArray}
 			/>
 			<SortingChart elements={renderElements} extClassName="mt-25" />
 		</div>
 	);
-};
+}

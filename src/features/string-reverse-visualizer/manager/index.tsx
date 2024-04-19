@@ -8,7 +8,7 @@ interface IProps {
 	value: string;
 	onChange: (evt: React.FormEvent<HTMLInputElement>) => void;
 	onSubmit: (evt: React.FormEvent<HTMLFormElement>) => void;
-	isDisabled: boolean;
+	disabled: boolean;
 	extClassName?: string;
 }
 
@@ -16,7 +16,7 @@ export function ReverseManager({
 	value,
 	onChange,
 	onSubmit,
-	isDisabled,
+	disabled,
 	extClassName
 }: IProps) {
 	return (
@@ -32,13 +32,13 @@ export function ReverseManager({
 				isLimitText
 				extClassName={styles.controls__input}
 				onChange={onChange}
-				disabled={isDisabled}
+				disabled={disabled}
 			/>
 			<Button
 				type="submit"
 				text="Развернуть"
 				extClassName={clsx('ml-6', styles.controls__button)}
-				isLoader={isDisabled}
+				loader={disabled}
 				disabled={value === ''}
 			/>
 		</form>

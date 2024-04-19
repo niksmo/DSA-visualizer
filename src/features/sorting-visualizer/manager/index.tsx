@@ -1,75 +1,110 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { clsx } from 'clsx';
-import { TSortMethod } from '../utils';
-import { Direction } from '../../../shared/types';
 import { RadioInput } from '../../../shared/ui/radio-input';
 import { Button } from '../../../shared/ui/button';
 import styles from './styles.module.css';
 
-interface ISortManagerProps {
-	newArray: () => void;
-	isDisabled: boolean;
-	sortType: Direction;
-	method: TSortMethod;
-	onChangeMethod: (method: TSortMethod) => void;
-	onStart: (
-		evt: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) => Promise<void>;
+const SORT_METHOD = {
+	SELECTION: 'selection',
+	BUBBLE: 'bubble',
+	INSERTION: 'insertion'
+} as const;
+
+const SORT_TYPE = {
+	NON_DECREASING: 'non-decreasing',
+	NON_INCREASIGN: 'non-increasing'
+} as const;
+
+export type TSortMethodUnion = (typeof SORT_METHOD)[keyof typeof SORT_METHOD];
+
+export type TSortTypeUnion = (typeof SORT_TYPE)[keyof typeof SORT_TYPE];
+
+interface IProps {
+	disabled: boolean;
+	onMethodChange: (sortMethod: TSortMethodUnion) => void;
+	onSort: (sortType: TSortTypeUnion) => void;
+	onNewArray: () => void;
 }
 
-export const SortManager: React.FC<ISortManagerProps> = ({
-	newArray,
-	isDisabled,
-	sortType,
-	method,
-	onChangeMethod,
-	onStart
-}) => {
+export function SortManager({
+	onNewArray,
+	disabled,
+	onMethodChange,
+	onSort
+}: IProps) {
+	const [sortType, setSortType] = useState<TSortTypeUnion>('non-decreasing');
+	const [sortMethod, setSortMethod] = useState<TSortMethodUnion>('selection');
+
+	const handleButtonClick = (
+		evt: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		const { value } = evt.currentTarget;
+		const sortType = value as TSortTypeUnion;
+		setSortType(sortType);
+		onSort(sortType);
+	};
+
+	const handleMethodChange = (evt: React.FormEvent<HTMLInputElement>) => {
+		const { value } = evt.currentTarget;
+		const sortMethod = value as TSortMethodUnion;
+		setSortMethod(sortMethod);
+		onMethodChange(sortMethod);
+	};
+
 	return (
 		<form className={styles.controls}>
 			<RadioInput
-				label="Выбор"
+				label="Выбором"
 				name="sortType"
-				value="selection"
-				disabled={isDisabled}
-				checked={method === 'selection'}
-				onChange={(evt) => onChangeMethod(evt.currentTarget.value as TSortMethod)}
+				value={SORT_METHOD.SELECTION}
+				disabled={disabled}
+				checked={sortMethod === SORT_METHOD.SELECTION}
+				onChange={handleMethodChange}
 			/>
 			<RadioInput
-				label="Пузырёк"
-				name="sortType"
-				value="bubble"
 				extClassName="ml-10"
-				disabled={isDisabled}
-				checked={method === 'bubble'}
-				onChange={(evt) => onChangeMethod(evt.currentTarget.value as TSortMethod)}
+				label="Пузырьком"
+				name="sortType"
+				value={SORT_METHOD.BUBBLE}
+				disabled={disabled}
+				checked={sortMethod === SORT_METHOD.BUBBLE}
+				onChange={handleMethodChange}
+			/>
+			<RadioInput
+				extClassName="ml-10"
+				label="Вставками"
+				name="sortType"
+				value={SORT_METHOD.INSERTION}
+				disabled={disabled}
+				checked={sortMethod === SORT_METHOD.INSERTION}
+				onChange={handleMethodChange}
 			/>
 			<Button
 				extClassName={clsx(styles.controls__button, 'ml-25')}
-				sorting={Direction.Ascending}
-				text="По возрастанию"
-				name="asc"
-				value="ascending"
-				disabled={isDisabled}
-				isLoader={isDisabled && sortType === Direction.Ascending}
-				onClick={onStart}
+				icon="Ascending"
+				text="По неубыванию"
+				name={SORT_TYPE.NON_DECREASING}
+				value={SORT_TYPE.NON_DECREASING}
+				disabled={disabled}
+				loader={disabled && sortType === SORT_TYPE.NON_DECREASING}
+				onClick={handleButtonClick}
 			/>
 			<Button
 				extClassName={clsx(styles.controls__button, 'ml-6')}
-				sorting={Direction.Descending}
-				text="По убыванию"
-				name="desc"
-				value="descending"
-				disabled={isDisabled}
-				isLoader={isDisabled && sortType === Direction.Descending}
-				onClick={onStart}
+				icon="Descending"
+				text="По невозрастанию"
+				name={SORT_TYPE.NON_INCREASIGN}
+				value={SORT_TYPE.NON_INCREASIGN}
+				disabled={disabled}
+				loader={disabled && sortType === SORT_TYPE.NON_INCREASIGN}
+				onClick={handleButtonClick}
 			/>
 			<Button
 				extClassName={clsx(styles.controls__button, 'ml-40')}
 				text="Новый массив"
-				disabled={isDisabled}
-				onClick={() => newArray()}
+				disabled={disabled}
+				onClick={onNewArray}
 			/>
 		</form>
 	);
-};
+}
