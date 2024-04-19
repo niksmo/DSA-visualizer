@@ -47,9 +47,8 @@ describe('reverse string', () => {
 	it('should correctly changing items state', () => {
 		const frames: Array<ArrayItem<string>[]> = [];
 
-		const reverser = new StringReverser((array) => {
-			frames.push(array);
-		});
+		const reverser = new StringReverser();
+		reverser.onFrame = (array) => frames.push(array);
 
 		reverser.reverse('12');
 
