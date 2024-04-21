@@ -2,10 +2,20 @@ import { ArrayItem, FrameMaker } from '../../shared/helpers/entities';
 import { getRandomInteger } from '../../shared/helpers/utils';
 import { ElementStates } from '../../shared/types';
 
-export const enum SortType {
-	NonDecreasing = 'non-decreasing',
-	NonIncreasing = 'non-increasing'
-}
+export const SORT_METHOD = {
+	SELECTION: 'selection',
+	BUBBLE: 'bubble',
+	INSERTION: 'insertion'
+} as const;
+
+export const SORT_TYPE = {
+	NON_DECREASING: 'non-decreasing',
+	NON_INCREASIGN: 'non-increasing'
+} as const;
+
+export type TSortMethodUnion = (typeof SORT_METHOD)[keyof typeof SORT_METHOD];
+
+export type TSortTypeUnion = (typeof SORT_TYPE)[keyof typeof SORT_TYPE];
 
 export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 	private _array: ArrayItem<number>[] = [];
@@ -14,14 +24,17 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 		this.onFrame([...this._array]);
 	}
 
-	private _checkOnLength(array: ArrayItem<number>[]) {
-		if (array.length < 2) {
-			return array;
-		}
+	private _prepareArray(array: ArrayItem<number>[]) {
+		this._array = array;
+
+		this._setItemState(
+			this._array.map((_, idx) => idx),
+			ElementStates.Default
+		);
 	}
 
-	private _getComparator(type: SortType) {
-		return type === SortType.NonDecreasing
+	private _getComparator(type: TSortTypeUnion) {
+		return type === SORT_TYPE.NON_DECREASING
 			? (a: number, b: number) => a > b
 			: (a: number, b: number) => a < b;
 	}
@@ -43,10 +56,12 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 		});
 	}
 
-	public selectionSort(array: ArrayItem<number>[], type: SortType) {
-		this._checkOnLength(array);
+	public selection(array: ArrayItem<number>[], type: TSortTypeUnion) {
+		if (array.length < 2) {
+			return array;
+		}
 
-		this._array = array;
+		this._prepareArray(array);
 
 		const comparator = this._getComparator(type);
 
@@ -77,15 +92,23 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 			if (swapIdx !== i) {
 				this._swap(i, swapIdx);
 			}
+
+			this._setItemState([i], ElementStates.Modified);
+			this._frame();
 		}
+
+		this._setItemState([length - 1], ElementStates.Modified);
+		this._frame();
 
 		return this._array;
 	}
 
-	public bubbleSort(array: ArrayItem<number>[], type: SortType) {
-		this._checkOnLength(array);
+	public bubble(array: ArrayItem<number>[], type: TSortTypeUnion) {
+		if (array.length < 2) {
+			return array;
+		}
 
-		this._array = array;
+		this._prepareArray(array);
 
 		const comparator = this._getComparator(type);
 
@@ -121,10 +144,12 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 		return this._array;
 	}
 
-	public insertionSort(array: ArrayItem<number>[], type: SortType) {
-		this._checkOnLength(array);
+	public insertion(array: ArrayItem<number>[], type: TSortTypeUnion) {
+		if (array.length < 2) {
+			return array;
+		}
 
-		this._array = array;
+		this._prepareArray(array);
 
 		const comparator = this._getComparator(type);
 

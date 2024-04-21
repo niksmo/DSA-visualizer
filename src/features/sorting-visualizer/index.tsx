@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 import { SortingChart } from './chart';
-import { SortManager, TSortMethodUnion, TSortTypeUnion } from './manager';
+import { SortManager } from './manager';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
 import { ArrayItem } from '../../shared/helpers/entities';
-import { makeArray } from './lib';
+import {
+	ArraySorter,
+	TSortMethodUnion,
+	TSortTypeUnion,
+	makeArray
+} from './lib';
 
 interface IProps {
 	extClassName?: string;
@@ -21,7 +26,20 @@ export function SortingVisualizer({ extClassName }: IProps) {
 	const handleSort = (
 		sortMethod: TSortMethodUnion,
 		sortType: TSortTypeUnion
-	) => {};
+	) => {
+		const array = [...frames[frames.length - 1]];
+
+		const sorter = new ArraySorter();
+
+		const renderFrames: Array<ArrayItem<number>[]> = [];
+
+		sorter.onFrame = (frame) => renderFrames.push(frame);
+		sorter[sortMethod](array, sortType);
+
+		setFrame(0);
+		setFrames(renderFrames);
+		setAnimation(true);
+	};
 
 	const handleNewArray = () => {
 		setFrames([makeArray()]);
@@ -30,7 +48,14 @@ export function SortingVisualizer({ extClassName }: IProps) {
 
 	useEffect(() => {
 		let timeoutId = -1;
-
+		if (animation && currentFrame < frames.length - 1) {
+			timeoutId = window.setTimeout(
+				() => setFrame(currentFrame + 1),
+				DELAY_500_MS
+			);
+		} else {
+			setAnimation(false);
+		}
 		return () => {
 			clearTimeout(timeoutId);
 		};

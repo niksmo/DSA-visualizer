@@ -11,13 +11,13 @@ describe('sort array', () => {
 
 			const items = array.map((v) => new ArrayItem(v));
 
-			sorter.bubbleSort(items, SortType.NonDecreasing);
+			sorter.bubble(items, SortType.NonDecreasing);
 
 			let sortedArray = items.map((item) => item.value);
 
 			expect(sortedArray).toEqual([]);
 
-			sorter.bubbleSort(items, SortType.NonIncreasing);
+			sorter.bubble(items, SortType.NonIncreasing);
 
 			sortedArray = items.map((item) => item.value);
 
@@ -29,13 +29,13 @@ describe('sort array', () => {
 
 			const items = array.map((v) => new ArrayItem(v));
 
-			sorter.bubbleSort(items, SortType.NonDecreasing);
+			sorter.bubble(items, SortType.NonDecreasing);
 
 			let sortedArray = items.map((item) => item.value);
 
 			expect(sortedArray).toEqual([3]);
 
-			sorter.bubbleSort(items, SortType.NonIncreasing);
+			sorter.bubble(items, SortType.NonIncreasing);
 
 			sortedArray = items.map((item) => item.value);
 
@@ -47,13 +47,13 @@ describe('sort array', () => {
 
 			const items = array.map((v) => new ArrayItem(v));
 
-			sorter.bubbleSort(items, SortType.NonDecreasing);
+			sorter.bubble(items, SortType.NonDecreasing);
 
 			let sortedArray = items.map((item) => item.value);
 
 			expect(sortedArray).toEqual([1, 3, 4, 7]);
 
-			sorter.bubbleSort(items, SortType.NonIncreasing);
+			sorter.bubble(items, SortType.NonIncreasing);
 
 			sortedArray = items.map((item) => item.value);
 
@@ -67,13 +67,13 @@ describe('sort array', () => {
 
 			const items = array.map((v) => new ArrayItem(v));
 
-			sorter.selectionSort(items, SortType.NonDecreasing);
+			sorter.selection(items, SortType.NonDecreasing);
 
 			let sortedArray = items.map((item) => item.value);
 
 			expect(sortedArray).toEqual([]);
 
-			sorter.selectionSort(items, SortType.NonIncreasing);
+			sorter.selection(items, SortType.NonIncreasing);
 
 			sortedArray = items.map((item) => item.value);
 
@@ -85,13 +85,13 @@ describe('sort array', () => {
 
 			const items = array.map((v) => new ArrayItem(v));
 
-			sorter.selectionSort(items, SortType.NonDecreasing);
+			sorter.selection(items, SortType.NonDecreasing);
 
 			let sortedArray = items.map((item) => item.value);
 
 			expect(sortedArray).toEqual([3]);
 
-			sorter.selectionSort(items, SortType.NonIncreasing);
+			sorter.selection(items, SortType.NonIncreasing);
 
 			sortedArray = items.map((item) => item.value);
 
@@ -103,13 +103,13 @@ describe('sort array', () => {
 
 			const items = array.map((v) => new ArrayItem(v));
 
-			sorter.selectionSort(items, SortType.NonDecreasing);
+			sorter.selection(items, SortType.NonDecreasing);
 
 			let sortedArray = items.map((item) => item.value);
 
 			expect(sortedArray).toEqual([1, 3, 4, 7]);
 
-			sorter.selectionSort(items, SortType.NonIncreasing);
+			sorter.selection(items, SortType.NonIncreasing);
 
 			sortedArray = items.map((item) => item.value);
 
@@ -123,13 +123,13 @@ describe('sort array', () => {
 
 			const items = array.map((v) => new ArrayItem(v));
 
-			sorter.insertionSort(items, SortType.NonDecreasing);
+			sorter.insertion(items, SortType.NonDecreasing);
 
 			let sortedArray = items.map((item) => item.value);
 
 			expect(sortedArray).toEqual([]);
 
-			sorter.insertionSort(items, SortType.NonIncreasing);
+			sorter.insertion(items, SortType.NonIncreasing);
 
 			sortedArray = items.map((item) => item.value);
 
@@ -141,13 +141,13 @@ describe('sort array', () => {
 
 			const items = array.map((v) => new ArrayItem(v));
 
-			sorter.insertionSort(items, SortType.NonDecreasing);
+			sorter.insertion(items, SortType.NonDecreasing);
 
 			let sortedArray = items.map((item) => item.value);
 
 			expect(sortedArray).toEqual([3]);
 
-			sorter.insertionSort(items, SortType.NonIncreasing);
+			sorter.insertion(items, SortType.NonIncreasing);
 
 			sortedArray = items.map((item) => item.value);
 
@@ -159,13 +159,13 @@ describe('sort array', () => {
 
 			const items = array.map((v) => new ArrayItem(v));
 
-			sorter.insertionSort(items, SortType.NonDecreasing);
+			sorter.insertion(items, SortType.NonDecreasing);
 
 			let sortedArray = items.map((item) => item.value);
 
 			expect(sortedArray).toEqual([1, 3, 4, 7]);
 
-			sorter.insertionSort(items, SortType.NonIncreasing);
+			sorter.insertion(items, SortType.NonIncreasing);
 
 			sortedArray = items.map((item) => item.value);
 

@@ -3,21 +3,12 @@ import { clsx } from 'clsx';
 import { RadioInput } from '../../../shared/ui/radio-input';
 import { Button } from '../../../shared/ui/button';
 import styles from './styles.module.css';
-
-const SORT_METHOD = {
-	SELECTION: 'selection',
-	BUBBLE: 'bubble',
-	INSERTION: 'insertion'
-} as const;
-
-const SORT_TYPE = {
-	NON_DECREASING: 'non-decreasing',
-	NON_INCREASIGN: 'non-increasing'
-} as const;
-
-export type TSortMethodUnion = (typeof SORT_METHOD)[keyof typeof SORT_METHOD];
-
-export type TSortTypeUnion = (typeof SORT_TYPE)[keyof typeof SORT_TYPE];
+import {
+	SORT_METHOD,
+	SORT_TYPE,
+	TSortMethodUnion,
+	TSortTypeUnion
+} from '../lib';
 
 interface IProps {
 	disabled: boolean;
