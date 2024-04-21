@@ -12,7 +12,7 @@ interface IProps {
 	extClassName?: string;
 }
 
-export function FibManager({
+export function Manager({
 	value,
 	onChange,
 	onSubmit,

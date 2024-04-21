@@ -8,7 +8,7 @@ interface IProps {
 	extClassName?: string;
 }
 
-export function SortingChart({ elements, extClassName }: IProps) {
+export function Chart({ elements, extClassName }: IProps) {
 	return (
 		<div className={clsx(styles.sortingChart, extClassName)}>
 			{elements.map((item) => (

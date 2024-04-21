@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from 'react';
-import { QueueChart } from './chart';
-import { QueueManager } from './manager';
+import { Chart } from './chart';
+import { Manager } from './manager';
 import {
 	changeValueAction,
 	renderAction,
@@ -12,7 +12,7 @@ import {
 } from './utils';
 import styles from './styles.module.css';
 
-export const QueueVisualizer = () => {
+export function RingBufferVisualizer() {
 	const queue = useQueue();
 	const [{ inputValue, animation, renderElements }, dispatch] = useReducer(
 		queueReducer,
@@ -62,7 +62,7 @@ export const QueueVisualizer = () => {
 
 	return (
 		<div>
-			<QueueManager
+			<Manager
 				value={inputValue}
 				queueLength={queue.length}
 				queueMaxSize={queue.maxSize}
@@ -72,7 +72,7 @@ export const QueueVisualizer = () => {
 				onClear={handleClear}
 				onDelete={handleDelete}
 			/>
-			<QueueChart elements={renderElements} extClassName={styles.queue__chart} />
+			<Chart elements={renderElements} extClassName={styles.queue__chart} />
 		</div>
 	);
-};
+}

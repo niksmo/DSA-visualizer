@@ -4,7 +4,7 @@ import {
 	FibonacciPage,
 	ListPage,
 	MainPage,
-	QueuePage,
+	RingBufferPage,
 	SortingPage,
 	StackPage,
 	StringComponent
@@ -29,7 +29,7 @@ export const App = () => (
 				<StackPage />
 			</Route>
 			<Route path="/queue">
-				<QueuePage />
+				<RingBufferPage />
 			</Route>
 			<Route path="/list">
 				<ListPage />

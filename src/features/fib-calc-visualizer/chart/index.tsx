@@ -8,7 +8,7 @@ interface IProps {
 	extClassName?: string;
 }
 
-export function FibChart({ elements, extClassName }: IProps) {
+export function Chart({ elements, extClassName }: IProps) {
 	return (
 		<div className={clsx(styles.chart, extClassName)}>
 			{elements.map((item, index) => (

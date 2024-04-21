@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { clsx } from 'clsx';
-import { FibChart } from './chart';
-import { FibManager } from './manager';
+import { Chart } from './chart';
+import { Manager } from './manager';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
 import styles from './styles.module.css';
 import { ArrayItem } from '../../shared/helpers/entities';
@@ -60,7 +60,7 @@ export function FibCalcVisualizer({ extClassName }: IProps) {
 
 	return (
 		<div className={clsx(styles.fibVisualizer, extClassName)}>
-			<FibManager
+			<Manager
 				onSubmit={handleComputeFibNum}
 				onChange={handleOnChange}
 				value={numValue}
@@ -68,7 +68,7 @@ export function FibCalcVisualizer({ extClassName }: IProps) {
 			/>
 
 			{haveFrames && (
-				<FibChart
+				<Chart
 					extClassName={styles.fibVisualizer__chart}
 					elements={renderElements}
 				/>

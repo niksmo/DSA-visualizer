@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { SortingChart } from './chart';
-import { SortManager } from './manager';
+import { Chart } from './chart';
+import { Manager } from './manager';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
 import { ArrayItem } from '../../shared/helpers/entities';
 import {
@@ -27,7 +27,9 @@ export function SortingVisualizer({ extClassName }: IProps) {
 		sortMethod: TSortMethodUnion,
 		sortType: TSortTypeUnion
 	) => {
-		const array = [...frames[frames.length - 1]];
+		const array = [...frames].pop();
+
+		if (!array) return;
 
 		const sorter = new ArraySorter();
 
@@ -63,12 +65,12 @@ export function SortingVisualizer({ extClassName }: IProps) {
 
 	return (
 		<div className={extClassName}>
-			<SortManager
+			<Manager
 				disabled={animation}
 				onSort={handleSort}
 				onNewArray={handleNewArray}
 			/>
-			<SortingChart elements={renderElements} extClassName="mt-25" />
+			<Chart elements={renderElements} extClassName="mt-25" />
 		</div>
 	);
 }

@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { DELAY_1000_MS } from '../../shared/helpers/delays';
 import { ArrayItem } from '../../shared/helpers/entities';
-import { ReverseManager } from './manager';
-import { ReverseChart } from './chart';
+import { Manager } from './manager';
+import { Chart } from './chart';
 import { StringReverser } from './lib';
 import styles from './styles.module.css';
 
@@ -60,14 +60,14 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 
 	return (
 		<div className={clsx(styles.reverseVisualizer, extClassName)}>
-			<ReverseManager
+			<Manager
 				value={stringValue}
 				onChange={handleOnChangeInputValue}
 				disabled={animation}
 				onSubmit={handleReverseString}
 			/>
 			{haveFrames && (
-				<ReverseChart
+				<Chart
 					elements={renderElements}
 					extClassName={styles.reverseVisualizer__chart}
 				/>

@@ -16,7 +16,7 @@ interface IProps {
 	onNewArray: () => void;
 }
 
-export function SortManager({ onNewArray, disabled, onSort }: IProps) {
+export function Manager({ onNewArray, disabled, onSort }: IProps) {
 	const [sortType, setSortType] = useState<TSortTypeUnion>('non-decreasing');
 	const [sortMethod, setSortMethod] = useState<TSortMethodUnion>('selection');
 
