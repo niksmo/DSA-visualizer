@@ -133,13 +133,19 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 				}
 
 				this._setItemState([leftIdx, rightIdx], ElementStates.Default);
-
-				if (!swapped) break;
+				this._frame();
 			}
 
-			this._setItemState([length - i - 1], ElementStates.Modified);
-			this._frame();
+			if (!swapped) break;
+
+			this._setItemState([length - 1 - i], ElementStates.Modified);
 		}
+
+		this._setItemState(
+			this._array.map((_, idx) => idx),
+			ElementStates.Modified
+		);
+		this._frame();
 
 		return this._array;
 	}
