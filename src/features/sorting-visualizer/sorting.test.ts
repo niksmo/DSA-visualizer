@@ -116,4 +116,60 @@ describe('sort array', () => {
 			expect(sortedArray).toEqual([7, 4, 3, 1]);
 		});
 	});
+
+	describe('with insertion method', () => {
+		it('should correctly sort empty array', async () => {
+			const array: number[] = [];
+
+			const items = array.map((v) => new ArrayItem(v));
+
+			sorter.insertionSort(items, SortType.NonDecreasing);
+
+			let sortedArray = items.map((item) => item.value);
+
+			expect(sortedArray).toEqual([]);
+
+			sorter.insertionSort(items, SortType.NonIncreasing);
+
+			sortedArray = items.map((item) => item.value);
+
+			expect(sortedArray).toEqual([]);
+		});
+
+		it('should correctly sort array with one element', async () => {
+			const array = [3];
+
+			const items = array.map((v) => new ArrayItem(v));
+
+			sorter.insertionSort(items, SortType.NonDecreasing);
+
+			let sortedArray = items.map((item) => item.value);
+
+			expect(sortedArray).toEqual([3]);
+
+			sorter.insertionSort(items, SortType.NonIncreasing);
+
+			sortedArray = items.map((item) => item.value);
+
+			expect(sortedArray).toEqual([3]);
+		});
+
+		it('should correctly sort array with several elements', async () => {
+			const array = [3, 1, 7, 4];
+
+			const items = array.map((v) => new ArrayItem(v));
+
+			sorter.insertionSort(items, SortType.NonDecreasing);
+
+			let sortedArray = items.map((item) => item.value);
+
+			expect(sortedArray).toEqual([1, 3, 4, 7]);
+
+			sorter.insertionSort(items, SortType.NonIncreasing);
+
+			sortedArray = items.map((item) => item.value);
+
+			expect(sortedArray).toEqual([7, 4, 3, 1]);
+		});
+	});
 });

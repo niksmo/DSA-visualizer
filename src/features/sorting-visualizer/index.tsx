@@ -18,9 +18,10 @@ export function SortingVisualizer({ extClassName }: IProps) {
 
 	const renderElements = frames[currentFrame];
 
-	const handleMethodChange = (sortMethod: TSortMethodUnion) => {};
-
-	const handleSort = (sortType: TSortTypeUnion) => {};
+	const handleSort = (
+		sortMethod: TSortMethodUnion,
+		sortType: TSortTypeUnion
+	) => {};
 
 	const handleNewArray = () => {
 		setFrames([makeArray()]);
@@ -39,7 +40,6 @@ export function SortingVisualizer({ extClassName }: IProps) {
 		<div className={extClassName}>
 			<SortManager
 				disabled={animation}
-				onMethodChange={handleMethodChange}
 				onSort={handleSort}
 				onNewArray={handleNewArray}
 			/>

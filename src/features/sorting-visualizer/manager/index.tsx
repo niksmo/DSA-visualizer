@@ -21,17 +21,11 @@ export type TSortTypeUnion = (typeof SORT_TYPE)[keyof typeof SORT_TYPE];
 
 interface IProps {
 	disabled: boolean;
-	onMethodChange: (sortMethod: TSortMethodUnion) => void;
-	onSort: (sortType: TSortTypeUnion) => void;
+	onSort: (sortMethod: TSortMethodUnion, sortType: TSortTypeUnion) => void;
 	onNewArray: () => void;
 }
 
-export function SortManager({
-	onNewArray,
-	disabled,
-	onMethodChange,
-	onSort
-}: IProps) {
+export function SortManager({ onNewArray, disabled, onSort }: IProps) {
 	const [sortType, setSortType] = useState<TSortTypeUnion>('non-decreasing');
 	const [sortMethod, setSortMethod] = useState<TSortMethodUnion>('selection');
 
@@ -41,14 +35,13 @@ export function SortManager({
 		const { value } = evt.currentTarget;
 		const sortType = value as TSortTypeUnion;
 		setSortType(sortType);
-		onSort(sortType);
+		onSort(sortMethod, sortType);
 	};
 
 	const handleMethodChange = (evt: React.FormEvent<HTMLInputElement>) => {
 		const { value } = evt.currentTarget;
 		const sortMethod = value as TSortMethodUnion;
 		setSortMethod(sortMethod);
-		onMethodChange(sortMethod);
 	};
 
 	return (

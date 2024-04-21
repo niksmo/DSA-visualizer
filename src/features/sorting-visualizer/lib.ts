@@ -120,6 +120,29 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 
 		return this._array;
 	}
+
+	public insertionSort(array: ArrayItem<number>[], type: SortType) {
+		this._checkOnLength(array);
+
+		this._array = array;
+
+		const comparator = this._getComparator(type);
+
+		const { length } = this._array;
+
+		for (let i = 1; i < length; i += 1) {
+			const item = this._array[i];
+			let j = i;
+			while (j > 0 && comparator(this._array[j - 1].value, item.value)) {
+				this._array[j] = this._array[j - 1];
+				j -= 1;
+			}
+
+			if (j !== i) {
+				this._array[j] = item;
+			}
+		}
+	}
 }
 
 export function makeArray() {
