@@ -1,7 +1,6 @@
 .content {
-	background-image: url('../../../app/assets/images/bg.jpg');
-	background-repeat: no-repeat;
-	background-size: cover;
+	background: linear-gradient(128.41deg, rgba(200, 62, 217, 0) 0%, #aaaede 200%),
+		linear-gradient(200deg, #ff3a7a 12.38%, #0b00c6 83.88%);
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
