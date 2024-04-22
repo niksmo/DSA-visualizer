@@ -21,7 +21,7 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 	private _array: ArrayItem<number>[] = [];
 
 	protected _frame() {
-		this.onFrame([...this._array]);
+		this.onFrame(this._array.map((item) => ({ ...item })));
 	}
 
 	private _prepareArray(array: ArrayItem<number>[]) {
@@ -162,22 +162,27 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 		const { length } = this._array;
 
 		for (let i = 1; i < length; i += 1) {
-			const item = this._array[i];
+			const currentValue = this._array[i].value;
 			let j = i;
 			this._setItemState([j], ElementStates.Changing);
 			this._frame();
 
-			while (j > 0 && comparator(this._array[j - 1].value, item.value)) {
+			while (j > 0 && comparator(this._array[j - 1].value, currentValue)) {
+				this._array[j].tail = String(currentValue);
+				this._frame();
+				this._array[j].tail = null;
 				this._array[j].value = this._array[j - 1].value;
 				this._setItemState([j], ElementStates.Default);
 				this._setItemState([j - 1], ElementStates.Changing);
-				this._frame();
 
 				j -= 1;
 			}
 
 			if (j !== i) {
-				this._array[j].value = item.value;
+				this._array[j].tail = String(currentValue);
+				this._frame();
+				this._array[j].tail = null;
+				this._array[j].value = currentValue;
 			}
 
 			this._setItemState([j], ElementStates.Modified);
