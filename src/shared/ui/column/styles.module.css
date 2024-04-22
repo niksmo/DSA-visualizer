@@ -21,3 +21,8 @@
 .modified {
 	background-color: var(--modified-color);
 }
+
+.stored {
+	margin-top: 8px;
+	height: 56px;
+}

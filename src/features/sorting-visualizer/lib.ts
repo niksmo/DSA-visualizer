@@ -164,15 +164,35 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 		for (let i = 1; i < length; i += 1) {
 			const item = this._array[i];
 			let j = i;
+			this._setItemState([j], ElementStates.Changing);
+			this._frame();
+
 			while (j > 0 && comparator(this._array[j - 1].value, item.value)) {
-				this._array[j] = this._array[j - 1];
+				this._array[j].value = this._array[j - 1].value;
+				this._setItemState([j], ElementStates.Default);
+				this._setItemState([j - 1], ElementStates.Changing);
+				this._frame();
+
 				j -= 1;
 			}
 
 			if (j !== i) {
-				this._array[j] = item;
+				this._array[j].value = item.value;
 			}
+
+			this._setItemState([j], ElementStates.Modified);
+			this._frame();
+			this._setItemState([j], ElementStates.Default);
+			this._frame();
 		}
+
+		this._setItemState(
+			this._array.map((_, idx) => idx),
+			ElementStates.Modified
+		);
+		this._frame();
+
+		return this._array;
 	}
 }
 

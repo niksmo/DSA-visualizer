@@ -17,6 +17,7 @@ export function Chart({ elements, extClassName }: IProps) {
 					elevation={item.value}
 					state={item.state}
 					extClassName={clsx(styles.sortingChart__scale, 'mr-5')}
+					compareWith={item.tail}
 				/>
 			))}
 		</div>

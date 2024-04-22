@@ -1,24 +1,37 @@
-import React from 'react';
 import { clsx } from 'clsx';
 import { ElementStates } from '../../types';
 import styles from './styles.module.css';
+import { Circle } from '../circle';
 
 interface ColumnProps {
 	elevation: number;
 	state?: ElementStates;
+	compareWith?: number | string | null;
 	extClassName?: string;
 }
 
-export const Column: React.FC<ColumnProps> = ({
+export function Column({
 	elevation,
 	state = ElementStates.Default,
+	compareWith,
 	extClassName = ''
-}) => (
-	<div className={clsx(styles.content, extClassName)}>
-		<div
-			className={`${styles.column} ${styles[state]}`}
-			style={{ height: 320 * elevation * 0.01 || 1 }}
-		/>
-		<p className={`text text_type_column text_color_input mt-3`}>{elevation}</p>
-	</div>
-);
+}: ColumnProps) {
+	return (
+		<div className={clsx(styles.content, extClassName)}>
+			<div
+				className={`${styles.column} ${styles[state]}`}
+				style={{ height: 280 * elevation * 0.01 || 1 }}
+			/>
+			<p className={`text text_type_column text_color_input mt-3`}>{elevation}</p>
+			<div className={styles.stored}>
+				{compareWith && (
+					<Circle
+						isSmall
+						letter={String(compareWith)}
+						state={ElementStates.Changing}
+					/>
+				)}
+			</div>
+		</div>
+	);
+}

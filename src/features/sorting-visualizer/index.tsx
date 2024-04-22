@@ -70,7 +70,7 @@ export function SortingVisualizer({ extClassName }: IProps) {
 				onSort={handleSort}
 				onNewArray={handleNewArray}
 			/>
-			<Chart elements={renderElements} extClassName="mt-25" />
+			<Chart elements={renderElements} extClassName="mt-30" />
 		</div>
 	);
 }

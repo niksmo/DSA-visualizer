@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: flex-end;
-	height: 340px;
+	height: 364px;
 }
 
 .sortingChart__scale:last-child {
