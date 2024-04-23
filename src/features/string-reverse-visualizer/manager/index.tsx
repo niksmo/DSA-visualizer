@@ -25,6 +25,7 @@ export function Manager({ onSubmit, disabled, extClassName }: IProps) {
 	return (
 		<form className={clsx(styles.controls, extClassName)} onSubmit={handleSubmit}>
 			<Input
+				name="String"
 				spellCheck={false}
 				autoComplete="off"
 				value={stringValue}

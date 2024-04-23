@@ -33,6 +33,7 @@ export function Manager({ onSubmit, disabled, extClassName }: IProps) {
 		>
 			<Input
 				placeholder="Введите число"
+				name="Number"
 				value={numValue}
 				max={19}
 				min={1}

@@ -1,74 +1,96 @@
-import React, { useReducer } from 'react';
-import { StackChart } from './chart';
-import { StackManager } from './manager';
-import {
-	animateAction,
-	changeValueAction,
-	generateStackAnimation,
-	renderAction,
-	stackReducer,
-	stackVisualizerState,
-	useStack
-} from './utils';
+import { useEffect, useRef, useState } from 'react';
+import { Chart } from './chart';
+import { Manager } from './manager';
+import type { ArrayItem } from '../../shared/helpers/entities';
+import { Stack } from './lib';
+import { DELAY_1000_MS } from '../../shared/helpers/delays';
 import styles from './styles.module.css';
 
+const MAX_STACK_SIZE = 9;
+
 export const StackVisualizer = () => {
-	const stack = useStack();
-	const [{ inputValue, animation, renderElements }, dispatch] = useReducer(
-		stackReducer,
-		stackVisualizerState
-	);
+	const [disableOptions, setDisableOptions] = useState({
+		push: false,
+		pop: true,
+		clear: true
+	});
 
-	const handleOnChangeInputValue = (evt: React.FormEvent<HTMLInputElement>) => {
-		const currentValue = evt.currentTarget.value;
+	const [loadOptions, setLoadOptions] = useState({ push: false, pop: false });
 
-		dispatch(changeValueAction(currentValue));
+	const [currentFrame, setFrame] = useState(0);
+	const [animation, setAnimation] = useState(false);
+	const [frames, setFrames] = useState<ArrayItem<string>[][]>([]);
+	const stackRef = useRef(new Stack(MAX_STACK_SIZE));
+
+	const renderElements = frames[currentFrame];
+	const stack = stackRef.current;
+
+	const handlePush = (value: string) => {
+		const renderFrames: ArrayItem<string>[][] = [];
+		stack.onFrame = (array) => renderFrames.push(array);
+		stack.push(value);
+
+		if (!renderFrames.length) return;
+
+		setFrame(0);
+		setFrames(renderFrames);
+		setLoadOptions({ ...loadOptions, push: true });
+		setAnimation(true);
 	};
 
-	const handleAdd = async (evt: React.FormEvent) => {
-		evt.preventDefault();
-
-		if (!inputValue.trim()) {
-			dispatch(changeValueAction(''));
-			return;
-		}
-
-		stack.push(inputValue.trim());
-		dispatch(changeValueAction(''));
-		const animationGenerator = generateStackAnimation(stack.getArray());
-		for await (const elements of animationGenerator) {
-			dispatch(animateAction(elements, 'add'));
-		}
-		dispatch(renderAction(stack.getArray()));
-	};
-
-	const handleDelete = async () => {
-		const animationGenerator = generateStackAnimation(renderElements);
-		for await (const elements of animationGenerator) {
-			dispatch(animateAction(elements, 'delete'));
-		}
+	const handlePop = () => {
+		const renderFrames: ArrayItem<string>[][] = [];
+		stack.onFrame = (array) => renderFrames.push(array);
 		stack.pop();
-		dispatch(renderAction(stack.getArray()));
+
+		if (!renderFrames.length) return;
+
+		setFrame(0);
+		setFrames(renderFrames);
+		setLoadOptions({ ...loadOptions, pop: true });
+		setAnimation(true);
 	};
 
 	const handleClear = () => {
 		stack.clear();
-		dispatch(renderAction(stack.getArray()));
+
+		setFrame(0);
+		setFrames([]);
 	};
+
+	useEffect(() => {
+		let timeoutId = -1;
+		if (animation && currentFrame < frames.length - 1) {
+			timeoutId = window.setTimeout(() => {
+				setFrame(currentFrame + 1);
+			}, DELAY_1000_MS);
+		} else {
+			const disableOpt = { ...disableOptions };
+			disableOpt.push = stack.size === stack.maxSize;
+			disableOpt.pop = disableOpt.clear = stack.size === 0;
+			setDisableOptions(disableOpt);
+
+			setAnimation(false);
+
+			setLoadOptions({ push: false, pop: false });
+		}
+		return () => {
+			clearTimeout(timeoutId);
+		};
+	}, [animation, currentFrame, frames]);
 
 	return (
 		<div>
-			<StackManager
-				value={inputValue}
-				stackSize={stack.size}
-				stackMaxSize={stack.maxSize}
-				action={animation}
-				onAdd={handleAdd}
-				onChange={handleOnChangeInputValue}
+			<Manager
+				onPush={handlePush}
+				onPop={handlePop}
 				onClear={handleClear}
-				onDelete={handleDelete}
+				disableOptions={disableOptions}
+				loadOptions={loadOptions}
 			/>
-			<StackChart elements={renderElements} extClassName={styles.stack__chart} />
+			{renderElements && (
+				<Chart elements={renderElements} extClassName={styles.stack__chart} />
+			)}
 		</div>
 	);
 };
