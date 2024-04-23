@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { Chart } from './chart';
 import { Manager } from './manager';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
-import { ArrayItem } from '../../shared/helpers/entities';
+import type { ArrayItem } from '../../shared/helpers/entities';
 import {
 	ArraySorter,
-	TSortMethodUnion,
-	TSortTypeUnion,
+	type TSortMethodUnion,
+	type TSortTypeUnion,
 	makeArray
 } from './lib';
 
@@ -14,12 +14,10 @@ interface IProps {
 	extClassName?: string;
 }
 
-const initArray = makeArray();
-
 export function SortingVisualizer({ extClassName }: IProps) {
 	const [currentFrame, setFrame] = useState(0);
 	const [animation, setAnimation] = useState(false);
-	const [frames, setFrames] = useState<ArrayItem<number>[][]>([initArray]);
+	const [frames, setFrames] = useState<ArrayItem<number>[][]>([makeArray()]);
 
 	const renderElements = frames[currentFrame];
 

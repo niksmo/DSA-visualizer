@@ -42,14 +42,14 @@ export const StackManager: React.FC<IStackManagerProps> = ({
 			text="Добавить"
 			name="add"
 			extClassName="ml-6"
-			isLoader={action === 'add'}
+			loader={action === 'add'}
 			disabled={Boolean(action) || !value || stackSize === stackMaxSize}
 		/>
 		<Button
 			text="Удалить"
 			data-testid="remove"
 			extClassName="ml-6"
-			isLoader={action === 'delete'}
+			loader={action === 'delete'}
 			disabled={stackSize === 0}
 			onClick={onDelete}
 		/>

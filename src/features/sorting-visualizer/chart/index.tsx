@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { TArrayItem } from '../../../shared/types';
+import type { TArrayItem } from '../../../shared/types';
 import { Column } from '../../../shared/ui/column';
 import styles from './styles.module.css';
 

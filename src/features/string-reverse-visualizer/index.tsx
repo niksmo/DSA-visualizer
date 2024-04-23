@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { DELAY_1000_MS } from '../../shared/helpers/delays';
-import { ArrayItem } from '../../shared/helpers/entities';
+import type { ArrayItem } from '../../shared/helpers/entities';
 import { Manager } from './manager';
 import { Chart } from './chart';
 import { StringReverser } from './lib';

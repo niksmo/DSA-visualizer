@@ -6,8 +6,8 @@ import styles from './styles.module.css';
 import {
 	SORT_METHOD,
 	SORT_TYPE,
-	TSortMethodUnion,
-	TSortTypeUnion
+	type TSortMethodUnion,
+	type TSortTypeUnion
 } from '../lib';
 
 interface IProps {

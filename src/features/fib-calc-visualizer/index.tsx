@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { Chart } from './chart';
 import { Manager } from './manager';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
-import { ArrayItem } from '../../shared/helpers/entities';
+import type { ArrayItem } from '../../shared/helpers/entities';
 import { FibCalculator } from './lib';
 import styles from './styles.module.css';
 
