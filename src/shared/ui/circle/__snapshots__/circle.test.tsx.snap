@@ -98,7 +98,7 @@ exports[`Circle component test > should render with index 1`] = `
 </p>
 `;
 
-exports[`Circle component test > should render with isSmall prop 1`] = `
+exports[`Circle component test > should render with small prop 1`] = `
 <div
   class="_circle_8fdf19  _small_8fdf19 _default_8fdf19"
   data-testid="circle-main"

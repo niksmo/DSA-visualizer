@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { DELAY_1000_MS } from '../../shared/helpers/delays';
 import { ArrayItem } from '../../shared/helpers/entities';
@@ -12,41 +12,34 @@ interface IProps {
 }
 
 export function ReverseVisualizer({ extClassName }: IProps) {
-	const [stringValue, setStringValue] = useState('');
 	const [currentFrame, setFrame] = useState(0);
 	const [animation, setAnimation] = useState(false);
-	const frames = useRef<ArrayItem<string>[][]>([]);
+	const [frames, setFrames] = useState<ArrayItem<string>[][]>([]);
 
-	const renderElements = frames.current[currentFrame];
-	const haveFrames = frames.current.length !== 0;
+	const renderElements = frames[currentFrame];
 
-	const handleOnChangeInputValue = (evt: React.FormEvent<HTMLInputElement>) => {
-		setStringValue(evt.currentTarget.value);
-	};
-
-	const handleReverseString = (evt: React.FormEvent) => {
-		evt.preventDefault();
-
+	const handleReverseString = (stringValue: string) => {
 		const trimmedValue = stringValue.trim();
 
 		if (!trimmedValue) return;
 
-		frames.current = [];
+		const renderFrames: ArrayItem<string>[][] = [];
 
 		const reverser = new StringReverser();
 
-		reverser.onFrame = (array) => frames.current.push(array);
+		reverser.onFrame = (array) => renderFrames.push(array);
 		reverser.reverse(trimmedValue);
 
-		if (frames.current.length === 0) return;
+		if (renderFrames.length === 0) return;
 
 		setFrame(0);
+		setFrames(renderFrames);
 		setAnimation(true);
 	};
 
 	useEffect(() => {
 		let timeoutId = -1;
-		if (animation && currentFrame < frames.current.length - 1) {
+		if (animation && currentFrame < frames.length - 1) {
 			timeoutId = window.setTimeout(() => {
 				setFrame(currentFrame + 1);
 			}, DELAY_1000_MS);
@@ -56,17 +49,12 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [animation, currentFrame]);
+	}, [animation, currentFrame, frames]);
 
 	return (
 		<div className={clsx(styles.reverseVisualizer, extClassName)}>
-			<Manager
-				value={stringValue}
-				onChange={handleOnChangeInputValue}
-				disabled={animation}
-				onSubmit={handleReverseString}
-			/>
-			{haveFrames && (
+			<Manager disabled={animation} onSubmit={handleReverseString} />
+			{renderElements && (
 				<Chart
 					elements={renderElements}
 					extClassName={styles.reverseVisualizer__chart}

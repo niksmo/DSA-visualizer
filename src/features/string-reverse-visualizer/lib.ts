@@ -20,7 +20,7 @@ export class StringReverser extends FrameMaker<ArrayItem<string>> {
 	}
 
 	protected _frame() {
-		this.onFrame([...this._array]);
+		this.onFrame(this._array.map((item) => ({ ...item })));
 	}
 
 	public reverse(str: string) {

@@ -26,7 +26,7 @@ export function Column({
 			<div className={styles.stored}>
 				{compareWith && (
 					<Circle
-						isSmall
+						small
 						letter={String(compareWith)}
 						state={ElementStates.Changing}
 					/>

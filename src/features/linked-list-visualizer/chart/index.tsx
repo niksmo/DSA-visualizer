@@ -20,7 +20,7 @@ export const LinkedListChart: React.FC<ILinkedListChartProps> = ({
 		}
 
 		if (headValue) {
-			return <Circle isSmall letter={headValue} state={ElementStates.Changing} />;
+			return <Circle small letter={headValue} state={ElementStates.Changing} />;
 		}
 
 		return headValue;
@@ -32,7 +32,7 @@ export const LinkedListChart: React.FC<ILinkedListChartProps> = ({
 		}
 
 		if (tailValue) {
-			return <Circle isSmall letter={tailValue} state={ElementStates.Changing} />;
+			return <Circle small letter={tailValue} state={ElementStates.Changing} />;
 		}
 
 		return tailValue;

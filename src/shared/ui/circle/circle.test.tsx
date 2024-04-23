@@ -74,8 +74,8 @@ describe('Circle component test', () => {
 		expect(circleWithIndex).toMatchSnapshot();
 	});
 
-	it('should render with isSmall prop', () => {
-		const { getByTestId } = render(<Circle isSmall />);
+	it('should render with small prop', () => {
+		const { getByTestId } = render(<Circle small />);
 
 		const circleWithIndex = getByTestId('circle-main');
 

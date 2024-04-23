@@ -1,51 +1,41 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 import { Chart } from './chart';
 import { Manager } from './manager';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
-import styles from './styles.module.css';
 import { ArrayItem } from '../../shared/helpers/entities';
 import { FibCalculator } from './lib';
-
-const NUM_PATTERN = /^[1-9]$|^1\d$|^\s*$/;
+import styles from './styles.module.css';
 
 interface IProps {
 	extClassName?: string;
 }
 
 export function FibCalcVisualizer({ extClassName }: IProps) {
-	const [numValue, setNumValue] = useState('');
-	const [currentFrame, setFrame] = useState(0);
 	const [animation, setAnimation] = useState(false);
-	const frames = useRef<ArrayItem<number>[][]>([]);
+	const [currentFrame, setFrame] = useState(0);
+	const [frames, setFrames] = useState<ArrayItem<number>[][]>([]);
 
-	const renderElements = frames.current[currentFrame];
-	const haveFrames = frames.current.length !== 0;
+	const renderElements = frames[currentFrame];
 
-	const handleOnChange = (evt: React.FormEvent<HTMLInputElement>) => {
-		const numValue = evt.currentTarget.value;
-
-		NUM_PATTERN.test(numValue) && setNumValue(numValue);
-	};
-
-	const handleComputeFibNum = (evt: React.FormEvent) => {
-		evt.preventDefault();
-
-		frames.current = [];
+	const handleComputeFibNum = (numValue: string) => {
+		console.log(numValue);
+		const renderFrames: ArrayItem<number>[][] = [];
 
 		const fibCalc = new FibCalculator();
-		fibCalc.onFrame = (array) => frames.current.push(array);
+		fibCalc.onFrame = (array) => renderFrames.push(array);
 		fibCalc.compute(parseInt(numValue));
 
-		if (frames.current.length === 0) return;
+		if (renderFrames.length === 0) return;
 
 		setFrame(0);
+		setFrames(renderFrames);
 		setAnimation(true);
 	};
 
 	useEffect(() => {
 		let timeoutId = -1;
-		if (animation && currentFrame < frames.current.length - 1) {
+		if (animation && currentFrame < frames.length - 1) {
 			timeoutId = window.setTimeout(() => {
 				setFrame(currentFrame + 1);
 			}, DELAY_500_MS);
@@ -56,18 +46,13 @@ export function FibCalcVisualizer({ extClassName }: IProps) {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [currentFrame, animation]);
+	}, [currentFrame, animation, frames]);
 
 	return (
 		<div className={clsx(styles.fibVisualizer, extClassName)}>
-			<Manager
-				onSubmit={handleComputeFibNum}
-				onChange={handleOnChange}
-				value={numValue}
-				disabled={animation}
-			/>
+			<Manager onSubmit={handleComputeFibNum} disabled={animation} />
 
-			{haveFrames && (
+			{renderElements && (
 				<Chart
 					extClassName={styles.fibVisualizer__chart}
 					elements={renderElements}

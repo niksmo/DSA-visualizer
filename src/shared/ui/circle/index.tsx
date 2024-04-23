@@ -10,7 +10,7 @@ interface CircleProps {
 	index?: number;
 	tail?: string | React.ReactElement | null;
 	extClassName?: string;
-	isSmall?: boolean;
+	small?: boolean;
 }
 
 export const Circle: React.FC<CircleProps> = ({
@@ -20,9 +20,9 @@ export const Circle: React.FC<CircleProps> = ({
 	index,
 	tail,
 	extClassName = '',
-	isSmall
+	small
 }) => {
-	const wrapperTestId = isSmall ? 'circle-small' : 'circle';
+	const wrapperTestId = small ? 'circle-small' : 'circle';
 
 	return (
 		<div
@@ -41,7 +41,7 @@ export const Circle: React.FC<CircleProps> = ({
 			</div>
 			<div
 				data-testid="circle-main"
-				className={`${styles.circle}  ${isSmall ? styles.small : ''} ${
+				className={`${styles.circle}  ${small ? styles.small : ''} ${
 					styles[state]
 				}`}
 			>
