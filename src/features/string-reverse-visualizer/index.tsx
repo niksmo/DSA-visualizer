@@ -55,10 +55,7 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 		<div className={clsx(styles.reverseVisualizer, extClassName)}>
 			<Manager disabled={animation} onSubmit={handleReverseString} />
 			{renderElements && (
-				<Chart
-					elements={renderElements}
-					extClassName={styles.reverseVisualizer__chart}
-				/>
+				<Chart elements={renderElements} extClassName={styles.chart} />
 			)}
 		</div>
 	);

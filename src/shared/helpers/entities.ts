@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
-import { ElementStates, TArrayItem, TListNode } from '../types';
+import { ElementStates, TListNode } from '../types';
 
-export class ArrayItem<T = number> implements TArrayItem<T> {
+export class ArrayItem<T = number> {
 	id: string;
 	value: T;
 	state: ElementStates;

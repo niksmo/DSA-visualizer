@@ -23,7 +23,7 @@ describe('Button component test', () => {
 	});
 
 	it('should render loading state', () => {
-		const { getByRole } = render(<Button isLoader />);
+		const { getByRole } = render(<Button loader />);
 		const button = getByRole('button');
 		expect(button).toMatchSnapshot();
 	});

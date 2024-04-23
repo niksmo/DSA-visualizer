@@ -77,7 +77,14 @@ export const StackVisualizer = () => {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [animation, currentFrame, frames]);
+	}, [
+		animation,
+		currentFrame,
+		frames.length,
+		disableOptions,
+		stack.size,
+		stack.maxSize
+	]);
 
 	return (
 		<div>
@@ -89,7 +96,7 @@ export const StackVisualizer = () => {
 				loadOptions={loadOptions}
 			/>
 			{renderElements && (
-				<Chart elements={renderElements} extClassName={styles.stack__chart} />
+				<Chart elements={renderElements} extClassName={styles.chart} />
 			)}
 		</div>
 	);

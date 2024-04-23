@@ -59,7 +59,7 @@ export function SortingVisualizer({ extClassName }: IProps) {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	});
+	}, [animation, currentFrame, frames.length]);
 
 	return (
 		<div className={extClassName}>

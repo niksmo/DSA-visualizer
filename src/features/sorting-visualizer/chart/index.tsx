@@ -1,10 +1,10 @@
 import { clsx } from 'clsx';
-import type { TArrayItem } from '../../../shared/types';
 import { Column } from '../../../shared/ui/column';
+import type { ArrayItem } from '../../../shared/helpers/entities';
 import styles from './styles.module.css';
 
 interface IProps {
-	elements: TArrayItem[];
+	elements: ArrayItem[];
 	extClassName?: string;
 }
 

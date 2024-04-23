@@ -53,10 +53,7 @@ export function FibCalcVisualizer({ extClassName }: IProps) {
 			<Manager onSubmit={handleComputeFibNum} disabled={animation} />
 
 			{renderElements && (
-				<Chart
-					extClassName={styles.fibVisualizer__chart}
-					elements={renderElements}
-				/>
+				<Chart elements={renderElements} extClassName={styles.chart} />
 			)}
 		</div>
 	);

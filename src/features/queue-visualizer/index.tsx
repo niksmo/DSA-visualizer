@@ -1,78 +1,107 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Chart } from './chart';
 import { Manager } from './manager';
-import {
-	changeValueAction,
-	renderAction,
-	queueReducer,
-	queueVisualizerState,
-	useQueue,
-	animateAction,
-	generateQueueAnimation
-} from './utils';
+import { DELAY_1000_MS } from '../../shared/helpers/delays';
+import type { ArrayItem } from '../../shared/helpers/entities';
+import { Queue } from './lib';
 import styles from './styles.module.css';
 
+const MAX_QUEUE_SIZE = 7;
+
 export function QueueVisualizer() {
-	const queue = useQueue();
-	const [{ inputValue, animation, renderElements }, dispatch] = useReducer(
-		queueReducer,
-		queueVisualizerState
-	);
+	const [disableOptions, setDisableOptions] = useState({
+		enqueue: false,
+		dequeue: true,
+		clear: true
+	});
 
-	const handleOnChangeInputValue = (evt: React.FormEvent<HTMLInputElement>) => {
-		const currentValue = evt.currentTarget.value;
-		dispatch(changeValueAction(currentValue));
+	const [loadOptions, setLoadOptions] = useState({
+		enqueue: false,
+		dequeue: false
+	});
+
+	const queueRef = useRef(new Queue(MAX_QUEUE_SIZE));
+	const queue = queueRef.current;
+
+	const [currentFrame, setFrame] = useState(0);
+	const [animation, setAnimation] = useState(false);
+	const [frames, setFrames] = useState<ArrayItem<string>[][]>([queue.items]);
+
+	const renderElements = frames[currentFrame];
+
+	const handleEnqueue = (value: string) => {
+		const renderFrames: ArrayItem<string>[][] = [];
+		queue.onFrame = (array) => renderFrames.push(array);
+		queue.enqueue(value);
+
+		if (!renderFrames.length) return;
+
+		setFrame(0);
+		setFrames(renderFrames);
+		setLoadOptions({ ...loadOptions, enqueue: true });
+		setAnimation(true);
 	};
 
-	const handleAdd = async (evt: React.FormEvent) => {
-		evt.preventDefault();
-
-		if (!inputValue.trim()) {
-			dispatch(changeValueAction(''));
-			return;
-		}
-		queue.enqueue(inputValue.trim());
-		dispatch(changeValueAction(''));
-
-		const animationGenerator = generateQueueAnimation(renderElements, queue.tail);
-		for await (const elements of animationGenerator) {
-			dispatch(animateAction(elements, 'add'));
-		}
-		dispatch(renderAction(queue.getArray()));
-	};
-
-	const handleDelete = async () => {
-		const animationGenerator = generateQueueAnimation(renderElements, queue.head);
-		for await (const elements of animationGenerator) {
-			dispatch(animateAction(elements, 'delete'));
-		}
+	const handleDequeue = () => {
+		const renderFrames: ArrayItem<string>[][] = [];
+		queue.onFrame = (array) => renderFrames.push(array);
 		queue.dequeue();
-		dispatch(renderAction(queue.getArray()));
+
+		if (!renderFrames.length) return;
+
+		setFrame(0);
+		setFrames(renderFrames);
+		setLoadOptions({ ...loadOptions, dequeue: true });
+		setAnimation(true);
 	};
 
 	const handleClear = () => {
 		queue.clear();
-		dispatch(renderAction(queue.getArray()));
+
+		setFrame(0);
+		setFrames([queue.items]);
 	};
 
 	useEffect(() => {
-		dispatch(renderAction(queue.getArray()));
-		// eslint-disable-next-line
-	}, []);
+		let timeoutId = -1;
+		if (animation && currentFrame < frames.length - 1) {
+			timeoutId = window.setTimeout(() => {
+				setFrame(currentFrame + 1);
+			}, DELAY_1000_MS);
+		} else {
+			const disableOpt = { ...disableOptions };
+			disableOpt.enqueue = queue.size === queue.maxSize;
+			disableOpt.dequeue = disableOpt.clear = queue.size === 0;
+			setDisableOptions(disableOpt);
+
+			setAnimation(false);
+
+			setLoadOptions({ enqueue: false, dequeue: false });
+		}
+		return () => {
+			clearTimeout(timeoutId);
+		};
+	}, [
+		animation,
+		currentFrame,
+		frames.length,
+		disableOptions,
+		queue.size,
+		queue.maxSize
+	]);
 
 	return (
 		<div>
 			<Manager
-				value={inputValue}
-				queueLength={queue.length}
-				queueMaxSize={queue.maxSize}
-				animation={animation}
-				onAdd={handleAdd}
-				onChange={handleOnChangeInputValue}
+				onEnqueue={handleEnqueue}
+				onDequeue={handleDequeue}
 				onClear={handleClear}
-				onDelete={handleDelete}
+				disableOptions={disableOptions}
+				loadOptions={loadOptions}
 			/>
-			<Chart elements={renderElements} extClassName={styles.queue__chart} />
+			{renderElements && (
+				<Chart elements={renderElements} extClassName={styles.chart} />
+			)}
 		</div>
 	);
 }
