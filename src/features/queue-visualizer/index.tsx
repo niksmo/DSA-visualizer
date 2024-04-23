@@ -12,7 +12,7 @@ import {
 } from './utils';
 import styles from './styles.module.css';
 
-export function RingBufferVisualizer() {
+export function QueueVisualizer() {
 	const queue = useQueue();
 	const [{ inputValue, animation, renderElements }, dispatch] = useReducer(
 		queueReducer,
