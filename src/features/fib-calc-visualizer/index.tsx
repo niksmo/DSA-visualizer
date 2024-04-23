@@ -19,7 +19,6 @@ export function FibCalcVisualizer({ extClassName }: IProps) {
 	const renderElements = frames[currentFrame];
 
 	const handleComputeFibNum = (numValue: string) => {
-		console.log(numValue);
 		const renderFrames: ArrayItem<number>[][] = [];
 
 		const fibCalc = new FibCalculator();
