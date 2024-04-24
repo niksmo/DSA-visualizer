@@ -17,7 +17,7 @@ class RenderNode extends RenderItem<string> {
 }
 
 export class LinkedList extends FrameMaker<RenderNode> {
-	public head: Nullable<RenderNode> = null;
+	private _head: Nullable<RenderNode> = null;
 	private _size;
 	private _maxSize;
 
@@ -29,8 +29,8 @@ export class LinkedList extends FrameMaker<RenderNode> {
 
 		if (!values || values.length === 0) return this;
 
-		this.head = new RenderNode(String(values[0]));
-		let curNode = this.head;
+		this._head = new RenderNode(String(values[0]));
+		let curNode = this._head;
 		this._size += 1;
 
 		for (let i = 1; i < values.length && i < this._maxSize; i += 1) {
@@ -38,6 +38,10 @@ export class LinkedList extends FrameMaker<RenderNode> {
 			curNode = curNode.next;
 			this._size += 1;
 		}
+	}
+
+	get head() {
+		return this._head;
 	}
 
 	get size() {
@@ -51,7 +55,7 @@ export class LinkedList extends FrameMaker<RenderNode> {
 	protected _frame(): void {
 		const array: RenderNode[] = [];
 
-		let curNode = this.head;
+		let curNode = this._head;
 
 		while (curNode) {
 			array.push({ ...curNode });
@@ -64,9 +68,31 @@ export class LinkedList extends FrameMaker<RenderNode> {
 
 	private _removeByIdx(idx: number) {}
 
-	private _pop() {}
+	private _pop() {
+		if (!this._head) {
+			throw Error('empty list');
+		}
 
-	public append(value: string) {}
+		let curNode: Nullable<RenderNode> = this._head;
+		let prev;
+
+		while (curNode) {
+			if (!curNode.next) {
+			}
+		}
+	}
+
+	public append(value: string) {
+		const node = new RenderNode(value);
+
+		if (!this._tail) {
+			this._head = this._tail = node;
+		} else {
+			this._tail.next = node;
+		}
+
+		this._size += 1;
+	}
 
 	public pop(idx?: number) {
 		if (!idx) return this._pop();
@@ -78,7 +104,11 @@ export class LinkedList extends FrameMaker<RenderNode> {
 		return this._removeByIdx(idx);
 	}
 
-	public unshift(value: string) {}
+	public unshift(value: string) {
+		if (this._size === 0) {
+			return this.append(value);
+		}
+	}
 
 	public shift() {}
 
