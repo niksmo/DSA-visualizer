@@ -23,7 +23,7 @@
 
 .title {
 	display: inline-block;
-	line-height: 152px;
+	margin-bottom: 20px;
 }
 
 .fibonacci_title {
@@ -91,10 +91,10 @@
 	background-image: url('../../app/assets/images/queue-hover.svg');
 }
 
-.list {
-	background-image: url('../../app/assets/images/list.svg');
+.deque {
+	background-image: url('../../app/assets/images/deque.svg');
 }
 
-.list:hover {
-	background-image: url('../../app/assets/images/list-hover.svg');
+.deque:hover {
+	background-image: url('../../app/assets/images/deque-hover.svg');
 }

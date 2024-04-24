@@ -13,8 +13,9 @@ import {
 	generateDeleteAnimation
 } from './utils';
 import styles from './styles.module.css';
+import './lib';
 
-export function LinkedListVisualizer() {
+export function DequeVisualizer() {
 	const linkedList = useLinkedList();
 	const [{ inputValue, indexValue, animation, renderElements }, dispatch] =
 		useReducer(linkedListReducer, linkedListVisualizerState);

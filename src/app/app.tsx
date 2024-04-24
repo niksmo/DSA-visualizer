@@ -2,7 +2,7 @@ import './assets/styles/index.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {
 	FibonacciPage,
-	ListPage,
+	DequePage,
 	MainPage,
 	RingBufferPage,
 	SortingPage,
@@ -32,7 +32,7 @@ export const App = () => (
 				<RingBufferPage />
 			</Route>
 			<Route path="/list">
-				<ListPage />
+				<DequePage />
 			</Route>
 		</Switch>
 	</BrowserRouter>

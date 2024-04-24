@@ -1,18 +1,24 @@
 .text {
+	--input-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+		'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+
+	--regular-family: 'Montserrat', sans-serif;
+
 	margin: 0;
 	padding: 0;
 }
 
 .text_type_h1 {
-	font-family: 'Montserrat', sans-serif;
+	font-family: var(--regular-family);
 	font-style: normal;
 	font-weight: 900;
-	font-size: 134px;
-	line-height: 163px;
+	font-size: 68px;
+	line-height: 1.2;
 }
 
 .text_type_h2 {
-	font-family: 'Montserrat', sans-serif;
+	font-family: var(--regular-family);
 	font-style: normal;
 	font-weight: 900;
 	font-size: 40px;
@@ -20,7 +26,7 @@
 }
 
 .text_type_h3 {
-	font-family: 'Montserrat', sans-serif;
+	font-family: var(--regular-family);
 	font-style: normal;
 	font-weight: 600;
 	font-size: 32px;
@@ -28,7 +34,7 @@
 }
 
 .text_type_ticker {
-	font-family: 'Montserrat', sans-serif;
+	font-family: var(--regular-family);
 	font-style: normal;
 	font-weight: 900;
 	font-size: 44px;
@@ -36,8 +42,7 @@
 }
 
 .text_type_button {
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	font-family: var(--input-family);
 	font-style: normal;
 	font-weight: 600;
 	font-size: 16px;
@@ -45,8 +50,7 @@
 }
 
 .text_type_input {
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	font-family: var(--input-family);
 	font-style: normal;
 	font-weight: normal;
 	font-size: 18px;
@@ -61,7 +65,7 @@
 }
 
 .text_type_circle {
-	font-family: 'Montserrat', sans-serif;
+	font-family: var(--regular-family);
 	font-style: normal;
 	font-weight: 600;
 	font-size: 18px;
@@ -69,19 +73,11 @@
 }
 
 .text_type_column {
-	font-family: 'Montserrat', sans-serif;
+	font-family: var(--regular-family);
 	font-style: normal;
 	font-weight: 500;
 	font-size: 16px;
 	line-height: 16px;
-}
-
-.text_type_fibonacci {
-	font-family: 'Montserrat', sans-serif;
-	font-style: normal;
-	font-weight: 600;
-	font-size: 11px;
-	line-height: 13px;
 }
 
 .text_color_primary {

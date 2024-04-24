@@ -49,7 +49,7 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [animation, currentFrame, frames]);
+	}, [animation, currentFrame, frames.length]);
 
 	return (
 		<div className={clsx(styles.reverseVisualizer, extClassName)}>

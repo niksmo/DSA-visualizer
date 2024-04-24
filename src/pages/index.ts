@@ -1,6 +1,6 @@
 import { StringComponent } from './string';
 import { FibonacciPage } from './fibonacci-page';
-import { ListPage } from './list-page';
+import { DequePage } from './deque-page';
 import { RingBufferPage } from './queue-page';
 import { MainPage } from './main-page';
 import { SortingPage } from './sorting-page';
@@ -10,7 +10,7 @@ export {
 	StringComponent,
 	FibonacciPage,
 	MainPage,
-	ListPage,
+	DequePage,
 	RingBufferPage,
 	SortingPage,
 	StackPage

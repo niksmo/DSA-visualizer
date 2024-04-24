@@ -17,14 +17,9 @@ export const SolutionLayout: React.FC<SolutionLayoutProps> = ({
 	return (
 		<main className={clsx(styles.content, extClassName)}>
 			<div className={styles.titleBox}>
-				<h1 className={`text text_type_h2 text_color_h1 ${styles.title}`}>
-					МБОУ АЛГОСОШ
+				<h1 className={`text text_type_h2 text_color_h1`}>
+					Алгоритмы и структуры данных
 				</h1>
-				<span
-					className={`text text_type_fibonacci text_color_secondary ${styles.subtitle}`}
-				>
-					им. Фибоначчи
-				</span>
 			</div>
 			<div className={styles.contentCard}>
 				<Link className={styles.link} to="/">

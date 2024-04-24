@@ -45,7 +45,7 @@ export function FibCalcVisualizer({ extClassName }: IProps) {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [currentFrame, animation, frames]);
+	}, [currentFrame, animation, frames.length]);
 
 	return (
 		<div className={clsx(styles.fibVisualizer, extClassName)}>

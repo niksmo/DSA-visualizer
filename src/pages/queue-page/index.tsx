@@ -3,7 +3,7 @@ import { SolutionLayout } from '../../shared/ui/solution-layout';
 
 export function RingBufferPage() {
 	return (
-		<SolutionLayout title="Очередь">
+		<SolutionLayout title={`Очередь\nСтруктура - буферное кольцо`}>
 			<QueueVisualizer />
 		</SolutionLayout>
 	);

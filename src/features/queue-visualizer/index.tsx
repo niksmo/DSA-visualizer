@@ -81,14 +81,7 @@ export function QueueVisualizer() {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [
-		animation,
-		currentFrame,
-		frames.length,
-		disableOptions,
-		queue.size,
-		queue.maxSize
-	]);
+	}, [animation, currentFrame, frames.length]);
 
 	return (
 		<div>

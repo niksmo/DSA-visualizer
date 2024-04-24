@@ -77,14 +77,7 @@ export const StackVisualizer = () => {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [
-		animation,
-		currentFrame,
-		frames.length,
-		disableOptions,
-		stack.size,
-		stack.maxSize
-	]);
+	}, [animation, currentFrame, frames.length]);
 
 	return (
 		<div>

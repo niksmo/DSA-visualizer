@@ -6,13 +6,8 @@ export function MainPage() {
 		<main className={`${styles.content}`}>
 			<div className={styles.title_box}>
 				<h1 className={`text text_type_h1 text_color_h1 noselect ${styles.title}`}>
-					МБОУ АЛГОСОШ
+					Алгоритмы и структуры данных
 				</h1>
-				<p
-					className={`text text_type_fibonacci text_color_secondary noselect ${styles.fibonacci_title}`}
-				>
-					им. Фибоначчи
-				</p>
 			</div>
 			<div className={styles.cards_box} data-testid="navigation">
 				<Link className={styles.link} to="/recursion">
@@ -31,7 +26,7 @@ export function MainPage() {
 					<div className={`${styles.card} ${styles.queue}`} />
 				</Link>
 				<Link className={styles.link} to="/list">
-					<div className={`${styles.card} ${styles.list}`} />
+					<div className={`${styles.card} ${styles.deque}`} />
 				</Link>
 			</div>
 		</main>
