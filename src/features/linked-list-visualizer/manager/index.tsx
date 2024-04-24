@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 import { Input } from '../../../shared/ui/input';
 import { Button } from '../../../shared/ui/button';
 
-interface ILinkedListManagerProps {
+interface IProps {
 	value: string;
 	index: string;
 	listLength: number;
@@ -22,7 +22,7 @@ interface ILinkedListManagerProps {
 	extClassName?: string;
 }
 
-export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
+export function Manager({
 	value,
 	index,
 	listLength,
@@ -37,99 +37,101 @@ export const LinkedListManager: React.FC<ILinkedListManagerProps> = ({
 	onAddByIndex,
 	onDeleteByIndex,
 	extClassName
-}) => (
-	<form className={clsx(styles.controls, extClassName)}>
-		<div className={styles.controls__row}>
-			<Input
-				placeholder="Введите значение"
-				name="value"
-				value={value}
-				maxLength={4}
-				isLimitText
-				extClassName={styles.controls__input}
-				disabled={listLength === maxSize || animation !== null}
-				data-testid="valueInput"
-				onChange={onValueChange}
-			/>
-			<Button
-				text="Добавить в head"
-				linkedList="small"
-				extClassName={clsx(styles.controls__button, 'ml-6')}
-				isLoader={animation === 'prepend'}
-				disabled={value === '' || listLength === maxSize || animation !== null}
-				data-testid="addToHead"
-				onClick={onAddInHead}
-			/>
-			<Button
-				text="Добавить в tail"
-				linkedList="small"
-				extClassName={clsx(styles.controls__button, 'ml-6')}
-				isLoader={animation === 'append'}
-				disabled={value === '' || listLength === maxSize || animation !== null}
-				data-testid="addToTail"
-				onClick={onAddInTail}
-			/>
-			<Button
-				text="Удалить из head"
-				linkedList="small"
-				extClassName={clsx(styles.controls__button, 'ml-6')}
-				isLoader={animation === 'deleteHead'}
-				disabled={listLength === 0 || animation !== null}
-				data-testid="removeFromHead"
-				onClick={onDeleteFromHead}
-			/>
-			<Button
-				text="Удалить из tail"
-				linkedList="small"
-				extClassName={clsx(styles.controls__button, 'ml-6')}
-				isLoader={animation === 'deleteTail'}
-				disabled={listLength === 0 || animation !== null}
-				data-testid="removeFromTail"
-				onClick={onDeleteFromTail}
-			/>
-		</div>
-		<div className={clsx(styles.controls__row, 'mt-6')}>
-			<Input
-				placeholder="Введите индекс"
-				name="index"
-				value={index}
-				type="number"
-				min={0}
-				max={listLength ? listLength - 1 : 0}
-				extClassName={styles.controls__input}
-				disabled={animation !== null || listLength === 0}
-				data-testid="indexInput"
-				onChange={onIndexChange}
-			/>
-			<Button
-				text="Добавить по индексу"
-				linkedList="big"
-				extClassName={clsx(styles.controls__button, 'ml-6')}
-				isLoader={animation === 'addByIndex'}
-				disabled={
-					value === '' ||
-					!index ||
-					listLength === maxSize ||
-					animation !== null ||
-					Number(index) > listLength - 1
-				}
-				data-testid="addByIndex"
-				onClick={onAddByIndex}
-			/>
-			<Button
-				text="Удалить по индексу"
-				linkedList="big"
-				extClassName={clsx(styles.controls__button, 'ml-6')}
-				isLoader={animation === 'deleteByIndex'}
-				disabled={
-					!index ||
-					listLength === 0 ||
-					animation !== null ||
-					Number(index) > listLength - 1
-				}
-				data-testid="removeByIndex"
-				onClick={onDeleteByIndex}
-			/>
-		</div>
-	</form>
-);
+}: IProps) {
+	return (
+		<form className={clsx(styles.controls, extClassName)}>
+			<div className={styles.controls__row}>
+				<Input
+					placeholder="Введите значение"
+					name="value"
+					value={value}
+					maxLength={4}
+					isLimitText
+					extClassName={styles.controls__input}
+					disabled={listLength === maxSize || animation !== null}
+					data-testid="valueInput"
+					onChange={onValueChange}
+				/>
+				<Button
+					text="Добавить в head"
+					size="small"
+					extClassName={clsx(styles.controls__button, 'ml-6')}
+					loader={animation === 'prepend'}
+					disabled={value === '' || listLength === maxSize || animation !== null}
+					data-testid="addToHead"
+					onClick={onAddInHead}
+				/>
+				<Button
+					text="Добавить в tail"
+					size="small"
+					extClassName={clsx(styles.controls__button, 'ml-6')}
+					loader={animation === 'append'}
+					disabled={value === '' || listLength === maxSize || animation !== null}
+					data-testid="addToTail"
+					onClick={onAddInTail}
+				/>
+				<Button
+					text="Удалить из head"
+					size="small"
+					extClassName={clsx(styles.controls__button, 'ml-6')}
+					loader={animation === 'deleteHead'}
+					disabled={listLength === 0 || animation !== null}
+					data-testid="removeFromHead"
+					onClick={onDeleteFromHead}
+				/>
+				<Button
+					text="Удалить из tail"
+					size="small"
+					extClassName={clsx(styles.controls__button, 'ml-6')}
+					loader={animation === 'deleteTail'}
+					disabled={listLength === 0 || animation !== null}
+					data-testid="removeFromTail"
+					onClick={onDeleteFromTail}
+				/>
+			</div>
+			<div className={clsx(styles.controls__row, 'mt-6')}>
+				<Input
+					placeholder="Введите индекс"
+					name="index"
+					value={index}
+					type="number"
+					min={0}
+					max={listLength ? listLength - 1 : 0}
+					extClassName={styles.controls__input}
+					disabled={animation !== null || listLength === 0}
+					data-testid="indexInput"
+					onChange={onIndexChange}
+				/>
+				<Button
+					text="Добавить по индексу"
+					size="big"
+					extClassName={clsx(styles.controls__button, 'ml-6')}
+					loader={animation === 'addByIndex'}
+					disabled={
+						value === '' ||
+						!index ||
+						listLength === maxSize ||
+						animation !== null ||
+						Number(index) > listLength - 1
+					}
+					data-testid="addByIndex"
+					onClick={onAddByIndex}
+				/>
+				<Button
+					text="Удалить по индексу"
+					size="big"
+					extClassName={clsx(styles.controls__button, 'ml-6')}
+					loader={animation === 'deleteByIndex'}
+					disabled={
+						!index ||
+						listLength === 0 ||
+						animation !== null ||
+						Number(index) > listLength - 1
+					}
+					data-testid="removeByIndex"
+					onClick={onDeleteByIndex}
+				/>
+			</div>
+		</form>
+	);
+}

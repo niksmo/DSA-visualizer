@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Chart } from './chart';
 import { Manager } from './manager';
-import type { ArrayItem } from '../../shared/helpers/entities';
+import type { RenderItem } from '../../shared/helpers/entities';
 import { Stack } from './lib';
 import { DELAY_1000_MS } from '../../shared/helpers/delays';
 import styles from './styles.module.css';
@@ -19,14 +19,14 @@ export const StackVisualizer = () => {
 
 	const [currentFrame, setFrame] = useState(0);
 	const [animation, setAnimation] = useState(false);
-	const [frames, setFrames] = useState<ArrayItem<string>[][]>([]);
+	const [frames, setFrames] = useState<RenderItem<string>[][]>([]);
 	const stackRef = useRef(new Stack(MAX_STACK_SIZE));
 
 	const renderElements = frames[currentFrame];
 	const stack = stackRef.current;
 
 	const handlePush = (value: string) => {
-		const renderFrames: ArrayItem<string>[][] = [];
+		const renderFrames: RenderItem<string>[][] = [];
 		stack.onFrame = (array) => renderFrames.push(array);
 		stack.push(value);
 
@@ -39,7 +39,7 @@ export const StackVisualizer = () => {
 	};
 
 	const handlePop = () => {
-		const renderFrames: ArrayItem<string>[][] = [];
+		const renderFrames: RenderItem<string>[][] = [];
 		stack.onFrame = (array) => renderFrames.push(array);
 		stack.pop();
 

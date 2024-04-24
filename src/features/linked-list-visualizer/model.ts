@@ -1,4 +1,4 @@
-import { ArrayItem, ListNode } from '../../shared/helpers/entities';
+import { RenderItem, ListNode } from '../../shared/helpers/entities';
 import { TArrayItem, TListNode } from '../../shared/types';
 
 export type TLinkedList<T> = {
@@ -189,7 +189,7 @@ export class LinkedList<T> implements TLinkedList<T> {
 		if (this.length > 0) {
 			let current = this._head;
 			while (current) {
-				ans.push(new ArrayItem<T>(current.value, null, null));
+				ans.push(new RenderItem<T>(current.value, null, null));
 
 				current = current.next;
 			}

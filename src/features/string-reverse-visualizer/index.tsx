@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { DELAY_1000_MS } from '../../shared/helpers/delays';
-import type { ArrayItem } from '../../shared/helpers/entities';
+import type { RenderItem } from '../../shared/helpers/entities';
 import { Manager } from './manager';
 import { Chart } from './chart';
 import { StringReverser } from './lib';
@@ -14,7 +14,7 @@ interface IProps {
 export function ReverseVisualizer({ extClassName }: IProps) {
 	const [currentFrame, setFrame] = useState(0);
 	const [animation, setAnimation] = useState(false);
-	const [frames, setFrames] = useState<ArrayItem<string>[][]>([]);
+	const [frames, setFrames] = useState<RenderItem<string>[][]>([]);
 
 	const renderElements = frames[currentFrame];
 
@@ -23,7 +23,7 @@ export function ReverseVisualizer({ extClassName }: IProps) {
 
 		if (!trimmedValue) return;
 
-		const renderFrames: ArrayItem<string>[][] = [];
+		const renderFrames: RenderItem<string>[][] = [];
 
 		const reverser = new StringReverser();
 

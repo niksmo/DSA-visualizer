@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ArrayItem } from '../../shared/helpers/entities';
+import { RenderItem } from '../../shared/helpers/entities';
 import { ElementStates } from '../../shared/types';
 import { StringReverser } from './lib';
 
@@ -45,7 +45,7 @@ describe('reverse string', () => {
 	});
 
 	it('should correctly changing items state', () => {
-		const frames: Array<ArrayItem<string>[]> = [];
+		const frames: RenderItem<string>[][] = [];
 
 		const reverser = new StringReverser();
 		reverser.onFrame = (array) => frames.push(array);

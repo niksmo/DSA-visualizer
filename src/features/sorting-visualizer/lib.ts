@@ -1,4 +1,4 @@
-import { ArrayItem, FrameMaker } from '../../shared/helpers/entities';
+import { RenderItem, FrameMaker } from '../../shared/helpers/entities';
 import { getRandomInteger } from '../../shared/helpers/utils';
 import { ElementStates } from '../../shared/types';
 
@@ -17,14 +17,14 @@ export type TSortMethodUnion = (typeof SORT_METHOD)[keyof typeof SORT_METHOD];
 
 export type TSortTypeUnion = (typeof SORT_TYPE)[keyof typeof SORT_TYPE];
 
-export class ArraySorter extends FrameMaker<ArrayItem<number>> {
-	private _array: ArrayItem<number>[] = [];
+export class ArraySorter extends FrameMaker<RenderItem<number>> {
+	private _array: RenderItem<number>[] = [];
 
 	protected _frame() {
 		this.onFrame(this._array.map((item) => ({ ...item })));
 	}
 
-	private _prepareArray(array: ArrayItem<number>[]) {
+	private _prepareArray(array: RenderItem<number>[]) {
 		this._array = array;
 
 		this._setItemState(
@@ -56,7 +56,7 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 		});
 	}
 
-	public selection(array: ArrayItem<number>[], type: TSortTypeUnion) {
+	public selection(array: RenderItem<number>[], type: TSortTypeUnion) {
 		if (array.length < 2) {
 			return array;
 		}
@@ -103,7 +103,7 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 		return this._array;
 	}
 
-	public bubble(array: ArrayItem<number>[], type: TSortTypeUnion) {
+	public bubble(array: RenderItem<number>[], type: TSortTypeUnion) {
 		if (array.length < 2) {
 			return array;
 		}
@@ -150,7 +150,7 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 		return this._array;
 	}
 
-	public insertion(array: ArrayItem<number>[], type: TSortTypeUnion) {
+	public insertion(array: RenderItem<number>[], type: TSortTypeUnion) {
 		if (array.length < 2) {
 			return array;
 		}
@@ -202,7 +202,7 @@ export class ArraySorter extends FrameMaker<ArrayItem<number>> {
 }
 
 export function makeArray() {
-	const makeItem = () => new ArrayItem(getRandomInteger(0, 100));
+	const makeItem = () => new RenderItem(getRandomInteger(0, 100));
 
 	return new Array(getRandomInteger(3, 17)).fill(null).map(makeItem);
 }

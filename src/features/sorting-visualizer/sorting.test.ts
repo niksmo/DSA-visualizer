@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ArrayItem } from '../../shared/helpers/entities';
+import { RenderItem } from '../../shared/helpers/entities';
 import { ArraySorter, SORT_TYPE } from './lib';
 
 describe('sort array', () => {
@@ -9,7 +9,7 @@ describe('sort array', () => {
 		it('should correctly sort empty array', async () => {
 			const array: number[] = [];
 
-			const items = array.map((v) => new ArrayItem(v));
+			const items = array.map((v) => new RenderItem(v));
 
 			sorter.bubble(items, SORT_TYPE.NON_DECREASING);
 
@@ -27,7 +27,7 @@ describe('sort array', () => {
 		it('should correctly sort array with one element', async () => {
 			const array = [3];
 
-			const items = array.map((v) => new ArrayItem(v));
+			const items = array.map((v) => new RenderItem(v));
 
 			sorter.bubble(items, SORT_TYPE.NON_DECREASING);
 
@@ -45,7 +45,7 @@ describe('sort array', () => {
 		it('should correctly sort array with several elements', async () => {
 			const array = [3, 1, 7, 4];
 
-			const items = array.map((v) => new ArrayItem(v));
+			const items = array.map((v) => new RenderItem(v));
 
 			sorter.bubble(items, SORT_TYPE.NON_DECREASING);
 
@@ -65,7 +65,7 @@ describe('sort array', () => {
 		it('should correctly sort empty array', () => {
 			const array: number[] = [];
 
-			const items = array.map((v) => new ArrayItem(v));
+			const items = array.map((v) => new RenderItem(v));
 
 			sorter.selection(items, SORT_TYPE.NON_DECREASING);
 
@@ -83,7 +83,7 @@ describe('sort array', () => {
 		it('should correctly sort array with one element', () => {
 			const array = [3];
 
-			const items = array.map((v) => new ArrayItem(v));
+			const items = array.map((v) => new RenderItem(v));
 
 			sorter.selection(items, SORT_TYPE.NON_DECREASING);
 
@@ -101,7 +101,7 @@ describe('sort array', () => {
 		it('should correctly sort array with several elements', () => {
 			const array = [3, 1, 7, 4];
 
-			const items = array.map((v) => new ArrayItem(v));
+			const items = array.map((v) => new RenderItem(v));
 
 			sorter.selection(items, SORT_TYPE.NON_DECREASING);
 
@@ -121,7 +121,7 @@ describe('sort array', () => {
 		it('should correctly sort empty array', async () => {
 			const array: number[] = [];
 
-			const items = array.map((v) => new ArrayItem(v));
+			const items = array.map((v) => new RenderItem(v));
 
 			sorter.insertion(items, SORT_TYPE.NON_DECREASING);
 
@@ -139,7 +139,7 @@ describe('sort array', () => {
 		it('should correctly sort array with one element', async () => {
 			const array = [3];
 
-			const items = array.map((v) => new ArrayItem(v));
+			const items = array.map((v) => new RenderItem(v));
 
 			sorter.insertion(items, SORT_TYPE.NON_DECREASING);
 
@@ -157,7 +157,7 @@ describe('sort array', () => {
 		it('should correctly sort array with several elements', async () => {
 			const array = [3, 1, 7, 4];
 
-			const items = array.map((v) => new ArrayItem(v));
+			const items = array.map((v) => new RenderItem(v));
 
 			sorter.insertion(items, SORT_TYPE.NON_DECREASING);
 

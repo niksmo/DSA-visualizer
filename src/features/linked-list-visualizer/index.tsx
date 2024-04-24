@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from 'react';
-import { LinkedListChart } from './chart';
-import { LinkedListManager } from './manager';
+import { Chart } from './chart';
+import { Manager } from './manager';
 import {
 	changeValueAction,
 	renderAction,
@@ -14,7 +14,7 @@ import {
 } from './utils';
 import styles from './styles.module.css';
 
-export const LinkedListVisualizer = () => {
+export function LinkedListVisualizer() {
 	const linkedList = useLinkedList();
 	const [{ inputValue, indexValue, animation, renderElements }, dispatch] =
 		useReducer(linkedListReducer, linkedListVisualizerState);
@@ -137,7 +137,7 @@ export const LinkedListVisualizer = () => {
 
 	return (
 		<div>
-			<LinkedListManager
+			<Manager
 				value={inputValue}
 				index={indexValue}
 				listLength={linkedList.length}
@@ -152,10 +152,7 @@ export const LinkedListVisualizer = () => {
 				onAddByIndex={handleAddByIndex}
 				onDeleteByIndex={handleDeleteByIndex}
 			/>
-			<LinkedListChart
-				elements={renderElements}
-				extClassName={styles.linkedList__chart}
-			/>
+			<Chart elements={renderElements} extClassName={styles.linkedList__chart} />
 		</div>
 	);
-};
+}

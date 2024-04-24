@@ -1,8 +1,8 @@
-import { ArrayItem, FrameMaker } from '../../shared/helpers/entities';
+import { RenderItem, FrameMaker } from '../../shared/helpers/entities';
 import { ElementStates } from '../../shared/types';
 
-export class StringReverser extends FrameMaker<ArrayItem<string>> {
-	private _array: ArrayItem<string>[] = [];
+export class StringReverser extends FrameMaker<RenderItem<string>> {
+	private _array: RenderItem<string>[] = [];
 
 	private _swap(idxA: number, idxB: number) {
 		[this._array[idxA], this._array[idxB]] = [
@@ -24,7 +24,7 @@ export class StringReverser extends FrameMaker<ArrayItem<string>> {
 	}
 
 	public reverse(str: string) {
-		this._array = str.split('').map((char) => new ArrayItem<string>(char));
+		this._array = str.split('').map((char) => new RenderItem<string>(char));
 		this._frame();
 
 		let pntLeft = 0;

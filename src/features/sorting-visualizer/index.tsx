@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Chart } from './chart';
 import { Manager } from './manager';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
-import type { ArrayItem } from '../../shared/helpers/entities';
+import type { RenderItem } from '../../shared/helpers/entities';
 import {
 	ArraySorter,
 	type TSortMethodUnion,
@@ -17,7 +17,7 @@ interface IProps {
 export function SortingVisualizer({ extClassName }: IProps) {
 	const [currentFrame, setFrame] = useState(0);
 	const [animation, setAnimation] = useState(false);
-	const [frames, setFrames] = useState<ArrayItem<number>[][]>([makeArray()]);
+	const [frames, setFrames] = useState<RenderItem<number>[][]>([makeArray()]);
 
 	const renderElements = frames[currentFrame];
 
@@ -31,7 +31,7 @@ export function SortingVisualizer({ extClassName }: IProps) {
 
 		const sorter = new ArraySorter();
 
-		const renderFrames: Array<ArrayItem<number>[]> = [];
+		const renderFrames: RenderItem<number>[][] = [];
 
 		sorter.onFrame = (frame) => renderFrames.push(frame);
 		sorter[sortMethod](array, sortType);

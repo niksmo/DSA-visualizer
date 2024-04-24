@@ -1,20 +1,18 @@
-import React from 'react';
 import { clsx } from 'clsx';
-import { ElementStates, TArrayItem } from '../../../shared/types';
+import { ElementStates } from '../../../shared/types';
 import { Circle } from '../../../shared/ui/circle';
 import { ArrowIcon } from '../../../shared/ui/icons';
+import type { RenderItem } from '../../../shared/helpers/entities';
 import styles from './styles.module.css';
 
-interface ILinkedListChartProps {
-	elements: TArrayItem<string>[];
+interface IProps {
+	elements: RenderItem<string>[];
 	extClassName?: string;
 }
 
-export const LinkedListChart: React.FC<ILinkedListChartProps> = ({
-	elements,
-	extClassName
-}) => {
+export function Chart({ elements, extClassName }: IProps) {
 	const getHead = (headValue: string | null) => {
+		//bug if user set 'head' value for list item
 		if (headValue === 'head') {
 			return headValue;
 		}
@@ -28,6 +26,7 @@ export const LinkedListChart: React.FC<ILinkedListChartProps> = ({
 
 	const getTail = (tailValue: string | null) => {
 		if (tailValue === 'tail') {
+			//bug if user set 'tail' value for list item
 			return tailValue;
 		}
 
@@ -59,4 +58,4 @@ export const LinkedListChart: React.FC<ILinkedListChartProps> = ({
 			))}
 		</ul>
 	);
-};
+}

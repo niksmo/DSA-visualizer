@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from 'react';
 import { LinkedList } from './model';
-import { ArrayItem, ListNode } from '../../shared/helpers/entities';
+import { RenderItem, ListNode } from '../../shared/helpers/entities';
 import { getRandomInteger, waitWithDelay } from '../../shared/helpers/utils';
 import { ElementStates, TArrayItem } from '../../shared/types';
 import { DELAY_1000_MS } from '../../shared/helpers/delays';
@@ -125,7 +125,7 @@ export async function* generateAddAnimation(
 		yield [...array];
 		await delay();
 		array[0].head = null;
-		array.unshift(new ArrayItem(value, 'head', null));
+		array.unshift(new RenderItem(value, 'head', null));
 		array[0].state = ElementStates.Modified;
 		yield [...array];
 		await delay();
@@ -142,7 +142,7 @@ export async function* generateAddAnimation(
 			array[tailIndex].head = null;
 		}
 		array[tailIndex].tail = null;
-		array.push(new ArrayItem(value, null, 'tail'));
+		array.push(new RenderItem(value, null, 'tail'));
 		array[array.length - 1].state = ElementStates.Modified;
 		yield [...array];
 		await delay();
@@ -171,7 +171,7 @@ export async function* generateAddAnimation(
 			await delay();
 		}
 		array[currentIndex].head = null;
-		array.splice(currentIndex, 0, new ArrayItem(value));
+		array.splice(currentIndex, 0, new RenderItem(value));
 		array[currentIndex].state = ElementStates.Modified;
 		yield [...array];
 		await delay();

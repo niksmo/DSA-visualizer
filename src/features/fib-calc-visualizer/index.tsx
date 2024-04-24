@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { Chart } from './chart';
 import { Manager } from './manager';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
-import type { ArrayItem } from '../../shared/helpers/entities';
+import type { RenderItem } from '../../shared/helpers/entities';
 import { FibCalculator } from './lib';
 import styles from './styles.module.css';
 
@@ -14,12 +14,12 @@ interface IProps {
 export function FibCalcVisualizer({ extClassName }: IProps) {
 	const [animation, setAnimation] = useState(false);
 	const [currentFrame, setFrame] = useState(0);
-	const [frames, setFrames] = useState<ArrayItem<number>[][]>([]);
+	const [frames, setFrames] = useState<RenderItem<number>[][]>([]);
 
 	const renderElements = frames[currentFrame];
 
 	const handleComputeFibNum = (numValue: string) => {
-		const renderFrames: ArrayItem<number>[][] = [];
+		const renderFrames: RenderItem<number>[][] = [];
 
 		const fibCalc = new FibCalculator();
 		fibCalc.onFrame = (array) => renderFrames.push(array);

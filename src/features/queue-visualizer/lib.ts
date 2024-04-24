@@ -1,11 +1,11 @@
-import { ArrayItem, FrameMaker } from '../../shared/helpers/entities';
+import { RenderItem, FrameMaker } from '../../shared/helpers/entities';
 import { ElementStates } from '../../shared/types';
 
 const LABEL_HEAD = 'head';
 const LABEL_TAIL = 'tail';
 
-export class Queue extends FrameMaker<ArrayItem<string>> {
-	private _array: ArrayItem<string>[] = [];
+export class Queue extends FrameMaker<RenderItem<string>> {
+	private _array: RenderItem<string>[] = [];
 	private _maxSize: number;
 	private _size = 0;
 	private _head = 0;
@@ -52,7 +52,7 @@ export class Queue extends FrameMaker<ArrayItem<string>> {
 			this._tail = (this._tail + 1) % this._maxSize;
 		}
 
-		this._array[this._tail] = new ArrayItem(value);
+		this._array[this._tail] = new RenderItem(value);
 		this._array[this._tail].state = ElementStates.Changing;
 		this._array[this._tail].tail = LABEL_TAIL;
 
@@ -92,7 +92,7 @@ export class Queue extends FrameMaker<ArrayItem<string>> {
 	public clear() {
 		this._array = new Array(this._maxSize)
 			.fill(null)
-			.map(() => new ArrayItem(''));
+			.map(() => new RenderItem(''));
 
 		this._head = 0;
 		this._tail = 0;

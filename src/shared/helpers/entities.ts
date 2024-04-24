@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import { ElementStates, TListNode } from '../types';
 
-export class ArrayItem<T = number> {
+export class RenderItem<T = number> {
 	id: string;
 	value: T;
 	state: ElementStates;

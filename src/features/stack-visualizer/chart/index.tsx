@@ -1,10 +1,10 @@
 import { clsx } from 'clsx';
 import { Circle } from '../../../shared/ui/circle';
-import type { ArrayItem } from '../../../shared/helpers/entities';
+import type { RenderItem } from '../../../shared/helpers/entities';
 import styles from './styles.module.css';
 
 interface IProps {
-	elements: ArrayItem<string>[];
+	elements: RenderItem<string>[];
 	extClassName?: string;
 }
 

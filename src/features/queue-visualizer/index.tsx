@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Chart } from './chart';
 import { Manager } from './manager';
 import { DELAY_1000_MS } from '../../shared/helpers/delays';
-import type { ArrayItem } from '../../shared/helpers/entities';
+import type { RenderItem } from '../../shared/helpers/entities';
 import { Queue } from './lib';
 import styles from './styles.module.css';
 
@@ -25,12 +25,12 @@ export function QueueVisualizer() {
 
 	const [currentFrame, setFrame] = useState(0);
 	const [animation, setAnimation] = useState(false);
-	const [frames, setFrames] = useState<ArrayItem<string>[][]>([queue.items]);
+	const [frames, setFrames] = useState<RenderItem<string>[][]>([queue.items]);
 
 	const renderElements = frames[currentFrame];
 
 	const handleEnqueue = (value: string) => {
-		const renderFrames: ArrayItem<string>[][] = [];
+		const renderFrames: RenderItem<string>[][] = [];
 		queue.onFrame = (array) => renderFrames.push(array);
 		queue.enqueue(value);
 
@@ -43,7 +43,7 @@ export function QueueVisualizer() {
 	};
 
 	const handleDequeue = () => {
-		const renderFrames: ArrayItem<string>[][] = [];
+		const renderFrames: RenderItem<string>[][] = [];
 		queue.onFrame = (array) => renderFrames.push(array);
 		queue.dequeue();
 

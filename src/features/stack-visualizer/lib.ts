@@ -1,10 +1,10 @@
-import { ArrayItem, FrameMaker } from '../../shared/helpers/entities';
+import { RenderItem, FrameMaker } from '../../shared/helpers/entities';
 import { ElementStates } from '../../shared/types';
 
 const LABEL_TOP = 'top';
 
-export class Stack extends FrameMaker<ArrayItem<string>> {
-	private _array: ArrayItem<string>[] = [];
+export class Stack extends FrameMaker<RenderItem<string>> {
+	private _array: RenderItem<string>[] = [];
 	private _maxSize;
 
 	constructor(maxSize: number) {
@@ -33,7 +33,7 @@ export class Stack extends FrameMaker<ArrayItem<string>> {
 
 		if (this._array.length) this.top.head = null;
 
-		const item = new ArrayItem(value, LABEL_TOP);
+		const item = new RenderItem(value, LABEL_TOP);
 		item.state = ElementStates.Changing;
 		this._array.push(item);
 		this._frame();

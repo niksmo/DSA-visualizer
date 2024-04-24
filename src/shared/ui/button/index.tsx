@@ -9,7 +9,7 @@ const Icon = {
 	Descending: DescendingIcon
 };
 
-type IProps = React.HTMLProps<HTMLButtonElement> & {
+type IProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 	text?: string;
 	type?: 'button' | 'submit' | 'reset';
 	icon?: keyof typeof Icon;

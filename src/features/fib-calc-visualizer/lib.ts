@@ -1,7 +1,7 @@
-import { ArrayItem, FrameMaker } from '../../shared/helpers/entities';
+import { RenderItem, FrameMaker } from '../../shared/helpers/entities';
 
-export class FibCalculator extends FrameMaker<ArrayItem<number>> {
-	private _array: ArrayItem<number>[] = [];
+export class FibCalculator extends FrameMaker<RenderItem<number>> {
+	private _array: RenderItem<number>[] = [];
 
 	protected _frame(): void {
 		this.onFrame(this._array.map((item) => ({ ...item })));
@@ -16,8 +16,8 @@ export class FibCalculator extends FrameMaker<ArrayItem<number>> {
 		let c = -1;
 
 		while (this._array.length < 2) {
-			(this._array.length === 0 && this._array.push(new ArrayItem(a))) ||
-				this._array.push(new ArrayItem(b));
+			(this._array.length === 0 && this._array.push(new RenderItem(a))) ||
+				this._array.push(new RenderItem(b));
 			this._frame();
 		}
 
@@ -26,7 +26,7 @@ export class FibCalculator extends FrameMaker<ArrayItem<number>> {
 			a = b;
 			b = c;
 
-			this._array.push(new ArrayItem(c));
+			this._array.push(new RenderItem(c));
 			this._frame();
 		}
 
