@@ -61,9 +61,23 @@ export function DequeVisualizer() {
 		setAnimation(true);
 	};
 
-	const handleInsert = (idx: number, value: string) => {};
+	const handleInsert = (idx: number, value: string) => {
+		const animationFrames: RenderNode[][] = [];
+		deque.onFrame = (frame) => animationFrames.push(frame);
+		deque.insert(idx, value);
+		setFrames(animationFrames);
+		setFrame(0);
+		setAnimation(true);
+	};
 
-	const handleDelete = (idx: number) => {};
+	const handleDelete = (idx: number) => {
+		const animationFrames: RenderNode[][] = [];
+		deque.onFrame = (frame) => animationFrames.push(frame);
+		deque.delete(idx);
+		setFrames(animationFrames);
+		setFrame(0);
+		setAnimation(true);
+	};
 
 	useEffect(() => {
 		let timeoutId = -1;
