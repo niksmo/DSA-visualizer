@@ -29,6 +29,10 @@ export function Manager({
 
 	const handleEnqueue = (evt: React.FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
+
+		const value = inputValue.trim();
+		if (!value) return;
+
 		onEnqueue(inputValue);
 		setInputValue('');
 	};

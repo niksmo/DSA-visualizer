@@ -39,6 +39,7 @@ export function QueueVisualizer() {
 		setFrame(0);
 		setFrames(renderFrames);
 		setLoadOptions({ ...loadOptions, enqueue: true });
+		setDisableOptions({ enqueue: true, dequeue: true, clear: true });
 		setAnimation(true);
 	};
 
@@ -52,6 +53,7 @@ export function QueueVisualizer() {
 		setFrame(0);
 		setFrames(renderFrames);
 		setLoadOptions({ ...loadOptions, dequeue: true });
+		setDisableOptions({ enqueue: true, dequeue: true, clear: true });
 		setAnimation(true);
 	};
 
