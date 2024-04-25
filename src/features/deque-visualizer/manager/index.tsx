@@ -65,6 +65,7 @@ export function Manager({
 	const handleDelete = () => {
 		if (!index.length) return;
 		onDelete(parseInt(index));
+		setIndex('');
 	};
 
 	return (

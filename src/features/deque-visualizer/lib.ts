@@ -228,17 +228,21 @@ export class Deque extends FrameMaker<RenderNode> {
 			ElementStates.Changing
 		);
 
-		let node = this._head.next;
+		let node = this._head;
 
-		for (let i = 0; i < idx; i += 1) {
-			if (!node || !node.prev) return;
-			node.prev.head = null;
+		for (let i = 0; i <= idx; i += 1) {
+			node = node.next as RenderNode;
+			node.prev!.passed = true;
 			node.head = insertingNode;
 			node.state = ElementStates.Changing;
+
+			if (i == 1) {
+				node.prev!.head = LABEL_HEAD;
+			}
+
 			this._frame();
 
-			node.passed = true;
-			node = node.next;
+			node.head = null;
 		}
 
 		if (!(node && node.prev && node.next)) return;
@@ -249,8 +253,7 @@ export class Deque extends FrameMaker<RenderNode> {
 		insertingNode.next = node;
 		node.prev.next = insertingNode;
 		node.prev = insertingNode;
-		this._frame();
-
+		node.state = ElementStates.Default;
 		insertingNode.state = ElementStates.Modified;
 		this._frame();
 
