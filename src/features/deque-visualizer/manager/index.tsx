@@ -4,6 +4,15 @@ import { Input } from '../../../shared/ui/input';
 import { Button } from '../../../shared/ui/button';
 import { useState } from 'react';
 
+export const enum LoadEnum {
+	pushFront = 1,
+	popFront,
+	pushBack,
+	popBack,
+	insert,
+	delete
+}
+
 interface IProps {
 	onPushFront: (value: string) => void;
 	onPopFront: () => void;
@@ -13,6 +22,8 @@ interface IProps {
 	onDelete: (idx: number) => void;
 	minIndex: number;
 	maxIndex: number;
+	disableOptions: { push: boolean; pop: boolean };
+	load: LoadEnum | false;
 	extClassName?: string;
 }
 
@@ -25,6 +36,8 @@ export function Manager({
 	onDelete,
 	minIndex,
 	maxIndex,
+	disableOptions,
+	load = false,
 	extClassName
 }: IProps) {
 	const [value, setValue] = useState('');
@@ -78,7 +91,7 @@ export function Manager({
 					maxLength={4}
 					isLimitText
 					extClassName={styles.controls__input}
-					disabled={false}
+					disabled={Boolean(load) || disableOptions.push}
 					data-testid="valueInput"
 					onChange={handleValueChange}
 				/>
@@ -86,8 +99,8 @@ export function Manager({
 					text="Добавить в head"
 					size="small"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={false}
-					disabled={false}
+					loader={load === LoadEnum.pushFront}
+					disabled={Boolean(load) || disableOptions.push}
 					data-testid="addToHead"
 					onClick={handlePushFront}
 				/>
@@ -95,8 +108,8 @@ export function Manager({
 					text="Добавить в tail"
 					size="small"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={false}
-					disabled={false}
+					loader={load === LoadEnum.pushBack}
+					disabled={Boolean(load) || disableOptions.push}
 					data-testid="addToTail"
 					onClick={handlePushBack}
 				/>
@@ -104,8 +117,8 @@ export function Manager({
 					text="Удалить из head"
 					size="small"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={false}
-					disabled={false}
+					loader={load === LoadEnum.popFront}
+					disabled={Boolean(load) || disableOptions.pop}
 					data-testid="removeFromHead"
 					onClick={onPopFront}
 				/>
@@ -113,8 +126,8 @@ export function Manager({
 					text="Удалить из tail"
 					size="small"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={false}
-					disabled={false}
+					loader={load === LoadEnum.popBack}
+					disabled={Boolean(load) || disableOptions.pop}
 					data-testid="removeFromTail"
 					onClick={onPopBack}
 				/>
@@ -128,7 +141,7 @@ export function Manager({
 					min={minIndex}
 					max={maxIndex}
 					extClassName={styles.controls__input}
-					disabled={false}
+					disabled={Boolean(load)}
 					data-testid="indexInput"
 					onChange={handleIndexChange}
 				/>
@@ -136,8 +149,8 @@ export function Manager({
 					text="Добавить по индексу"
 					size="big"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={false}
-					disabled={false}
+					loader={load === LoadEnum.insert}
+					disabled={Boolean(load) || disableOptions.push}
 					data-testid="addByIndex"
 					onClick={handleInsert}
 				/>
@@ -145,8 +158,8 @@ export function Manager({
 					text="Удалить по индексу"
 					size="big"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={false}
-					disabled={false}
+					loader={load === LoadEnum.delete}
+					disabled={Boolean(load) || disableOptions.pop}
 					data-testid="removeByIndex"
 					onClick={handleDelete}
 				/>

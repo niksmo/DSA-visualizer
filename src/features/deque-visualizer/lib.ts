@@ -231,7 +231,7 @@ export class Deque extends FrameMaker<RenderNode> {
 		let node = this._head;
 
 		for (let i = 0; i <= idx; i += 1) {
-			node = node.next as RenderNode;
+			node = node.next!;
 			node.prev!.passed = true;
 			node.head = insertingNode;
 			node.state = ElementStates.Changing;
