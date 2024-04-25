@@ -35,6 +35,7 @@ export const StackVisualizer = () => {
 		setFrame(0);
 		setFrames(renderFrames);
 		setLoadOptions({ ...loadOptions, push: true });
+		setDisableOptions({ push: true, pop: true, clear: true });
 		setAnimation(true);
 	};
 
@@ -48,6 +49,7 @@ export const StackVisualizer = () => {
 		setFrame(0);
 		setFrames(renderFrames);
 		setLoadOptions({ ...loadOptions, pop: true });
+		setDisableOptions({ push: true, pop: true, clear: true });
 		setAnimation(true);
 	};
 
