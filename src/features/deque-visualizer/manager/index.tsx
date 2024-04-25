@@ -44,22 +44,26 @@ export function Manager({
 	};
 
 	const handlePushFront = () => {
+		if (!value.length) return;
 		onPushFront(value);
 		setValue('');
 	};
 
 	const handlePushBack = () => {
+		if (!value.length) return;
 		onPushBack(value);
 		setValue('');
 	};
 
 	const handleInsert = () => {
+		if (!value.length || !index.length) return;
 		onInsert(parseInt(index), value);
 		setValue('');
 		setIndex('');
 	};
 
 	const handleDelete = () => {
+		if (!index.length) return;
 		onDelete(parseInt(index));
 	};
 

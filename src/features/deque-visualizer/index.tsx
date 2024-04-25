@@ -3,15 +3,17 @@ import { Chart } from './chart';
 import { Manager } from './manager';
 import { Deque, type RenderNode } from './lib';
 import { getRandomInteger } from '../../shared/helpers/utils';
-import styles from './styles.module.css';
 import { DELAY_1000_MS } from '../../shared/helpers/delays';
+import styles from './styles.module.css';
 
 const MAX_SIZE = 7;
 const INIT_LIST_SIZE = 5;
+const MIN_RNDM_INT = 10;
+const MAX_RNDM_INT = 90;
 
 const INIT_LIST = Array(INIT_LIST_SIZE)
 	.fill(null)
-	.map(() => getRandomInteger(10, 90));
+	.map(() => getRandomInteger(MIN_RNDM_INT, MAX_RNDM_INT));
 
 export function DequeVisualizer() {
 	const dequeRef = useRef(new Deque(MAX_SIZE, INIT_LIST));
@@ -25,11 +27,8 @@ export function DequeVisualizer() {
 
 	const handlePushFront = (value: string) => {
 		const animationFrames: RenderNode[][] = [];
-
 		deque.onFrame = (frame) => animationFrames.push(frame);
-
 		deque.pushFront(value);
-
 		setFrames(animationFrames);
 		setFrame(0);
 		setAnimation(true);
