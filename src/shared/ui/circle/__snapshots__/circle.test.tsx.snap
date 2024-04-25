@@ -11,7 +11,7 @@ exports[`Circle component test > should render with all existing states 1`] = `
       data-testid="circle-head"
     />
     <div
-      class="_circle_8fdf19   _default_8fdf19"
+      class="_circle_8fdf19 _default_8fdf19"
       data-testid="circle-main"
     >
       <p
@@ -39,7 +39,7 @@ exports[`Circle component test > should render with all existing states 1`] = `
       data-testid="circle-head"
     />
     <div
-      class="_circle_8fdf19   _changing_8fdf19"
+      class="_circle_8fdf19 _changing_8fdf19"
       data-testid="circle-main"
     >
       <p
@@ -67,7 +67,7 @@ exports[`Circle component test > should render with all existing states 1`] = `
       data-testid="circle-head"
     />
     <div
-      class="_circle_8fdf19   _modified_8fdf19"
+      class="_circle_8fdf19 _modified_8fdf19"
       data-testid="circle-main"
     >
       <p
@@ -98,18 +98,6 @@ exports[`Circle component test > should render with index 1`] = `
 </p>
 `;
 
-exports[`Circle component test > should render with small prop 1`] = `
-<div
-  class="_circle_8fdf19  _small_8fdf19 _default_8fdf19"
-  data-testid="circle-main"
->
-  <p
-    class="text text_type_circle text_color_input _letter_8fdf19"
-    data-testid="circle-value"
-  />
-</div>
-`;
-
 exports[`Circle component test > should render with react element in head 1`] = `
 <a>
   abcd
@@ -120,6 +108,18 @@ exports[`Circle component test > should render with react element in tail 1`] = 
 <a>
   abcd
 </a>
+`;
+
+exports[`Circle component test > should render with small prop 1`] = `
+<div
+  class="_circle_8fdf19 _small_8fdf19 _default_8fdf19"
+  data-testid="circle-main"
+>
+  <p
+    class="text text_type_circle text_color_input _letter_8fdf19"
+    data-testid="circle-value"
+  />
+</div>
 `;
 
 exports[`Circle component test > should render with text 1`] = `
@@ -159,7 +159,7 @@ exports[`Circle component test > should render without text 1`] = `
     data-testid="circle-head"
   />
   <div
-    class="_circle_8fdf19   _default_8fdf19"
+    class="_circle_8fdf19 _default_8fdf19"
     data-testid="circle-main"
   >
     <p
