@@ -69,7 +69,7 @@ export class Deque extends FrameMaker<RenderNode> {
 
 			if (curNode.tail instanceof RenderNode) {
 				renderItem.tail = Object.assign({}, curNode.tail);
-				Object.setPrototypeOf(renderItem.head, curNode.tail);
+				Object.setPrototypeOf(renderItem.tail, curNode.tail);
 			}
 
 			renderList.push(renderItem);
@@ -132,8 +132,15 @@ export class Deque extends FrameMaker<RenderNode> {
 
 		if (!node || !node.next) return;
 
+		node.tail = new RenderNode(null, node.value, null, ElementStates.Changing);
+		node.value = '';
+		this._frame();
+
 		this._head.next = node.next;
 		node.next.prev = this._head;
+		this._head.next.head = LABEL_HEAD;
+		this._frame();
+
 		this._size -= 1;
 		return node.value;
 	}

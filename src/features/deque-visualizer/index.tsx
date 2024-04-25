@@ -35,7 +35,17 @@ export function DequeVisualizer() {
 		setAnimation(true);
 	};
 
-	const handlePopFront = () => {};
+	const handlePopFront = () => {
+		const animationFrames: RenderNode[][] = [];
+
+		deque.onFrame = (frame) => animationFrames.push(frame);
+
+		deque.popFront();
+
+		setFrames(animationFrames);
+		setFrame(0);
+		setAnimation(true);
+	};
 
 	const handlePushBack = (value: string) => {};
 
