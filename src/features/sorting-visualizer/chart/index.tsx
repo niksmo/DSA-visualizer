@@ -1,7 +1,8 @@
 import { clsx } from 'clsx';
 import { Column } from '../../../shared/ui/column';
-import type { RenderItem } from '../../../shared/helpers/entities';
+import { RenderItem } from '../../../shared/helpers/entities';
 import styles from './styles.module.css';
+import { Circle } from '../../../shared/ui/circle';
 
 interface IProps {
 	elements: RenderItem[];
@@ -17,7 +18,11 @@ export function Chart({ elements, extClassName }: IProps) {
 					elevation={item.value}
 					state={item.state}
 					extClassName={clsx(styles.sortingChart__scale, 'mr-5')}
-					compareWith={item.tail}
+					compareWith={
+						item.tail instanceof RenderItem ? (
+							<Circle small letter={String(item.tail.value)} state={item.tail.state} />
+						) : null
+					}
 				/>
 			))}
 		</div>

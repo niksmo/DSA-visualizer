@@ -4,7 +4,7 @@ export class FibCalculator extends FrameMaker<RenderItem<number>> {
 	private _array: RenderItem<number>[] = [];
 
 	protected _frame(): void {
-		this.onFrame(this._array.map((item) => ({ ...item })));
+		this.onFrame(this._array.map((item) => Object.assign({}, item)));
 	}
 
 	public compute(num: number) {

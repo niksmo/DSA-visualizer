@@ -41,9 +41,10 @@ export const Circle: React.FC<CircleProps> = ({
 			</div>
 			<div
 				data-testid="circle-main"
-				className={`${styles.circle}  ${small ? styles.small : ''} ${
-					styles[state]
-				}`}
+				// className={`${styles.circle}  ${small ? styles.small : ''} ${
+				// 	styles[state]
+				// }`}
+				className={clsx(styles.circle, small && styles.small, styles[state])}
 			>
 				<p
 					data-testid="circle-value"

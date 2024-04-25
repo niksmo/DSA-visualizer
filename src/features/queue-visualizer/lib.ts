@@ -34,11 +34,11 @@ export class Queue extends FrameMaker<RenderItem<string>> {
 	}
 
 	get items() {
-		return this._array.map((item) => ({ ...item }));
+		return this._array.map((item) => Object.assign({}, item));
 	}
 
 	protected _frame(): void {
-		this.onFrame(this._array.map((item) => ({ ...item })));
+		this.onFrame(this._array.map((item) => Object.assign({}, item)));
 	}
 
 	public enqueue(value: string) {

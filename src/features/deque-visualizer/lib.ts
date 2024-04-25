@@ -1,7 +1,11 @@
 import { Nullable } from 'vitest';
 import { FrameMaker, RenderItem } from '../../shared/helpers/entities';
+import { ElementStates } from '../../shared/types';
 
-class RenderNode extends RenderItem<string> {
+const LABEL_HEAD = 'head';
+const LABEL_TAIL = 'tail';
+
+export class RenderNode extends RenderItem<string> {
 	public next: Nullable<RenderNode>;
 	public prev: Nullable<RenderNode>;
 
@@ -9,11 +13,12 @@ class RenderNode extends RenderItem<string> {
 		prev: Nullable<RenderNode> = null,
 		value: string,
 		next: Nullable<RenderNode> = null,
-		head?: string | null,
-		tail?: string | null,
+		state: ElementStates = ElementStates.Default,
+		head?: string | RenderItem<string> | null,
+		tail?: string | RenderItem<string> | null,
 		passed?: boolean
 	) {
-		super(value, head, tail, passed);
+		super(value, state, head, tail, passed);
 		this.prev = prev;
 		this.next = next;
 	}
@@ -44,6 +49,33 @@ export class Deque extends FrameMaker<RenderNode> {
 		if (!values || values.length === 0) return this;
 
 		values.forEach((v) => this.pushBack(String(v)));
+		this._head.next.head = LABEL_HEAD;
+		this._tail.prev.tail = LABEL_TAIL;
+	}
+
+	get items() {
+		const renderList: RenderNode[] = [];
+
+		let curNode = this._head.next;
+
+		while (curNode && curNode.value !== Deque.DUMMY_TAIL) {
+			const renderItem = Object.assign({}, curNode);
+			Object.setPrototypeOf(renderItem, curNode);
+
+			if (curNode.head instanceof RenderNode) {
+				renderItem.head = Object.assign({}, curNode.head);
+				Object.setPrototypeOf(renderItem.head, curNode.head);
+			}
+
+			if (curNode.tail instanceof RenderNode) {
+				renderItem.tail = Object.assign({}, curNode.tail);
+				Object.setPrototypeOf(renderItem.head, curNode.tail);
+			}
+
+			renderList.push(renderItem);
+			curNode = curNode.next;
+		}
+		return renderList;
 	}
 
 	get head() {
@@ -63,26 +95,31 @@ export class Deque extends FrameMaker<RenderNode> {
 	}
 
 	protected _frame(): void {
-		const array: RenderNode[] = [];
-
-		let curNode = this._head.next;
-
-		while (curNode && curNode.value !== Deque.DUMMY_TAIL) {
-			array.push({ ...curNode });
-			curNode = curNode.next;
-		}
-
-		//debugg
-		console.log(array.map((item) => `${item.value}: ${item.state}`));
-
-		this.onFrame(array);
+		this.onFrame(this.items);
 	}
 
 	public pushFront(value: string) {
 		const node = new RenderNode(this.head, value, this.head.next);
-		if (this.head.next) this.head.next.prev = node;
-		this.head.next = node;
+
+		if (!this._head.next) return;
+
+		if (this._size > 0) {
+			node.state = ElementStates.Changing;
+			this._head.next.head = node;
+			this._frame();
+		}
+
+		this._head.next.head = null;
+		this._head.next.prev = node;
+		this._head.next = node;
 		this._size += 1;
+
+		node.head = LABEL_HEAD;
+		node.state = ElementStates.Modified;
+		this._frame();
+		node.state = ElementStates.Default;
+		this._frame();
+
 		return this._size;
 	}
 
@@ -93,7 +130,7 @@ export class Deque extends FrameMaker<RenderNode> {
 
 		const node = this._head.next;
 
-		if (!node || !node.next) return -1;
+		if (!node || !node.next) return;
 
 		this._head.next = node.next;
 		node.next.prev = this._head;
@@ -102,7 +139,7 @@ export class Deque extends FrameMaker<RenderNode> {
 	}
 
 	public pushBack(value: string) {
-		const node = new RenderNode(this.tail.prev, value, this.tail);
+		const node = new RenderNode(this._tail.prev, value, this._tail);
 		if (this._tail.prev) this._tail.prev.next = node;
 		this._tail.prev = node;
 		this._size += 1;
@@ -116,7 +153,7 @@ export class Deque extends FrameMaker<RenderNode> {
 
 		const node = this._tail.prev;
 
-		if (!node || !node.prev) return -1;
+		if (!node || !node.prev) return;
 
 		this._tail.prev = node.prev;
 		node.prev.next = this._tail;

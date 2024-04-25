@@ -1,12 +1,12 @@
+import type React from 'react';
 import { clsx } from 'clsx';
 import { ElementStates } from '../../types';
 import styles from './styles.module.css';
-import { Circle } from '../circle';
 
 interface ColumnProps {
 	elevation: number;
 	state?: ElementStates;
-	compareWith?: number | string | null;
+	compareWith?: number | string | React.ReactElement | null;
 	extClassName?: string;
 }
 
@@ -23,15 +23,7 @@ export function Column({
 				style={{ height: 280 * elevation * 0.01 || 1 }}
 			/>
 			<p className={`text text_type_column text_color_input mt-3`}>{elevation}</p>
-			<div className={styles.stored}>
-				{compareWith && (
-					<Circle
-						small
-						letter={String(compareWith)}
-						state={ElementStates.Changing}
-					/>
-				)}
-			</div>
+			<div className={styles.stored}>{compareWith}</div>
 		</div>
 	);
 }

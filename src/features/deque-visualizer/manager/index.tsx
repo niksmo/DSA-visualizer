@@ -1,43 +1,61 @@
-import React from 'react';
 import { clsx } from 'clsx';
-import { TAnimationType } from '../utils';
 import styles from './styles.module.css';
 import { Input } from '../../../shared/ui/input';
 import { Button } from '../../../shared/ui/button';
+import { useState } from 'react';
 
 interface IProps {
-	value: string;
-	index: string;
-	listLength: number;
-	maxSize: number;
-	animation: TAnimationType;
-	onValueChange: (evt: React.FormEvent<HTMLInputElement>) => void;
-	onIndexChange: (evt: React.FormEvent<HTMLInputElement>) => void;
-	onAddInHead: () => void;
-	onAddInTail: () => void;
-	onDeleteFromHead: () => void;
-	onDeleteFromTail: () => void;
-	onAddByIndex: () => void;
-	onDeleteByIndex: () => void;
+	onPushFront: (value: string) => void;
+	onPopFront: () => void;
+	onPushBack: (value: string) => void;
+	onPopBack: () => void;
+	onInsert: (idx: number, value: string) => void;
+	onDelete: (idx: number) => void;
+	maxIndex: number;
 	extClassName?: string;
 }
 
 export function Manager({
-	value,
-	index,
-	listLength,
-	maxSize,
-	animation,
-	onValueChange,
-	onIndexChange,
-	onAddInHead,
-	onAddInTail,
-	onDeleteFromHead,
-	onDeleteFromTail,
-	onAddByIndex,
-	onDeleteByIndex,
+	onPushFront,
+	onPopFront,
+	onPushBack,
+	onPopBack,
+	onInsert,
+	onDelete,
+	maxIndex,
 	extClassName
 }: IProps) {
+	const [value, setValue] = useState('');
+	const [index, setIndex] = useState('');
+
+	const handleValueChange = (evt: React.FormEvent<HTMLInputElement>) => {
+		setValue(evt.currentTarget.value);
+	};
+
+	const handleIndexChange = (evt: React.FormEvent<HTMLInputElement>) => {
+		setIndex(evt.currentTarget.value);
+	};
+
+	const handlePushFront = () => {
+		onPushFront(value);
+		setValue('');
+	};
+
+	const handlePushBack = () => {
+		onPushBack(value);
+		setValue('');
+	};
+
+	const handleInsert = () => {
+		onInsert(parseInt(index), value);
+		setValue('');
+		setIndex('');
+	};
+
+	const handleDelete = () => {
+		onDelete(parseInt(index));
+	};
+
 	return (
 		<form className={clsx(styles.controls, extClassName)}>
 			<div className={styles.controls__row}>
@@ -48,45 +66,45 @@ export function Manager({
 					maxLength={4}
 					isLimitText
 					extClassName={styles.controls__input}
-					disabled={listLength === maxSize || animation !== null}
+					disabled={false}
 					data-testid="valueInput"
-					onChange={onValueChange}
+					onChange={handleValueChange}
 				/>
 				<Button
 					text="Добавить в head"
 					size="small"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={animation === 'prepend'}
-					disabled={value === '' || listLength === maxSize || animation !== null}
+					loader={false}
+					disabled={false}
 					data-testid="addToHead"
-					onClick={onAddInHead}
+					onClick={handlePushFront}
 				/>
 				<Button
 					text="Добавить в tail"
 					size="small"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={animation === 'append'}
-					disabled={value === '' || listLength === maxSize || animation !== null}
+					loader={false}
+					disabled={false}
 					data-testid="addToTail"
-					onClick={onAddInTail}
+					onClick={handlePushBack}
 				/>
 				<Button
 					text="Удалить из head"
 					size="small"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={animation === 'deleteHead'}
-					disabled={listLength === 0 || animation !== null}
+					loader={false}
+					disabled={false}
 					data-testid="removeFromHead"
-					onClick={onDeleteFromHead}
+					onClick={onPopFront}
 				/>
 				<Button
 					text="Удалить из tail"
 					size="small"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={animation === 'deleteTail'}
-					disabled={listLength === 0 || animation !== null}
+					loader={false}
+					disabled={false}
 					data-testid="removeFromTail"
-					onClick={onDeleteFromTail}
+					onClick={onPopBack}
 				/>
 			</div>
 			<div className={clsx(styles.controls__row, 'mt-6')}>
@@ -96,40 +114,29 @@ export function Manager({
 					value={index}
 					type="number"
 					min={0}
-					max={listLength ? listLength - 1 : 0}
+					max={maxIndex}
 					extClassName={styles.controls__input}
-					disabled={animation !== null || listLength === 0}
+					disabled={false}
 					data-testid="indexInput"
-					onChange={onIndexChange}
+					onChange={handleIndexChange}
 				/>
 				<Button
 					text="Добавить по индексу"
 					size="big"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={animation === 'addByIndex'}
-					disabled={
-						value === '' ||
-						!index ||
-						listLength === maxSize ||
-						animation !== null ||
-						Number(index) > listLength - 1
-					}
+					loader={false}
+					disabled={false}
 					data-testid="addByIndex"
-					onClick={onAddByIndex}
+					onClick={handleInsert}
 				/>
 				<Button
 					text="Удалить по индексу"
 					size="big"
 					extClassName={clsx(styles.controls__button, 'ml-6')}
-					loader={animation === 'deleteByIndex'}
-					disabled={
-						!index ||
-						listLength === 0 ||
-						animation !== null ||
-						Number(index) > listLength - 1
-					}
+					loader={false}
+					disabled={false}
 					data-testid="removeByIndex"
-					onClick={onDeleteByIndex}
+					onClick={handleDelete}
 				/>
 			</div>
 		</form>

@@ -1,157 +1,75 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Chart } from './chart';
 import { Manager } from './manager';
-import {
-	changeValueAction,
-	renderAction,
-	animateAction,
-	useLinkedList,
-	linkedListReducer,
-	linkedListVisualizerState,
-	changeIndexAction,
-	generateAddAnimation,
-	generateDeleteAnimation
-} from './utils';
+import { Deque, type RenderNode } from './lib';
+import { getRandomInteger } from '../../shared/helpers/utils';
 import styles from './styles.module.css';
-import './lib';
+import { DELAY_1000_MS } from '../../shared/helpers/delays';
+
+const MAX_SIZE = 7;
+const INIT_LIST_SIZE = 5;
+
+const INIT_LIST = Array(INIT_LIST_SIZE)
+	.fill(null)
+	.map(() => getRandomInteger(10, 90));
 
 export function DequeVisualizer() {
-	const linkedList = useLinkedList();
-	const [{ inputValue, indexValue, animation, renderElements }, dispatch] =
-		useReducer(linkedListReducer, linkedListVisualizerState);
+	const dequeRef = useRef(new Deque(MAX_SIZE, INIT_LIST));
+	const deque = dequeRef.current;
 
-	const handleOnValueChange = (evt: React.FormEvent<HTMLInputElement>) => {
-		const currentValue = evt.currentTarget.value;
-		dispatch(changeValueAction(currentValue));
+	const [animation, setAnimation] = useState(false);
+	const [currentFrame, setFrame] = useState(0);
+	const [frames, setFrames] = useState([deque.items]);
+
+	const renderElements = frames[currentFrame];
+
+	const handlePushFront = (value: string) => {
+		const animationFrames: RenderNode[][] = [];
+
+		deque.onFrame = (frame) => animationFrames.push(frame);
+
+		deque.pushFront(value);
+
+		setFrames(animationFrames);
+		setFrame(0);
+		setAnimation(true);
 	};
 
-	const handleOnIndexChange = (evt: React.FormEvent<HTMLInputElement>) => {
-		const currentIndex = evt.currentTarget.value;
-		const maxIndex = linkedList.length - 1;
-		const allowedIndex = new RegExp(`^[0-${maxIndex}]$|^\\s*$`);
-		if (allowedIndex.test(currentIndex)) {
-			dispatch(changeIndexAction(currentIndex));
-		}
-	};
+	const handlePopFront = () => {};
 
-	const handleAddInHead = async () => {
-		if (!inputValue.trim()) {
-			dispatch(changeValueAction(''));
-			return;
-		}
+	const handlePushBack = (value: string) => {};
 
-		linkedList.prepend(inputValue);
-		dispatch(changeValueAction(''));
-		const animationGenerator = generateAddAnimation(
-			renderElements,
-			inputValue,
-			'prepend'
-		);
-		for await (const elements of animationGenerator) {
-			dispatch(animateAction('prepend', elements));
-		}
-		dispatch(renderAction(linkedList.toArray()));
-	};
+	const handlePopBack = () => {};
 
-	const handleAddInTail = async () => {
-		if (!inputValue.trim()) {
-			dispatch(changeValueAction(''));
-			return;
-		}
+	const handleInsert = (idx: number, value: string) => {};
 
-		linkedList.append(inputValue);
-		dispatch(changeValueAction(''));
-		const animationGenerator = generateAddAnimation(
-			renderElements,
-			inputValue,
-			'append'
-		);
-		for await (const elements of animationGenerator) {
-			dispatch(animateAction('append', elements));
-		}
-		dispatch(renderAction(linkedList.toArray()));
-	};
-
-	const handleDeleteFromHead = async () => {
-		linkedList.deleteHead();
-		const animationGenerator = generateDeleteAnimation(
-			renderElements,
-			'deleteHead'
-		);
-		for await (const elements of animationGenerator) {
-			dispatch(animateAction('deleteHead', elements));
-		}
-		dispatch(renderAction(linkedList.toArray()));
-	};
-
-	const handleDeleteFromTail = async () => {
-		linkedList.deleteTail();
-		const animationGenerator = generateDeleteAnimation(
-			renderElements,
-			'deleteTail'
-		);
-		for await (const elements of animationGenerator) {
-			dispatch(animateAction('deleteTail', elements));
-		}
-		dispatch(renderAction(linkedList.toArray()));
-	};
-
-	const handleAddByIndex = async () => {
-		if (!inputValue.trim()) {
-			dispatch(changeValueAction(''));
-			return;
-		}
-
-		linkedList.addByIndex(inputValue, Number(indexValue));
-		dispatch(changeValueAction(''));
-		dispatch(changeIndexAction(''));
-		const animationGenerator = generateAddAnimation(
-			renderElements,
-			inputValue,
-			'addByIndex',
-			indexValue
-		);
-		for await (const elements of animationGenerator) {
-			dispatch(animateAction('addByIndex', elements));
-		}
-		dispatch(renderAction(linkedList.toArray()));
-	};
-
-	const handleDeleteByIndex = async () => {
-		linkedList.deleteByIndex(Number(indexValue));
-		dispatch(changeIndexAction(''));
-		const animationGenerator = generateDeleteAnimation(
-			renderElements,
-			'deleteByIndex',
-			indexValue
-		);
-		for await (const elements of animationGenerator) {
-			dispatch(animateAction('deleteByIndex', elements));
-		}
-		dispatch(renderAction(linkedList.toArray()));
-	};
+	const handleDelete = (idx: number) => {};
 
 	useEffect(() => {
-		dispatch(renderAction(linkedList.toArray()));
-		// eslint-disable-next-line
-	}, []);
+		let timeoutId = -1;
+		if (animation && currentFrame < frames.length - 1) {
+			timeoutId = window.setTimeout(() => {
+				setFrame(currentFrame + 1);
+			}, DELAY_1000_MS);
+		} else {
+			setAnimation(false);
+		}
+
+		return () => {
+			clearTimeout(timeoutId);
+		};
+	}, [animation, currentFrame, frames.length]);
 
 	return (
 		<div>
 			<Manager
-				value={inputValue}
-				index={indexValue}
-				listLength={linkedList.length}
-				maxSize={linkedList.maxSize}
-				animation={animation}
-				onValueChange={handleOnValueChange}
-				onIndexChange={handleOnIndexChange}
-				onAddInHead={handleAddInHead}
-				onAddInTail={handleAddInTail}
-				onDeleteFromHead={handleDeleteFromHead}
-				onDeleteFromTail={handleDeleteFromTail}
-				onAddByIndex={handleAddByIndex}
-				onDeleteByIndex={handleDeleteByIndex}
+				onPushFront={handlePushFront}
+				onPopFront={handlePopFront}
+				onPushBack={handlePushBack}
+				onPopBack={handlePopBack}
+				onInsert={handleInsert}
+				onDelete={handleDelete}
+				maxIndex={Infinity} //don't forget
 			/>
 			<Chart elements={renderElements} extClassName={styles.linkedList__chart} />
 		</div>

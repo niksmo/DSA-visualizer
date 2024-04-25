@@ -13,14 +13,11 @@ export class StringReverser extends FrameMaker<RenderItem<string>> {
 	}
 
 	private _setItemState(idx: number, state: ElementStates) {
-		this._array[idx] = {
-			...this._array[idx],
-			state
-		};
+		this._array[idx] = Object.assign({}, this._array[idx], { state });
 	}
 
 	protected _frame() {
-		this.onFrame(this._array.map((item) => ({ ...item })));
+		this.onFrame(this._array.map((item) => Object.assign({}, item)));
 	}
 
 	public reverse(str: string) {

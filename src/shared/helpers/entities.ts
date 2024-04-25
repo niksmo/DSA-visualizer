@@ -4,29 +4,31 @@ import { ElementStates, TListNode } from '../types';
 export class RenderItem<T = number> {
 	id: string;
 	value: T;
-	state: ElementStates;
+	state;
 	head?;
 	tail?;
 	passed?;
 
 	constructor(
 		value: T,
-		head?: string | null,
-		tail?: string | null,
+		state: ElementStates = ElementStates.Default,
+		head?: string | RenderItem<T> | null,
+		tail?: string | RenderItem<T> | null,
 		passed?: boolean
 	) {
 		this.id = nanoid();
 		this.value = value;
-		this.state = ElementStates.Default;
-		if (head || head === null) {
-			this.head = head;
-		}
-		if (tail || tail === null) {
-			this.tail = tail;
-		}
-		if (typeof passed === 'boolean') {
-			this.passed = passed;
-		}
+		this.state = state;
+
+		this.head = head;
+
+		this.tail = tail;
+
+		this.passed = passed;
+	}
+
+	[Symbol.toPrimitive]() {
+		return String(this.value);
 	}
 }
 

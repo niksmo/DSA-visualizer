@@ -21,7 +21,8 @@ export class ArraySorter extends FrameMaker<RenderItem<number>> {
 	private _array: RenderItem<number>[] = [];
 
 	protected _frame() {
-		this.onFrame(this._array.map((item) => ({ ...item })));
+		const array = this._array.map((item) => Object.assign({}, item));
+		this.onFrame(array);
 	}
 
 	private _prepareArray(array: RenderItem<number>[]) {
@@ -49,10 +50,7 @@ export class ArraySorter extends FrameMaker<RenderItem<number>> {
 
 	private _setItemState(idxList: number[], state: ElementStates) {
 		idxList.forEach((idx) => {
-			this._array[idx] = {
-				...this._array[idx],
-				state
-			};
+			this._array[idx] = Object.assign({}, this._array[idx], { state });
 		});
 	}
 
@@ -168,7 +166,7 @@ export class ArraySorter extends FrameMaker<RenderItem<number>> {
 			this._frame();
 
 			while (j > 0 && comparator(this._array[j - 1].value, currentValue)) {
-				this._array[j].tail = String(currentValue);
+				this._array[j].tail = new RenderItem(currentValue, ElementStates.Changing);
 				this._frame();
 				this._array[j].tail = null;
 				this._array[j].value = this._array[j - 1].value;
@@ -179,7 +177,7 @@ export class ArraySorter extends FrameMaker<RenderItem<number>> {
 			}
 
 			if (j !== i) {
-				this._array[j].tail = String(currentValue);
+				this._array[j].tail = new RenderItem(currentValue, ElementStates.Changing);
 				this._frame();
 				this._array[j].tail = null;
 				this._array[j].value = currentValue;

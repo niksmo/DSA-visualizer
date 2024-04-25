@@ -15,7 +15,7 @@ export function Chart({ elements, extClassName }: IProps) {
 				<Circle
 					key={id}
 					state={state}
-					head={head}
+					head={head && String(head)}
 					letter={value}
 					index={idx}
 					extClassName={clsx(styles.chart__element, 'mr-8')}

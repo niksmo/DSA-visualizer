@@ -2,8 +2,8 @@ import { clsx } from 'clsx';
 import { ElementStates } from '../../../shared/types';
 import { Circle } from '../../../shared/ui/circle';
 import { ArrowIcon } from '../../../shared/ui/icons';
-import type { RenderItem } from '../../../shared/helpers/entities';
 import styles from './styles.module.css';
+import { RenderItem } from '../../../shared/helpers/entities';
 
 interface IProps {
 	elements: RenderItem<string>[];
@@ -11,47 +11,31 @@ interface IProps {
 }
 
 export function Chart({ elements, extClassName }: IProps) {
-	const getHead = (headValue: string | null) => {
-		//bug if user set 'head' value for list item
-		if (headValue === 'head') {
-			return headValue;
+	const getHeadOrTail = (
+		item: string | RenderItem<string> | null | undefined
+	) => {
+		if (!item) return;
+		if (item instanceof RenderItem) {
+			return <Circle small state={item.state} letter={item.value} />;
 		}
-
-		if (headValue) {
-			return <Circle small letter={headValue} state={ElementStates.Changing} />;
-		}
-
-		return headValue;
-	};
-
-	const getTail = (tailValue: string | null) => {
-		if (tailValue === 'tail') {
-			//bug if user set 'tail' value for list item
-			return tailValue;
-		}
-
-		if (tailValue) {
-			return <Circle small letter={tailValue} state={ElementStates.Changing} />;
-		}
-
-		return tailValue;
+		return String(item);
 	};
 
 	return (
 		<ul className={clsx(styles.chart, extClassName)}>
-			{elements.map((item, index, array) => (
-				<li key={item.id} className={styles.chart__item}>
+			{elements.map(({ id, head, tail, state, value, passed }, index, array) => (
+				<li key={id} className={styles.chart__item}>
 					<Circle
-						head={getHead(item.head!)}
-						tail={getTail(item.tail!)}
-						state={item.state}
-						letter={item.value}
+						head={getHeadOrTail(head)}
+						tail={getHeadOrTail(tail)}
+						state={state}
+						letter={value}
 						index={index}
 						extClassName={clsx(styles.chart__element, 'ml-8 mr-8')}
 					/>
 					{index !== array.length - 1 && (
 						<ArrowIcon
-							fill={item.passed ? ElementStates.Changing : ElementStates.Default}
+							fill={passed ? ElementStates.Changing : ElementStates.Default}
 						/>
 					)}
 				</li>

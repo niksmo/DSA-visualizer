@@ -13,7 +13,7 @@ export class Stack extends FrameMaker<RenderItem<string>> {
 	}
 
 	protected _frame() {
-		this.onFrame(this._array.map((item) => ({ ...item })));
+		this.onFrame(this._array.map((item) => Object.assign({}, item)));
 	}
 
 	get top() {
@@ -33,7 +33,7 @@ export class Stack extends FrameMaker<RenderItem<string>> {
 
 		if (this._array.length) this.top.head = null;
 
-		const item = new RenderItem(value, LABEL_TOP);
+		const item = new RenderItem(value, ElementStates.Default, LABEL_TOP);
 		item.state = ElementStates.Changing;
 		this._array.push(item);
 		this._frame();
