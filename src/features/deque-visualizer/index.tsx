@@ -32,64 +32,38 @@ export function DequeVisualizer() {
 
 	const renderElements = frames[currentFrame];
 
-	const handlePushFront = (value: string) => {
+	function startAnimation(fn: () => void, load: LoadEnum) {
 		const animationFrames: RenderNode[][] = [];
 		deque.onFrame = (frame) => animationFrames.push(frame);
-		deque.pushFront(value);
+		fn();
 		setFrames(animationFrames);
 		setFrame(0);
-		setLoad(LoadEnum.pushFront);
+		setLoad(load);
 		setAnimation(true);
+	}
+
+	const handlePushFront = (value: string) => {
+		startAnimation(() => deque.pushFront(value), LoadEnum.pushFront);
 	};
 
 	const handlePopFront = () => {
-		const animationFrames: RenderNode[][] = [];
-		deque.onFrame = (frame) => animationFrames.push(frame);
-		deque.popFront();
-		setFrames(animationFrames);
-		setFrame(0);
-		setLoad(LoadEnum.popFront);
-		setAnimation(true);
+		startAnimation(() => deque.popFront(), LoadEnum.popFront);
 	};
 
 	const handlePushBack = (value: string) => {
-		const animationFrames: RenderNode[][] = [];
-		deque.onFrame = (frame) => animationFrames.push(frame);
-		deque.pushBack(value);
-		setFrames(animationFrames);
-		setFrame(0);
-		setLoad(LoadEnum.pushBack);
-		setAnimation(true);
+		startAnimation(() => deque.pushBack(value), LoadEnum.pushBack);
 	};
 
 	const handlePopBack = () => {
-		const animationFrames: RenderNode[][] = [];
-		deque.onFrame = (frame) => animationFrames.push(frame);
-		deque.popBack();
-		setFrames(animationFrames);
-		setFrame(0);
-		setLoad(LoadEnum.popBack);
-		setAnimation(true);
+		startAnimation(() => deque.popBack(), LoadEnum.popBack);
 	};
 
 	const handleInsert = (idx: number, value: string) => {
-		const animationFrames: RenderNode[][] = [];
-		deque.onFrame = (frame) => animationFrames.push(frame);
-		deque.insert(idx, value);
-		setFrames(animationFrames);
-		setFrame(0);
-		setLoad(LoadEnum.insert);
-		setAnimation(true);
+		startAnimation(() => deque.insert(idx, value), LoadEnum.insert);
 	};
 
 	const handleDelete = (idx: number) => {
-		const animationFrames: RenderNode[][] = [];
-		deque.onFrame = (frame) => animationFrames.push(frame);
-		deque.delete(idx);
-		setFrames(animationFrames);
-		setFrame(0);
-		setLoad(LoadEnum.delete);
-		setAnimation(true);
+		startAnimation(() => deque.delete(idx), LoadEnum.delete);
 	};
 
 	useEffect(() => {
