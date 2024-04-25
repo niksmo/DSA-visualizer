@@ -91,7 +91,7 @@ export function DequeVisualizer() {
 				onInsert={handleInsert}
 				onDelete={handleDelete}
 				minIndex={0}
-				maxIndex={Infinity} //don't forget
+				maxIndex={deque.size - 1}
 			/>
 			<Chart elements={renderElements} extClassName={styles.linkedList__chart} />
 		</div>

@@ -11,6 +11,7 @@ interface IProps {
 	onPopBack: () => void;
 	onInsert: (idx: number, value: string) => void;
 	onDelete: (idx: number) => void;
+	minIndex: number;
 	maxIndex: number;
 	extClassName?: string;
 }
@@ -22,6 +23,7 @@ export function Manager({
 	onPopBack,
 	onInsert,
 	onDelete,
+	minIndex,
 	maxIndex,
 	extClassName
 }: IProps) {
@@ -33,7 +35,12 @@ export function Manager({
 	};
 
 	const handleIndexChange = (evt: React.FormEvent<HTMLInputElement>) => {
-		setIndex(evt.currentTarget.value);
+		const value = evt.currentTarget.value;
+
+		Number(value) >= minIndex &&
+			Number(value) <= maxIndex &&
+			value.length <= String(maxIndex).length &&
+			setIndex(evt.currentTarget.value);
 	};
 
 	const handlePushFront = () => {
@@ -113,7 +120,7 @@ export function Manager({
 					name="index"
 					value={index}
 					type="number"
-					min={0}
+					min={minIndex}
 					max={maxIndex}
 					extClassName={styles.controls__input}
 					disabled={false}
