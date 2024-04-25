@@ -43,7 +43,6 @@ export class Deque extends FrameMaker<RenderNode> {
 
 		if (!values || values.length === 0) return this;
 
-		//pushBack() each value algorithm
 		values.forEach((v) => this.pushBack(String(v)));
 	}
 
@@ -74,7 +73,7 @@ export class Deque extends FrameMaker<RenderNode> {
 		}
 
 		//debugg
-		console.log(array.map((item) => item.value));
+		console.log(array.map((item) => `${item.value}: ${item.state}`));
 
 		this.onFrame(array);
 	}
@@ -129,6 +128,22 @@ export class Deque extends FrameMaker<RenderNode> {
 		if (idx < 0 || idx >= this._size) {
 			throw Error('index out of range');
 		}
+
+		let node = this._head.next;
+
+		for (let i = 0; i < idx; i += 1) {
+			node = node?.next;
+		}
+
+		if (!(node && node.prev && node.next)) return;
+
+		const insertingNode = new RenderNode(node.prev, value, node);
+		node.prev.next = insertingNode;
+		node.prev = insertingNode;
+
+		this._size += 1;
+
+		return this._size;
 	}
 
 	public delete(idx: number) {
@@ -139,8 +154,20 @@ export class Deque extends FrameMaker<RenderNode> {
 		if (idx < 0 || idx >= this._size) {
 			throw Error('index out of range');
 		}
+
+		let node = this._head.next;
+
+		for (let i = 0; i < idx; i += 1) {
+			node = node?.next;
+		}
+
+		if (!(node && node.prev && node.next)) return;
+
+		node.prev.next = node.next;
+		node.next.prev = node.prev;
+
+		this._size -= 1;
+
+		return node.value;
 	}
 }
-
-const deque = new Deque(20, [5, 6, 7, 8, 9, 10]);
-debugger;
