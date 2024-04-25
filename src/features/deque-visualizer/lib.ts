@@ -255,10 +255,10 @@ export class Deque extends FrameMaker<RenderNode> {
 		node.prev = insertingNode;
 		node.state = ElementStates.Default;
 		insertingNode.state = ElementStates.Modified;
+		this._labelEdges();
 		this._frame();
 
 		this._resetToDefault();
-		this._labelEdges();
 		this._frame();
 
 		return this._size;
