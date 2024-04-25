@@ -37,19 +37,30 @@ export function DequeVisualizer() {
 
 	const handlePopFront = () => {
 		const animationFrames: RenderNode[][] = [];
-
 		deque.onFrame = (frame) => animationFrames.push(frame);
-
 		deque.popFront();
-
 		setFrames(animationFrames);
 		setFrame(0);
 		setAnimation(true);
 	};
 
-	const handlePushBack = (value: string) => {};
+	const handlePushBack = (value: string) => {
+		const animationFrames: RenderNode[][] = [];
+		deque.onFrame = (frame) => animationFrames.push(frame);
+		deque.pushBack(value);
+		setFrames(animationFrames);
+		setFrame(0);
+		setAnimation(true);
+	};
 
-	const handlePopBack = () => {};
+	const handlePopBack = () => {
+		const animationFrames: RenderNode[][] = [];
+		deque.onFrame = (frame) => animationFrames.push(frame);
+		deque.popBack();
+		setFrames(animationFrames);
+		setFrame(0);
+		setAnimation(true);
+	};
 
 	const handleInsert = (idx: number, value: string) => {};
 
@@ -79,6 +90,7 @@ export function DequeVisualizer() {
 				onPopBack={handlePopBack}
 				onInsert={handleInsert}
 				onDelete={handleDelete}
+				minIndex={0}
 				maxIndex={Infinity} //don't forget
 			/>
 			<Chart elements={renderElements} extClassName={styles.linkedList__chart} />

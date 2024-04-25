@@ -101,7 +101,7 @@ export class Deque extends FrameMaker<RenderNode> {
 	public pushFront(value: string) {
 		const node = new RenderNode(this.head, value, this.head.next);
 
-		if (!this._head.next) return;
+		if (!this._head.next || !this._tail.prev) return;
 
 		if (this._size > 0) {
 			node.state = ElementStates.Changing;
@@ -112,13 +112,17 @@ export class Deque extends FrameMaker<RenderNode> {
 		this._head.next.head = null;
 		this._head.next.prev = node;
 		this._head.next = node;
-		this._size += 1;
 
 		node.head = LABEL_HEAD;
+
+		this._tail.prev.tail = LABEL_TAIL;
+
 		node.state = ElementStates.Modified;
 		this._frame();
 		node.state = ElementStates.Default;
 		this._frame();
+
+		this._size += 1;
 
 		return this._size;
 	}
@@ -147,8 +151,29 @@ export class Deque extends FrameMaker<RenderNode> {
 
 	public pushBack(value: string) {
 		const node = new RenderNode(this._tail.prev, value, this._tail);
-		if (this._tail.prev) this._tail.prev.next = node;
+
+		if (!this._tail.prev || !this._head.next) return;
+
+		if (this._size > 0) {
+			node.state = ElementStates.Changing;
+			this._tail.prev.head = node;
+			this._frame();
+		}
+
+		this._tail.prev.head = null;
+		this._tail.prev.tail = null;
+		this._tail.prev.next = node;
 		this._tail.prev = node;
+
+		node.tail = LABEL_TAIL;
+
+		this._head.next.head = LABEL_HEAD;
+
+		node.state = ElementStates.Modified;
+		this._frame();
+		node.state = ElementStates.Default;
+		this._frame();
+
 		this._size += 1;
 		return this._size;
 	}
@@ -162,8 +187,15 @@ export class Deque extends FrameMaker<RenderNode> {
 
 		if (!node || !node.prev) return;
 
+		node.tail = new RenderNode(null, node.value, null, ElementStates.Changing);
+		node.value = '';
+		this._frame();
+
 		this._tail.prev = node.prev;
 		node.prev.next = this._tail;
+		this._tail.prev.tail = LABEL_TAIL;
+		this._frame();
+
 		this._size -= 1;
 		return node.value;
 	}
