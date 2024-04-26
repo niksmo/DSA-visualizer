@@ -60,16 +60,16 @@ export class Deque extends FrameMaker<RenderNode> {
 
 		while (curNode && curNode.value !== Deque.DUMMY_TAIL) {
 			const renderItem = Object.assign({}, curNode);
-			Object.setPrototypeOf(renderItem, curNode);
+			Object.setPrototypeOf(renderItem, RenderNode.prototype);
 
 			if (curNode.head instanceof RenderNode) {
 				renderItem.head = Object.assign({}, curNode.head);
-				Object.setPrototypeOf(renderItem.head, curNode.head);
+				Object.setPrototypeOf(renderItem.head, RenderNode.prototype);
 			}
 
 			if (curNode.tail instanceof RenderNode) {
 				renderItem.tail = Object.assign({}, curNode.tail);
-				Object.setPrototypeOf(renderItem.tail, curNode.tail);
+				Object.setPrototypeOf(renderItem.tail, RenderNode.prototype);
 			}
 
 			renderList.push(renderItem);
