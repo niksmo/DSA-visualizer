@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { Chart } from './chart';
-import { Manager } from './manager';
 import { DELAY_1000_MS } from '../../shared/helpers/delays';
 import type { RenderItem } from '../../shared/helpers/entities';
+import { Chart } from './chart';
+import { LoadEnum, Manager } from './manager';
 import { Queue } from './lib';
 import styles from './styles.module.css';
 
@@ -11,55 +11,40 @@ const MAX_QUEUE_SIZE = 7;
 export function QueueVisualizer() {
 	const [disableOptions, setDisableOptions] = useState({
 		enqueue: false,
-		dequeue: true,
-		clear: true
-	});
-
-	const [loadOptions, setLoadOptions] = useState({
-		enqueue: false,
 		dequeue: false
 	});
 
+	const [load, setLoad] = useState<LoadEnum | false>(false);
+
 	const queueRef = useRef(new Queue(MAX_QUEUE_SIZE));
 	const queue = queueRef.current;
-
 	const [currentFrame, setFrame] = useState(0);
 	const [animation, setAnimation] = useState(false);
 	const [frames, setFrames] = useState<RenderItem<string>[][]>([queue.items]);
 
 	const renderElements = frames[currentFrame];
 
-	const handleEnqueue = (value: string) => {
+	function startAnimation(fn: () => void, load: LoadEnum) {
 		const renderFrames: RenderItem<string>[][] = [];
 		queue.onFrame = (array) => renderFrames.push(array);
-		queue.enqueue(value);
-
-		if (!renderFrames.length) return;
+		fn();
 
 		setFrame(0);
 		setFrames(renderFrames);
-		setLoadOptions({ ...loadOptions, enqueue: true });
-		setDisableOptions({ enqueue: true, dequeue: true, clear: true });
+		setLoad(load);
 		setAnimation(true);
+	}
+
+	const handleEnqueue = (value: string) => {
+		startAnimation(() => queue.enqueue(value), LoadEnum.enqueue);
 	};
 
 	const handleDequeue = () => {
-		const renderFrames: RenderItem<string>[][] = [];
-		queue.onFrame = (array) => renderFrames.push(array);
-		queue.dequeue();
-
-		if (!renderFrames.length) return;
-
-		setFrame(0);
-		setFrames(renderFrames);
-		setLoadOptions({ ...loadOptions, dequeue: true });
-		setDisableOptions({ enqueue: true, dequeue: true, clear: true });
-		setAnimation(true);
+		startAnimation(() => queue.dequeue(), LoadEnum.dequeue);
 	};
 
 	const handleClear = () => {
 		queue.clear();
-
 		setFrame(0);
 		setFrames([queue.items]);
 	};
@@ -71,14 +56,12 @@ export function QueueVisualizer() {
 				setFrame(currentFrame + 1);
 			}, DELAY_1000_MS);
 		} else {
-			const disableOpt = { ...disableOptions };
-			disableOpt.enqueue = queue.size === queue.maxSize;
-			disableOpt.dequeue = disableOpt.clear = queue.size === 0;
-			setDisableOptions(disableOpt);
-
 			setAnimation(false);
-
-			setLoadOptions({ enqueue: false, dequeue: false });
+			setLoad(false);
+			setDisableOptions({
+				enqueue: queue.size === queue.maxSize,
+				dequeue: queue.size === 0
+			});
 		}
 		return () => {
 			clearTimeout(timeoutId);
@@ -92,7 +75,7 @@ export function QueueVisualizer() {
 				onDequeue={handleDequeue}
 				onClear={handleClear}
 				disableOptions={disableOptions}
-				loadOptions={loadOptions}
+				load={load}
 			/>
 			{renderElements && (
 				<Chart elements={renderElements} extClassName={styles.chart} />

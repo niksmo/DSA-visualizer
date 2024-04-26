@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Chart } from './chart';
-import { Manager } from './manager';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
 import type { RenderItem } from '../../shared/helpers/entities';
+import { Chart } from './chart';
+import { Manager } from './manager';
 import {
 	ArraySorter,
 	type TSortMethodUnion,
@@ -30,9 +30,7 @@ export function SortingVisualizer({ extClassName }: IProps) {
 		if (!array) return;
 
 		const sorter = new ArraySorter();
-
 		const renderFrames: RenderItem<number>[][] = [];
-
 		sorter.onFrame = (frame) => renderFrames.push(frame);
 		sorter[sortMethod](array, sortType);
 

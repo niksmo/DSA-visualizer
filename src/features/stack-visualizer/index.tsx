@@ -43,7 +43,6 @@ export const StackVisualizer = () => {
 
 	const handleClear = () => {
 		stack.clear();
-
 		setFrame(0);
 		setFrames([]);
 	};
