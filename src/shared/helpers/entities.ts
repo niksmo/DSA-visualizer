@@ -1,5 +1,10 @@
 import { nanoid } from 'nanoid';
-import { ElementStates, TListNode } from '../types';
+
+export const enum ElementStates {
+	Default = 'default',
+	Changing = 'changing',
+	Modified = 'modified'
+}
 
 export class RenderItem<T = number> {
 	id: string;
@@ -29,20 +34,6 @@ export class RenderItem<T = number> {
 
 	[Symbol.toPrimitive]() {
 		return String(this.value);
-	}
-}
-
-export class ListNode<T> implements TListNode<T> {
-	id: string;
-	value: T;
-	state: ElementStates;
-	next: TListNode<T> | null;
-
-	constructor(value: T, next?: TListNode<T>) {
-		this.id = nanoid();
-		this.value = value;
-		this.state = ElementStates.Default;
-		this.next = next ? next : null;
 	}
 }
 

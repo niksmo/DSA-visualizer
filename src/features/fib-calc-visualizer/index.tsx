@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
-import { Chart } from './chart';
-import { Manager } from './manager';
 import { DELAY_500_MS } from '../../shared/helpers/delays';
 import type { RenderItem } from '../../shared/helpers/entities';
+import { Chart } from './chart';
+import { Manager } from './manager';
 import { FibCalculator } from './lib';
 import styles from './styles.module.css';
 

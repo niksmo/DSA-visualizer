@@ -1,6 +1,9 @@
 import { Nullable } from 'vitest';
-import { FrameMaker, RenderItem } from '../../shared/helpers/entities';
-import { ElementStates } from '../../shared/types';
+import {
+	ElementStates,
+	FrameMaker,
+	RenderItem
+} from '../../shared/helpers/entities';
 
 const LABEL_HEAD = 'head';
 const LABEL_TAIL = 'tail';

@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
+import type { RenderItem } from '../../../shared/helpers/entities';
 import { Circle } from '../../../shared/ui/circle';
 import styles from './styles.module.css';
-import type { RenderItem } from '../../../shared/helpers/entities';
 
 interface IProps {
 	elements: RenderItem[];

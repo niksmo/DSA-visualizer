@@ -1,6 +1,6 @@
 import React from 'react';
 import { clsx } from 'clsx';
-import { ElementStates } from '../../types';
+import { ElementStates } from '../../helpers/entities';
 import styles from './styles.module.css';
 
 interface CircleProps {

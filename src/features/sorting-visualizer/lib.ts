@@ -1,6 +1,9 @@
-import { RenderItem, FrameMaker } from '../../shared/helpers/entities';
+import {
+	RenderItem,
+	FrameMaker,
+	ElementStates
+} from '../../shared/helpers/entities';
 import { getRandomInteger } from '../../shared/helpers/utils';
-import { ElementStates } from '../../shared/types';
 
 export const SORT_METHOD = {
 	SELECTION: 'selection',

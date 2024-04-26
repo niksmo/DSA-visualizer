@@ -11,7 +11,7 @@ const MAX_STACK_SIZE = 9;
 export const StackVisualizer = () => {
 	const [disableOptions, setDisableOptions] = useState({
 		push: false,
-		pop: false
+		pop: true
 	});
 
 	const [load, setLoad] = useState<LoadEnum | false>(false);

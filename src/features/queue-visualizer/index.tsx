@@ -11,7 +11,7 @@ const MAX_QUEUE_SIZE = 7;
 export function QueueVisualizer() {
 	const [disableOptions, setDisableOptions] = useState({
 		enqueue: false,
-		dequeue: false
+		dequeue: true
 	});
 
 	const [load, setLoad] = useState<LoadEnum | false>(false);
