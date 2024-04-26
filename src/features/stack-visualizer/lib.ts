@@ -1,5 +1,8 @@
-import { RenderItem, FrameMaker } from '../../shared/helpers/entities';
-import { ElementStates } from '../../shared/types';
+import {
+	RenderItem,
+	FrameMaker,
+	ElementStates
+} from '../../shared/helpers/entities';
 
 const LABEL_TOP = 'top';
 

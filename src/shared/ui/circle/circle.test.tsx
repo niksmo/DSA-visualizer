@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { ElementStates } from '../../types';
+import { ElementStates } from '../../helpers/entities';
 import { Circle } from '.';
 
 describe('Circle component test', () => {

@@ -1,9 +1,8 @@
 import { clsx } from 'clsx';
-import { ElementStates } from '../../../shared/types';
+import { ElementStates, RenderItem } from '../../../shared/helpers/entities';
 import { Circle } from '../../../shared/ui/circle';
 import { ArrowIcon } from '../../../shared/ui/icons';
 import styles from './styles.module.css';
-import { RenderItem } from '../../../shared/helpers/entities';
 
 interface IProps {
 	elements: RenderItem<string>[];

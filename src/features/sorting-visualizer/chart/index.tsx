@@ -1,8 +1,8 @@
 import { clsx } from 'clsx';
 import { Column } from '../../../shared/ui/column';
 import { RenderItem } from '../../../shared/helpers/entities';
-import styles from './styles.module.css';
 import { Circle } from '../../../shared/ui/circle';
+import styles from './styles.module.css';
 
 interface IProps {
 	elements: RenderItem[];

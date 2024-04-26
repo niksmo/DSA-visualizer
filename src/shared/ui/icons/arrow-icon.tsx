@@ -1,5 +1,5 @@
 import React from 'react';
-import { ElementStates } from '../../types';
+import { ElementStates } from '../../helpers/entities';
 
 interface Props {
 	fill?: ElementStates;

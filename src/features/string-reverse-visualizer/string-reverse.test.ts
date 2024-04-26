@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { RenderItem } from '../../shared/helpers/entities';
-import { ElementStates } from '../../shared/types';
+import { ElementStates, RenderItem } from '../../shared/helpers/entities';
+
 import { StringReverser } from './lib';
 
 describe('reverse string', () => {
