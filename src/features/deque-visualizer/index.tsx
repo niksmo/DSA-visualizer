@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { DELAY_1000_MS } from '../../shared/helpers/delays';
+import { getRandomInteger } from '../../shared/helpers/utils';
 import { Chart } from './chart';
 import { LoadEnum, Manager } from './manager';
 import { Deque, type RenderNode } from './lib';
-import { getRandomInteger } from '../../shared/helpers/utils';
-import { DELAY_1000_MS } from '../../shared/helpers/delays';
 import styles from './styles.module.css';
 
 const MAX_SIZE = 7;

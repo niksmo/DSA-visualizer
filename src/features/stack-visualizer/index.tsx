@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { Chart } from './chart';
-import { Manager } from './manager';
-import type { RenderItem } from '../../shared/helpers/entities';
-import { Stack } from './lib';
 import { DELAY_1000_MS } from '../../shared/helpers/delays';
+import type { RenderItem } from '../../shared/helpers/entities';
+import { Chart } from './chart';
+import { LoadEnum, Manager } from './manager';
+import { Stack } from './lib';
 import styles from './styles.module.css';
 
 const MAX_STACK_SIZE = 9;
@@ -11,46 +11,34 @@ const MAX_STACK_SIZE = 9;
 export const StackVisualizer = () => {
 	const [disableOptions, setDisableOptions] = useState({
 		push: false,
-		pop: true,
-		clear: true
+		pop: false
 	});
 
-	const [loadOptions, setLoadOptions] = useState({ push: false, pop: false });
+	const [load, setLoad] = useState<LoadEnum | false>(false);
 
 	const [currentFrame, setFrame] = useState(0);
 	const [animation, setAnimation] = useState(false);
 	const [frames, setFrames] = useState<RenderItem<string>[][]>([]);
 	const stackRef = useRef(new Stack(MAX_STACK_SIZE));
-
-	const renderElements = frames[currentFrame];
 	const stack = stackRef.current;
+	const renderElements = frames[currentFrame];
+
+	function startAnimation(fn: () => void, load: LoadEnum) {
+		const animationFrames: RenderItem<string>[][] = [];
+		stack.onFrame = (frame) => animationFrames.push(frame);
+		fn();
+		setFrames(animationFrames);
+		setFrame(0);
+		setLoad(load);
+		setAnimation(true);
+	}
 
 	const handlePush = (value: string) => {
-		const renderFrames: RenderItem<string>[][] = [];
-		stack.onFrame = (array) => renderFrames.push(array);
-		stack.push(value);
-
-		if (!renderFrames.length) return;
-
-		setFrame(0);
-		setFrames(renderFrames);
-		setLoadOptions({ ...loadOptions, push: true });
-		setDisableOptions({ push: true, pop: true, clear: true });
-		setAnimation(true);
+		startAnimation(() => stack.push(value), LoadEnum.push);
 	};
 
 	const handlePop = () => {
-		const renderFrames: RenderItem<string>[][] = [];
-		stack.onFrame = (array) => renderFrames.push(array);
-		stack.pop();
-
-		if (!renderFrames.length) return;
-
-		setFrame(0);
-		setFrames(renderFrames);
-		setLoadOptions({ ...loadOptions, pop: true });
-		setDisableOptions({ push: true, pop: true, clear: true });
-		setAnimation(true);
+		startAnimation(() => stack.pop(), LoadEnum.pop);
 	};
 
 	const handleClear = () => {
@@ -67,14 +55,12 @@ export const StackVisualizer = () => {
 				setFrame(currentFrame + 1);
 			}, DELAY_1000_MS);
 		} else {
-			const disableOpt = { ...disableOptions };
-			disableOpt.push = stack.size === stack.maxSize;
-			disableOpt.pop = disableOpt.clear = stack.size === 0;
-			setDisableOptions(disableOpt);
-
 			setAnimation(false);
-
-			setLoadOptions({ push: false, pop: false });
+			setLoad(false);
+			setDisableOptions({
+				push: stack.size === stack.maxSize,
+				pop: stack.size === 0
+			});
 		}
 		return () => {
 			clearTimeout(timeoutId);
@@ -88,7 +74,7 @@ export const StackVisualizer = () => {
 				onPop={handlePop}
 				onClear={handleClear}
 				disableOptions={disableOptions}
-				loadOptions={loadOptions}
+				load={load}
 			/>
 			{renderElements && (
 				<Chart elements={renderElements} extClassName={styles.chart} />
